@@ -3,35 +3,35 @@ import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
 import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import { ReplyCommentCard } from "./ReplyCommentCard";
-export const CommentCard = () => {
+import { formatTimestamp } from "../../../utils/functions";
+import parse from "html-react-parser";
+
+export const CommentCard = ({ data }) => {
   const [replyCommentToggle, setReplyCommentToggle] = useState(false);
   return (
     <Box sx={{ mb: 1 }}>
       <Box sx={{ display: "flex" }}>
         <img
-          src={LogoPensook}
+          src={data.isAnonymous ? LogoPensook : data.displayImagePath}
           width={40}
           height={40}
           style={{ borderRadius: "50%" }}
           alt="avatar"
         />
         <Box sx={{ ml: 2 }}>
-          <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
-            Jeremy Caldwell
+          <Typography variant="body1" sx={{ fontWeight: "500", fontSize: 16 }}>
+            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}
           >
-            3 ตุลาคม 2566 , 09:13 น.
+            {formatTimestamp(data.createTime)}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ px: 7, py: 2 }}>
         <Typography sx={{ fontWeight: "400", fontSize: 16 }}>
-          หากเคยมีประวัติกระเพาะปัสสาวะอักเสบมาก่อนก็อาจ
-          เป็นไปได้ที่จะมีอาการกลับมาเป็นซ้ำได้ค่ะ โดยเฉพาะถ้ามี
-          การกลั้นปัสสาวะบ่อย ๆ ร่วมกับมีอาการปัสสาวะแสบ เหมือนปัสสาวะไม่สุด
-          เบื้องต้นให้ดื่มน้ำเยอะ ๆ หากปวดมาก ปัสสาวะไม่ออกก็ต้องไปพบแพทย์นะคะ
+          {parse(data.content)}
         </Typography>
       </Box>
       <Box
@@ -55,7 +55,7 @@ export const CommentCard = () => {
             },
           }}
         >
-          135 Up Vote
+          {data.upVote} Up Vote
         </Button>
         <Box sx={{ display: "flex", alignItems: "center", height: 30 }}>
           <IconButton
@@ -77,15 +77,16 @@ export const CommentCard = () => {
             />
           </IconButton>
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
-            5
+            {data.commentList.length}
           </Typography>
         </Box>
       </Box>
       <Divider />
       {replyCommentToggle && (
         <Box sx={{ pl: 7, pt: 2 }}>
-          <ReplyCommentCard />
-          <ReplyCommentCard />
+          {data?.commentList.map((item, index) => (
+            <ReplyCommentCard key={index} data={item} />
+          ))}
         </Box>
       )}
     </Box>

@@ -1,13 +1,16 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import React from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
 import { ArrowDropUp } from "@mui/icons-material";
-export const ReplyCommentCardSecond = () => {
+import parse from "html-react-parser";
+import { formatTimestamp } from "../../../utils/functions";
+
+export const ReplyCommentCardSecond = ({ data }) => {
   return (
-    <Box>
+    <Box mb={1}>
       <Box sx={{ display: "flex" }}>
         <img
-          src={LogoPensook}
+          src={data.isAnonymous ? LogoPensook : data.displayImagePath}
           width={40}
           height={40}
           style={{ borderRadius: "50%" }}
@@ -15,18 +18,18 @@ export const ReplyCommentCardSecond = () => {
         />
         <Box sx={{ ml: 2 }}>
           <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
-            Jeremy Caldwell
+            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}
           >
-            3 ตุลาคม 2566 , 09:13 น.
+            {formatTimestamp(data?.createTime)}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ mt: 2, pl: 7 }}>
         <Typography sx={{ fontWeight: "400", fontSize: 16 }}>
-          ขอบคุณสำหรับคำตอบ
+          {parse(data.content)}
         </Typography>
       </Box>
       <Box
@@ -50,9 +53,10 @@ export const ReplyCommentCardSecond = () => {
             },
           }}
         >
-          135 Up Vote
+          {data.upVote} Up Vote
         </Button>
       </Box>
+      <Divider />
     </Box>
   );
 };

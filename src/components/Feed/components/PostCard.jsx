@@ -1,9 +1,13 @@
-import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
 import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
+import parse from "html-react-parser";
+import { formatTimestamp } from "../../../utils/functions";
+import { ImageShow } from "./PostCard/ImageShow";
 
-export const PostCard = () => {
+export const PostCard = ({ data, setCommentData }) => {
+  const [showMore, setShowMore] = useState(false);
   return (
     <Box
       bgcolor="#fff"
@@ -16,7 +20,7 @@ export const PostCard = () => {
     >
       <Box sx={{ display: "flex" }}>
         <img
-          src={LogoPensook}
+          src={data.isAnonymous ? LogoPensook : data.displayImagePath}
           width={40}
           height={40}
           style={{ borderRadius: "50%" }}
@@ -24,24 +28,37 @@ export const PostCard = () => {
         />
         <Box sx={{ ml: 2 }}>
           <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
-            Jeremy Caldwell
+            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}
           >
-            3 ตุลาคม 2566 , 09:13 น.
+            {formatTimestamp(data.createTime)}
           </Typography>
         </Box>
       </Box>
       <Typography sx={{ fontWeight: "600", fontSize: 18, mt: 2 }}>
-        การฉีดวัคซีน ป้องกันไข้หวัดใหญ่
+        {data.label}
       </Typography>
-      <Typography sx={{ fontWeight: "400", fontSize: 16, mt: 2 }}>
-        การป้องกันที่ดีคือ การฉีดวัคซีนป้องกันไข้หวัดใหญ่
-        ซึ่งเป็นวัคซีนที่ทำมาจากเชื้อที่ตาย แล้ว โดยฉีดที่แขนปีละครั้ง หลังฉีด 2
-        สัปดาห์ภูมิคุ้มกันจึงจะสูงพอที่จะป้องกันการติด เชื้อ
-        ผู้ที่มีประวัติแพ้สารโปรตีนประเภทไข่ ห้ามฉีดวัคซีนชนิดนี้
-      </Typography>
+      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }}>
+        {showMore ? parse(data.content) : parse(data.content.substring(0, 200))}
+        <span
+          style={{ cursor: "pointer", color: "#007DFC" }}
+          onClick={() => setShowMore(!showMore)}
+        >
+          {showMore ? "แสดงน้อยลง" : "ดูเพิ่มเติม"}
+        </span>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{
+            maxWidth: 600,
+          }}
+        >
+          <ImageShow imageData={data.attachImageList} />
+        </Box>
+      </Box>
+
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
         <Button
           startIcon={<ArrowDropUp sx={{ width: 30, height: 30 }} />}
@@ -55,12 +72,30 @@ export const PostCard = () => {
             },
           }}
         >
-          135 Up Vote
+          {data.upVote} Up Vote
         </Button>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <CommentOutlined sx={{ width: 20, height: 20 }} />
+          <IconButton
+            sx={{
+              width: 30,
+              height: 30,
+              "&:hover": {
+                bgcolor: "#ededed",
+              },
+            }}
+            onClick={() => setCommentData(data.commentList)}
+          >
+            <CommentOutlined
+              sx={{
+                width: 20,
+                height: 20,
+                color: "#000",
+              }}
+            />
+          </IconButton>
+
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
-            5
+            {data.commentList.length}
           </Typography>
         </Box>
       </Box>

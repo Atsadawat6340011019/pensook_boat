@@ -1,18 +1,39 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
+import { handleGetFeed } from "../services/getDataServices";
 
-export const Feed = () => {
+export const Feed = ({ setCommentData, setKeepPostData }) => {
+  const [feedData, setFeedData] = useState([]);
+
+  useEffect(() => {
+    const fectFeedData = async () => {
+      try {
+        const response = await handleGetFeed();
+        setFeedData(response.data.response);
+        setKeepPostData(response.data.response);
+        setCommentData(response.data.response[0].commentList);
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาด :", error);
+      }
+    };
+
+    fectFeedData();
+  }, [setCommentData, setKeepPostData]);
+
   return (
     <Box flex={3}>
       <PostStatus />
       <Box sx={{ mt: 1, height: 750, overflow: "auto" }}>
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {feedData?.map((item, index) => (
+          <PostCard
+            key={index}
+            index={index}
+            data={item}
+            setCommentData={setCommentData}
+          />
+        ))}
       </Box>
     </Box>
   );

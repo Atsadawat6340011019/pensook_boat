@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { KeepPostCard } from "./Sidebar/components/KeepPostCard";
 
-export const Sidebar = () => {
+export const Sidebar = ({ keepPostData }) => {
   return (
     <Box flex={1.5} sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}>
       <Box
@@ -42,14 +42,9 @@ export const Sidebar = () => {
           โพสต์ที่คุณอาจสนใจ
         </Typography>
         <Box sx={{ px: 2, overflow: "auto", height: 485 }}>
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
-          <KeepPostCard />
+          {keepPostData?.map((item, index) => (
+            <KeepPostCard key={index} data={item} />
+          ))}
         </Box>
       </Box>
     </Box>

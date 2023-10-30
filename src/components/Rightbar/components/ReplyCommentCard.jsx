@@ -1,16 +1,19 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
 import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import { ReplyCommentCardSecond } from "./ReplyCommentCardSecond";
-export const ReplyCommentCard = () => {
+import parse from "html-react-parser";
+import { formatTimestamp } from "../../../utils/functions";
+
+export const ReplyCommentCard = ({ data }) => {
   const [replyCommentToggle, setReplyCommentToggle] = useState(false);
 
   return (
-    <Box>
+    <Box mb={1}>
       <Box sx={{ display: "flex" }}>
         <img
-          src={LogoPensook}
+          src={data.isAnonymous ? LogoPensook : data.displayImagePath}
           width={40}
           height={40}
           style={{ borderRadius: "50%" }}
@@ -18,18 +21,18 @@ export const ReplyCommentCard = () => {
         />
         <Box sx={{ ml: 2 }}>
           <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
-            Jeremy Caldwell
+            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}
           >
-            3 ตุลาคม 2566 , 09:13 น.
+            {formatTimestamp(data.createTime)}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ mt: 2, pl: 7 }}>
         <Typography sx={{ fontWeight: "400", fontSize: 16 }}>
-          ขอบคุณสำหรับคำตอบ
+          {parse(data.content)}
         </Typography>
       </Box>
       <Box
@@ -53,7 +56,7 @@ export const ReplyCommentCard = () => {
             },
           }}
         >
-          135 Up Vote
+          {data.upVote} Up Vote
         </Button>
         <Box sx={{ display: "flex", alignItems: "center", height: 30 }}>
           <IconButton
@@ -75,16 +78,20 @@ export const ReplyCommentCard = () => {
             />
           </IconButton>
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
-            5
+            {data.commentList.length}
           </Typography>
         </Box>
       </Box>
-      {replyCommentToggle && (
-        <Box sx={{ pl: 8 }}>
-          <ReplyCommentCardSecond />
-          <ReplyCommentCardSecond />
-        </Box>
-      )}
+      <Divider />
+      {replyCommentToggle &&
+        data?.commentList &&
+        data.commentList.length > 0 && (
+          <Box sx={{ pl: 8, mt: 1 }}>
+            {data?.commentList.map((item, index) => (
+              <ReplyCommentCardSecond key={index} data={item} />
+            ))}
+          </Box>
+        )}
     </Box>
   );
 };
