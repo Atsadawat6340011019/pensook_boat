@@ -17,7 +17,18 @@ export const Rightbar = ({ commentData }) => {
         >
           ความคิดเห็น
         </Typography>
-        <Box sx={{ px: 2, height: 740, overflow: "auto" }}>
+        <Box
+          sx={{
+            px: 2,
+            height: 740,
+            overflow: "auto",
+            ...(commentData?.length === 0 && {
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }),
+          }}
+        >
           {commentData?.length > 0 ? (
             commentData?.map((item, index) => (
               <CommentCard key={index} data={item} />

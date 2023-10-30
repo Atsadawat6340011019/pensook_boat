@@ -1,0 +1,50 @@
+import { Box } from "@mui/material";
+import React from "react";
+
+export const ImageSlideShow = ({
+  imageData,
+  imageSelectData,
+  setImageSelect,
+}) => {
+  const handleSelectImage = (image) => {
+    if (image === imageSelectData) {
+      setImageSelect();
+    } else {
+      setImageSelect(image);
+    }
+  };
+
+  return (
+    <Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {imageData.map((item, index) => (
+          <img
+            key={index}
+            src={item}
+            width={100}
+            height={100}
+            style={{
+              objectFit: "cover",
+              cursor: "pointer",
+              paddingRight: "3px",
+              paddingLeft: "3px",
+            }}
+            alt="imageContent"
+            onClick={() => handleSelectImage(item)}
+          />
+        ))}
+      </Box>
+      {imageSelectData && (
+        <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={imageSelectData}
+            width={500}
+            height={530}
+            style={{ objectFit: "cover" }}
+            alt="imageSelect"
+          />
+        </Box>
+      )}
+    </Box>
+  );
+};

@@ -1,4 +1,4 @@
-export const formatTimestamp = (timestamp) => {
+export const formatTimestampAllLang = (timestamp) => {
   const date = new Date(timestamp);
   const day = date.getDate();
   const month = date.toLocaleString("default", { month: "long" });
@@ -11,4 +11,20 @@ export const formatTimestamp = (timestamp) => {
   const formattedTime = `${hours}:${minutes} ${ampm}`;
 
   return `${formattedDate} ${formattedTime}`;
+};
+
+export const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const thaiOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = date.toLocaleDateString("th-TH", thaiOptions);
+  const formattedTime = date.toLocaleTimeString("th-TH", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return `${formattedDate}, ${formattedTime} น.`;
 };

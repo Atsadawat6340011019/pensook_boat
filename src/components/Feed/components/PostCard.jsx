@@ -5,9 +5,12 @@ import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
+import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 
 export const PostCard = ({ data, setCommentData }) => {
   const [showMore, setShowMore] = useState(false);
+  const [imageSelect, setImageSelect] = useState();
+
   return (
     <Box
       bgcolor="#fff"
@@ -55,7 +58,19 @@ export const PostCard = ({ data, setCommentData }) => {
             maxWidth: 600,
           }}
         >
-          <ImageShow imageData={data.attachImageList} />
+          {!imageSelect && (
+            <ImageShow
+              imageData={data.attachImageList}
+              setImageSelect={setImageSelect}
+            />
+          )}
+          {imageSelect && (
+            <ImageSlideShow
+              imageData={data.attachImageList}
+              imageSelectData={imageSelect}
+              setImageSelect={setImageSelect}
+            />
+          )}
         </Box>
       </Box>
 
