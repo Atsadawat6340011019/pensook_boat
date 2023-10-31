@@ -7,7 +7,13 @@ import { formatTimestamp } from "../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 
-export const PostCard = ({ data, setCommentData }) => {
+export const PostCard = ({
+  data,
+  setCommentData,
+  index,
+  selectIndexComment,
+  setSelectIndexComment,
+}) => {
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
 
@@ -16,11 +22,27 @@ export const PostCard = ({ data, setCommentData }) => {
       bgcolor="#fff"
       sx={{
         px: 2,
-        py: 1,
+        py: 1.5,
         borderRadius: "8px",
         mb: 1,
+        position: "relative",
       }}
     >
+      {selectIndexComment === index && (
+        <Box
+          sx={{
+            position: "absolute",
+            bgcolor: "#007DFC",
+            height: 7,
+            width: "100%",
+            top: 0,
+            ml: -2,
+            borderTopLeftRadius: "8px",
+            borderTopRightRadius: "8px",
+          }}
+        ></Box>
+      )}
+
       <Box sx={{ display: "flex" }}>
         <img
           src={data.isAnonymous ? LogoPensook : data.displayImagePath}
@@ -98,7 +120,10 @@ export const PostCard = ({ data, setCommentData }) => {
                 bgcolor: "#ededed",
               },
             }}
-            onClick={() => setCommentData(data.commentList)}
+            onClick={() => {
+              setCommentData(data.commentList);
+              setSelectIndexComment(index);
+            }}
           >
             <CommentOutlined
               sx={{

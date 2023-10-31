@@ -6,6 +6,7 @@ import { handleGetFeed } from "../services/getDataServices";
 
 export const Feed = ({ setCommentData, setKeepPostData }) => {
   const [feedData, setFeedData] = useState([]);
+  const [selectIndexComment, setSelectIndexComment] = useState(0);
 
   useEffect(() => {
     const fectFeedData = async () => {
@@ -32,6 +33,8 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
             index={index}
             data={item}
             setCommentData={setCommentData}
+            selectIndexComment={selectIndexComment}
+            setSelectIndexComment={setSelectIndexComment}
           />
         ))}
       </Box>
