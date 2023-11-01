@@ -1,8 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { KeepPostCard } from "./Sidebar/components/KeepPostCard";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = ({ keepPostData }) => {
+  const navigate = useNavigate();
+
   return (
     <Box flex={1.5} sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}>
       <Box
@@ -31,6 +34,7 @@ export const Sidebar = ({ keepPostData }) => {
             borderRadius: "8px",
             mt: 2,
           }}
+          onClick={() => navigate("/login")}
         >
           เข้าสู่ระบบ
         </Button>
