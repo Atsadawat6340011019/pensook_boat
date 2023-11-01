@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
 import { useSelector } from "react-redux";
 
 export const PostStatus = () => {
@@ -18,7 +17,7 @@ export const PostStatus = () => {
       }}
     >
       <img
-        src={userData?.photoURL}
+        src={userData?.profileImagePath}
         width={40}
         height={40}
         style={{ borderRadius: "50%" }}

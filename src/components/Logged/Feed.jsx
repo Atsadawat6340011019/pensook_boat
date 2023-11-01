@@ -2,25 +2,35 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
-import { handleGetFeed } from "../../services/getDataServices";
+import { handleGetFeed } from "../../services/feedServices";
+import { useDispatch } from "react-redux";
+import { AddUserData } from "../../store/userSlice";
 
 export const Feed = ({ setCommentData }) => {
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fectFeedData = async () => {
+    const token = localStorage.getItem("token");
+    const fectFeedData = async (token) => {
       try {
-        const response = await handleGetFeed();
+        const response = await handleGetFeed(token);
+        dispatch(AddUserData(response.data.session));
         setFeedData(response.data.response);
         setCommentData(response.data.response[0].commentList);
       } catch (error) {
-        console.error("เกิดข้อผิดพลาด :", error);
+        const { response } = error;
+        console.error("เกิดข้อผิดพลาด :", response?.data.error);
+        if (response?.data.error === "Token not found") {
+          localStorage.removeItem("token");
+          navigator("/");
+        }
       }
     };
 
-    fectFeedData();
-  }, [setCommentData]);
+    fectFeedData(token);
+  }, [setCommentData, dispatch]);
 
   return (
     <Box flex={3}>

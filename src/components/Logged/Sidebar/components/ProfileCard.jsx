@@ -57,7 +57,7 @@ export const ProfileCard = () => {
             }}
           >
             <img
-              src={userData?.photoURL}
+              src={userData?.profileImagePath}
               style={{
                 width: 83,
                 height: 83,
@@ -73,7 +73,7 @@ export const ProfileCard = () => {
         align="center"
         sx={{ fontWeight: "500", fontSize: 25, mt: 2, mb: 4, height: 20 }}
       >
-        {userData.displayName}
+        {userData?.firstName} {userData?.lastName}
       </Typography>
       <MenuList sx={{ mt: 1.5 }}>
         <MenuItem onClick={() => navigate("/profile")}>

@@ -136,7 +136,10 @@ export const Navbar = () => {
         </Icons>
 
         <UserBox>
-          <Avatar src={userData?.photoURL} sx={{ width: 40, height: 40 }} />
+          <Avatar
+            src={userData?.profileImagePath}
+            sx={{ width: 40, height: 40 }}
+          />
         </UserBox>
       </StyledToolbar>
 
@@ -172,7 +175,7 @@ export const Navbar = () => {
       >
         <Box px={4} py={2}>
           <Typography sx={{ fontWeight: "600", fontSize: 18 }}>
-            {userData?.displayName}
+            {userData?.firstName} {userData?.lastName}
           </Typography>
           <Typography sx={{ fontSize: 12, color: "#808080" }}>
             {userData.email}

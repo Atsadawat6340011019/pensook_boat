@@ -40,7 +40,7 @@ export const Profile = () => {
               ภาพโปรไฟล์
             </Typography>
             <img
-              src={userData?.photoURL}
+              src={userData?.profileImagePath}
               style={{
                 width: 150,
                 height: 150,
@@ -60,7 +60,7 @@ export const Profile = () => {
               align="center"
               sx={{ fontWeight: "500", fontSize: 25, py: 10 }}
             >
-              {userData.displayName}
+              {userData?.firstName} {userData?.lastName}
             </Typography>
             <img
               src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
@@ -107,7 +107,7 @@ export const Profile = () => {
               align="center"
               sx={{ fontWeight: "500", fontSize: 25, py: 10 }}
             >
-              {userData.displayName}
+              {userData?.firstName} {userData?.lastName}
             </Typography>
             <img
               src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { Feed } from "./components/Feed";
 import { Rightbar } from "./components/Rightbar";
 import { Box, Stack } from "@mui/material";
 import { Navbar } from "./components/Navbar";
-import { auth } from "./services/firebase";
-import { useDispatch } from "react-redux";
-import { AddUserData } from "./store/userSlice";
 import { RootLayout } from "./layouts/RootLayout";
 import { FeedAndCommentsPage } from "./pages/FeedAndCommentsPage";
 import { SettingPage } from "./pages/SettingPage";
@@ -36,26 +33,6 @@ function App() {
   const [commentData, setCommentData] = useState();
   const [keepPostData, setKeepPostData] = useState();
   //const userData = useSelector((state) => state.user.userData);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const idToken = await user.getIdTokenResult();
-        console.log("userData:", user);
-        dispatch(
-          AddUserData({
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            token: idToken.token,
-          })
-        );
-      }
-    });
-
-    return () => unsubscribe();
-  }, [dispatch]);
 
   return (
     <Box bgcolor="#F1F1F1" sx={{ height: "100vh" }}>
