@@ -62,7 +62,8 @@ export const Login = () => {
             const loginRespone = await handleLogin(user.email, idToken.token);
             console.log("เข้าสู่ระบบ", loginRespone);
             if (loginRespone.status === "success") {
-              localStorage.setItem("token", JSON.stringify(idToken.token));
+              const googleToken = idToken.token;
+              localStorage.setItem("token", JSON.stringify(googleToken));
               navigate("/feed");
             }
           }
@@ -70,7 +71,8 @@ export const Login = () => {
           const loginRespone = await handleLogin(user.email, idToken.token);
           console.log(loginRespone);
           if (loginRespone.status === "success") {
-            localStorage.setItem("token", JSON.stringify(idToken.token));
+            const googleToken = idToken.token;
+            localStorage.setItem("token", JSON.stringify(googleToken));
             navigate("/feed");
           }
         }
@@ -135,7 +137,7 @@ export const Login = () => {
           >
             <Checkbox checked={checked} onChange={handleChange} />
             <Typography sx={{ color: "#000" }}>
-              ยอบรับ
+              ยอมรับ
               <Typography
                 sx={{
                   color: "#007DFC",
