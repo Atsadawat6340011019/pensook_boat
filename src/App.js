@@ -55,7 +55,9 @@ function App() {
             }
           />
         </Route>
-        <Route path="login" element={<LoginPage />} />
+        <Route element={<UnloggedRoute />}>
+          <Route path="login" element={<LoginPage />} />
+        </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="" element={<RootLayout />}>
             <Route
