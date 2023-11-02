@@ -26,7 +26,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
   return (
     <Box flex={3}>
       <PostStatus />
-      <Box sx={{ mt: 1, height: 750, overflow: "auto" }}>
+      <Box sx={{ mt: 1, height: 760, overflow: "auto" }}>
         {feedData?.map((item, index) => (
           <PostCard
             key={index}

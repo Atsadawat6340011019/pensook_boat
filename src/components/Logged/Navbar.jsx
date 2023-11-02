@@ -128,7 +128,7 @@ export const Navbar = () => {
             </Badge>
           </IconButton>
           <Avatar
-            src={userData?.photoURL}
+            src={userData?.profileImagePath}
             alt="userImage"
             sx={{ width: 40, height: 40 }}
             onClick={handleClick}

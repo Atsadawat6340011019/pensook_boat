@@ -8,7 +8,12 @@ export const RootLayout = () => {
   return (
     <>
       <Navbar />
-      <Stack direction="row" spacing={1.8} justifyContent={"space-between"}>
+      <Stack
+        direction="row"
+        spacing={1.8}
+        justifyContent={"space-between"}
+        sx={{ bgcolor: "#F1F1F1" }}
+      >
         <Sidebar />
         <Outlet />
       </Stack>

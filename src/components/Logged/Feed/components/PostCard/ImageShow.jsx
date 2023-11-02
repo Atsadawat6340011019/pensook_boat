@@ -27,6 +27,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[0]}
+              style={{ objectFit: "cover" }}
               width={300}
               height={300}
               alt="contentImage"
@@ -40,6 +41,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[1]}
+              style={{ objectFit: "cover" }}
               width={300}
               height={300}
               alt="contentImage"
@@ -74,6 +76,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[1]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -87,6 +90,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[2]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -105,6 +109,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[0]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -119,6 +124,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[1]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -132,6 +138,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[2]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -145,6 +152,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[3]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -163,6 +171,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[0]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -177,6 +186,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[1]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -190,6 +200,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[2]}
               width={300}
               height={300}
+              style={{ objectFit: "cover" }}
               alt="contentImage"
             />
           </Grid>
@@ -203,7 +214,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
               src={imageData[3]}
               width={300}
               height={300}
-              style={{ opacity: "70%" }}
+              style={{ opacity: "70%", objectFit: "cover" }}
               alt="contentImage"
             />
             <Typography

@@ -12,7 +12,7 @@ export const CommentCard = ({ data }) => {
     <Box sx={{ mb: 1 }}>
       <Box sx={{ display: "flex" }}>
         <img
-          src={data.isAnonymous ? LogoPensook : data.displayImagePath}
+          src={data.isAnonymous ? LogoPensook : data.userImagePath}
           width={40}
           height={40}
           style={{ borderRadius: "50%" }}

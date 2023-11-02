@@ -51,22 +51,63 @@ export const Login = () => {
         console.log("isNewUser", additionalUserInfo.isNewUser);
         if (additionalUserInfo.isNewUser) {
           console.log("isNewUser", additionalUserInfo.isNewUser);
-          const createUser = await handleCreateUser(
-            user.email,
-            firstName,
-            lastName,
-            user.photoURL
-          );
-          console.log("สร้างโปรไฟล์", createUser);
-          if (createUser.status === "success") {
-            const loginRespone = await handleLogin(user.email, idToken.token);
-            console.log("เข้าสู่ระบบ", loginRespone);
-            if (loginRespone.status === "success") {
-              const googleToken = idToken.token;
-              localStorage.setItem("token", JSON.stringify(googleToken));
-              navigate("/feed");
+          const googleImage = user.photoURL;
+          const coverttobase64 = async (image) => {
+            try {
+              const response = await fetch(image);
+              if (!response.ok) {
+                throw new Error(
+                  `Failed to fetch the image. Status: ${response.status}`
+                );
+              }
+
+              const blob = await response.blob();
+
+              return new Promise((resolve) => {
+                const reader = new FileReader();
+
+                reader.onloadend = () => {
+                  resolve(reader.result);
+                };
+
+                reader.readAsDataURL(blob);
+              });
+            } catch (error) {
+              throw new Error(`An error occurred: ${error.message}`);
             }
-          }
+          };
+
+          coverttobase64(googleImage)
+            .then(async (base64) => {
+              try {
+                const createUser = await handleCreateUser(
+                  user.email,
+                  firstName,
+                  lastName,
+                  base64
+                );
+                console.log("สร้างโปรไฟล์", createUser);
+
+                if (createUser.status === "success") {
+                  const loginRespone = await handleLogin(
+                    user.email,
+                    idToken.token
+                  );
+                  console.log("เข้าสู่ระบบ", loginRespone);
+
+                  if (loginRespone.status === "success") {
+                    const googleToken = idToken.token;
+                    localStorage.setItem("token", JSON.stringify(googleToken));
+                    navigate("/feed");
+                  }
+                }
+              } catch (error) {
+                console.error(error);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         } else {
           const loginRespone = await handleLogin(user.email, idToken.token);
           console.log(loginRespone);
@@ -120,7 +161,14 @@ export const Login = () => {
           <Button
             fullWidth
             variant="outlined"
-            sx={{ mt: 3, mb: 2, maxWidth: 466, borderRadius: "8px" }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              maxWidth: 466,
+              borderRadius: "8px",
+              textTransform: "none",
+              fontWeight: "600",
+            }}
             startIcon={<FcGoogle />}
             disabled={!checked}
             onClick={handleLoginByGoogle}

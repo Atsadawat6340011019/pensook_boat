@@ -21,7 +21,12 @@ const HomePage = ({
 }) => (
   <>
     <Navbar />
-    <Stack direction="row" spacing={1.8} justifyContent={"space-between"}>
+    <Stack
+      direction="row"
+      spacing={1.8}
+      justifyContent={"space-between"}
+      sx={{ bgcolor: "#F1F1F1" }}
+    >
       <Sidebar keepPostData={keepPostData} />
       <Feed setCommentData={setCommentData} setKeepPostData={setKeepPostData} />
       <Rightbar commentData={commentData} />

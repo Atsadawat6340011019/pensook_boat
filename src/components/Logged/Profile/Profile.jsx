@@ -93,7 +93,7 @@ export const Profile = () => {
             </Button>
 
             <img
-              src={userData?.photoURL}
+              src={userData?.profileImagePath}
               style={{
                 width: 150,
                 height: 150,

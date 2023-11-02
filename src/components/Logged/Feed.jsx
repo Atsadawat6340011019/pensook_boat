@@ -10,6 +10,7 @@ export const Feed = ({ setCommentData }) => {
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
   const dispatch = useDispatch();
+  console.log(feedData);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
