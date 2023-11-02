@@ -5,11 +5,13 @@ import { PostCard } from "./Feed/components/PostCard";
 import { handleGetFeed } from "../../services/feedServices";
 import { useDispatch } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export const Feed = ({ setCommentData }) => {
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log(feedData);
 
   useEffect(() => {
@@ -25,13 +27,13 @@ export const Feed = ({ setCommentData }) => {
         console.error("เกิดข้อผิดพลาด :", response?.data.error);
         if (response?.data.error === "Token not found") {
           localStorage.removeItem("token");
-          navigator("/");
+          navigate("/");
         }
       }
     };
 
     fectFeedData(token);
-  }, [setCommentData, dispatch]);
+  }, [setCommentData, dispatch, navigate]);
 
   return (
     <Box flex={3}>
