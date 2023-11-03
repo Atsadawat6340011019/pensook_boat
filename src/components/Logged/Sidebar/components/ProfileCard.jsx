@@ -24,7 +24,11 @@ export const ProfileCard = () => {
       }}
     >
       <img
-        src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+        src={
+          userData.profileCover
+            ? userData.profileCoverPath
+            : "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+        }
         style={{
           width: "100%",
           height: 120,

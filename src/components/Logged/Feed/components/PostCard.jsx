@@ -47,7 +47,7 @@ export const PostCard = ({
           src={data.isAnonymous ? LogoPensook : data.userImagePath}
           width={40}
           height={40}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "50%", objectFit: "cover" }}
           alt="avatar"
           referrerPolicy="no-referrer"
         />

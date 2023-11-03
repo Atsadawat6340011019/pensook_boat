@@ -130,7 +130,14 @@ export const Navbar = () => {
           <Avatar
             src={userData?.profileImagePath}
             alt="userImage"
-            sx={{ width: 40, height: 40 }}
+            sx={{
+              width: 40,
+              height: 40,
+              cursor: "pointer",
+              "&:hover": {
+                opacity: "80%",
+              },
+            }}
             onClick={handleClick}
           />
         </Icons>
@@ -139,6 +146,7 @@ export const Navbar = () => {
           <Avatar
             src={userData?.profileImagePath}
             sx={{ width: 40, height: 40 }}
+            onClick={handleClick}
           />
         </UserBox>
       </StyledToolbar>

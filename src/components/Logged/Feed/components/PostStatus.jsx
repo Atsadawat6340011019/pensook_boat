@@ -20,7 +20,7 @@ export const PostStatus = () => {
         src={userData?.profileImagePath}
         width={40}
         height={40}
-        style={{ borderRadius: "50%" }}
+        style={{ borderRadius: "50%", objectFit: "cover" }}
         alt="avatar"
       />
       <Box
