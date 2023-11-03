@@ -1,12 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { forwardRef } from "react";
 import { useSelector } from "react-redux";
 
-export const PostStatus = () => {
+export const PostStatus = forwardRef(({ setRichTextModalToggle, ModalRef }) => {
   const userData = useSelector((state) => state.user.userData);
 
   return (
     <Box
+      ref={ModalRef}
       bgcolor="#fff"
       sx={{
         display: "flex",
@@ -14,7 +15,9 @@ export const PostStatus = () => {
         height: 70,
         px: 2,
         borderRadius: "8px",
+        cursor: "pointer",
       }}
+      onClick={() => setRichTextModalToggle(true)}
     >
       <img
         src={userData?.profileImagePath}
@@ -35,8 +38,10 @@ export const PostStatus = () => {
           px: 2,
         }}
       >
-        <Typography>ช่วงนี้คุณเป็นยังไงบ้าง...</Typography>
+        <Typography sx={{ userSelect: "none" }}>
+          ช่วงนี้คุณเป็นยังไงบ้าง...
+        </Typography>
       </Box>
     </Box>
   );
-};
+});

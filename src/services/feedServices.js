@@ -12,3 +12,26 @@ export const handleGetFeed = (token) => {
     },
   });
 };
+
+export const handleCreatePost = async (token, AllContent) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/createPost`,
+      {
+        isAnonymous: AllContent.isAnonymous,
+        label: AllContent.label,
+        content: AllContent.content,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

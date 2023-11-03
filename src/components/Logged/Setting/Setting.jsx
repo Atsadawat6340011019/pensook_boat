@@ -1,4 +1,4 @@
-import { CheckCircleOutline, ErrorOutline } from "@mui/icons-material";
+import { ErrorOutline } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,34 +12,23 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  handleGetMyProfile,
-  handleUpdateProfile,
-} from "../../../services/profileServices";
+import { handleGetMyProfile } from "../../../services/profileServices";
 import { AddUserData } from "../../../store/userSlice";
 import { ProfileCard } from "./components/ProfileCard";
 import { ModalDeleteUser } from "./components/ModalDeleteUser";
 
 export const Setting = () => {
-  const userData = useSelector((state) => state.user.userData);
   const token = localStorage.getItem("token");
   const ModalRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [stateEdit, setStateEdit] = useState(false);
-  const [errorNoti, setErrorNoti] = useState();
-  const [dialogToggle, setDialogToggle] = useState(false);
+
   const [dialogToggleWarn, setDialogToggleWarn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [imageProflieFile, setImageProflieFile] = useState();
-  const [imageProflieCoverFile, setImageProflieCoverFile] = useState();
-  const [fileProfile, setFileProfile] = React.useState();
-  const [fileProfileCover, setFileProfileCover] = React.useState();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const fectProfileData = async (token) => {
       try {
         const response = await handleGetMyProfile(token);
@@ -55,74 +44,7 @@ export const Setting = () => {
     };
 
     fectProfileData(token);
-  }, [dispatch, navigate, stateEdit]);
-
-  const convertToBase64ForProfile = (selectedFile) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedFile);
-    reader.onload = () => {
-      setImageProflieFile(reader.result);
-    };
-  };
-
-  const convertToBase64ForProfileCover = (selectedFile) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedFile);
-    reader.onload = () => {
-      setImageProflieCoverFile(reader.result);
-    };
-  };
-
-  const handleChangeFileProfile = (e) => {
-    if (e.target.files[0]) {
-      setFileProfile(URL.createObjectURL(e.target.files[0]));
-      convertToBase64ForProfile(e.target.files[0]);
-    } else {
-      setFileProfile(null);
-    }
-  };
-
-  const handleChangeFileProfileCover = (e) => {
-    if (e.target.files[0]) {
-      setFileProfileCover(URL.createObjectURL(e.target.files[0]));
-      convertToBase64ForProfileCover(e.target.files[0]);
-    } else {
-      setFileProfileCover(null);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const dataUpdate = {
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      profileImage: imageProflieFile,
-      profileCover: imageProflieCoverFile,
-    };
-
-    console.log(dataUpdate);
-    setErrorNoti("");
-    handleUpdateProfileFinal(token, dataUpdate);
-  };
-
-  const handleUpdateProfileFinal = async (token, dataUpdate) => {
-    try {
-      const UpdateData = await handleUpdateProfile(token, dataUpdate);
-      console.log(UpdateData);
-      if (UpdateData.response.status === "success") {
-        setDialogToggle(true);
-        setTimeout(() => {
-          setDialogToggle(false);
-          setStateEdit(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาด:", error.error);
-      setErrorNoti("กำลังปรับปรุงระบบ");
-    }
-  };
+  }, [dispatch, navigate, token]);
 
   return (
     <Box
@@ -141,37 +63,6 @@ export const Setting = () => {
       <Divider sx={{ pt: 3 }} />
       <ProfileCard setDialogToggleWarn={setDialogToggleWarn} />
 
-      <Dialog
-        open={dialogToggle}
-        sx={{
-          "& .MuiPaper-root": { borderRadius: "8px" },
-        }}
-      >
-        <DialogContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            py: 5,
-            px: 8,
-          }}
-        >
-          <CheckCircleOutline
-            sx={{
-              width: 63,
-              height: 63,
-              color: "#75f24c",
-            }}
-          />
-          <DialogContentText
-            id="alert-dialog-description"
-            align="center"
-            sx={{ fontSize: 24 }}
-          >
-            บันทึกข้อมูลสำเร็จ
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
       <Dialog
         open={dialogToggleWarn}
         sx={{

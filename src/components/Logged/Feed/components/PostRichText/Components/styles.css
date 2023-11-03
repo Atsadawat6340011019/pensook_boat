@@ -1,0 +1,17 @@
+.contentEditable {
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+}
+
+.contentEditable:focus {
+  outline: none;
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  font-size: 20px;
+  color: #808080;
+  user-select: none;
+}
