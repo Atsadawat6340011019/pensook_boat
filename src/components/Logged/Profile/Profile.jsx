@@ -321,7 +321,11 @@ export const Profile = () => {
                     fontSize: 16,
                   }}
                   style={{ color: "#ffff" }}
-                  onClick={() => setStateEdit(false)}
+                  onClick={() => {
+                    setStateEdit(false);
+                    setFileProfile(null);
+                    setFileProfileCover(null);
+                  }}
                 >
                   ยกเลิก
                 </Button>
