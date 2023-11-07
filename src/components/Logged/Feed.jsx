@@ -46,7 +46,15 @@ export const Feed = ({ setCommentData }) => {
         ModalRef={ModalRef}
         setRichTextModalToggle={setRichTextModalToggle}
       />
-      <Box sx={{ mt: 1, maxWidth: 890, height: 750, overflow: "auto" }}>
+      <Box
+        sx={{
+          mt: 1,
+          maxWidth: 890,
+          height: 750,
+          overflow: "auto",
+          overflowX: "hidden",
+        }}
+      >
         {feedData?.map((item, index) => (
           <PostCard
             key={index}

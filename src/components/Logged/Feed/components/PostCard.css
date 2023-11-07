@@ -10,3 +10,7 @@
 .test span {
   word-wrap: break-word;
 }
+
+.test p {
+  word-wrap: break-word;
+}
