@@ -41,7 +41,7 @@ export const Feed = ({ setCommentData }) => {
   }, [setCommentData, dispatch, navigate, reflesh]);
 
   return (
-    <Box flex={3}>
+    <Box flex={3} maxWidth={750}>
       <PostStatus
         ModalRef={ModalRef}
         setRichTextModalToggle={setRichTextModalToggle}
@@ -49,7 +49,7 @@ export const Feed = ({ setCommentData }) => {
       <Box
         sx={{
           mt: 1,
-          maxWidth: 890,
+          maxWidth: 750,
           height: 750,
           overflow: "auto",
           overflowX: "hidden",
