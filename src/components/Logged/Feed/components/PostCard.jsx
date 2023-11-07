@@ -63,7 +63,7 @@ export const PostCard = ({
           </Typography>
         </Box>
       </Box>
-      <Box maxWidth={600}>
+      <Box maxWidth={850}>
         <Typography
           sx={{ fontWeight: "600", fontSize: 18, mt: 2 }}
           style={{ wordWrap: "break-word" }}
