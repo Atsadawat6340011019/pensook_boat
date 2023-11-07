@@ -195,7 +195,7 @@ export const PostRichTextModal = forwardRef(
     return (
       <Box sx={style} ref={ModalRef}>
         {loading && (
-          <Box sx={{ position: "absolute", top: "50%" }}>
+          <Box sx={{ position: "absolute", top: "50%", zIndex: 10 }}>
             <Oval
               height={80}
               width={80}
