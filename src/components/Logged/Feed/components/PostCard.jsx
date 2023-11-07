@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { formatTimestamp } from "../../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
+import "./PostCard.css";
 
 export const PostCard = ({
   data,
@@ -65,7 +66,7 @@ export const PostCard = ({
       <Typography sx={{ fontWeight: "600", fontSize: 18, mt: 2 }}>
         {data.label}
       </Typography>
-      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }}>
+      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="test">
         {showMore ? parse(data.content) : parse(data.content.substring(0, 200))}
         <span
           style={{ cursor: "pointer", color: "#007DFC" }}
@@ -135,7 +136,7 @@ export const PostCard = ({
           </IconButton>
 
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
-            {data.commentList.length}
+            {data?.commentList?.length}
           </Typography>
         </Box>
       </Box>

@@ -80,23 +80,107 @@ export const PostRichTextModal = forwardRef(({ ModalRef, onClose }) => {
   const [content, setContent] = useState();
   const [labelText, setLabelText] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [errorNoti, setErrorNoti] = useState("");
 
   console.log(content);
 
+  function replaceParagraphsWithCenterAlignment(htmlText) {
+    return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
+  }
+
+  const extractImgSrc = (htmlString) => {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(htmlString, "text/html");
+
+    var imgElements = doc.querySelectorAll("img");
+
+    var imgSrcArray = [];
+    imgElements.forEach(function (imgElement) {
+      var src = imgElement.getAttribute("src");
+      if (src) {
+        imgSrcArray.push(src);
+      }
+    });
+
+    return imgSrcArray;
+  };
+
+  const filterConsecutiveEmptyParagraphs = (htmlString, maxConsecutive) => {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(htmlString, "text/html");
+
+    var pElements = doc.querySelectorAll("p");
+    var consecutiveEmptyCount = 0;
+
+    pElements.forEach(function (pElement) {
+      if (
+        pElement.children.length === 1 &&
+        pElement.children[0].tagName.toLowerCase() === "br"
+      ) {
+        consecutiveEmptyCount++;
+
+        if (consecutiveEmptyCount > maxConsecutive) {
+          pElement.remove();
+        }
+      } else {
+        consecutiveEmptyCount = 0;
+      }
+    });
+
+    var updatedHTML = doc.documentElement.innerHTML;
+    return updatedHTML;
+  };
+
+  const addHttpsToHref = (htmlText) => {
+    return htmlText.replace(/href="www\./g, 'href="https://www.');
+  };
+
+  const addTargetBlankToAllLinks = (htmlText) => {
+    return htmlText.replace(/<a/g, '<a target="_blank"');
+  };
+
   const handleSubmit = async () => {
+    const cutBrContent = filterConsecutiveEmptyParagraphs(content, 1);
+    const linkContent = addHttpsToHref(cutBrContent);
+    const linkTargetContent = addTargetBlankToAllLinks(linkContent);
+
     const AllContent = {
       isAnonymous: isAnonymous,
       label: labelText,
-      content: content,
+      content: replaceParagraphsWithCenterAlignment(linkTargetContent),
+      attachImageArr: extractImgSrc(content),
     };
     console.log(AllContent);
-    try {
-      const postData = await handleCreatePost(token, AllContent);
-      console.log(postData);
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาด:", error.error);
+
+    if (
+      AllContent?.label &&
+      !(
+        AllContent.content ===
+        `<head></head><body><p style="text-align: center;"><br></p></body>`
+      )
+    ) {
+      try {
+        const postData = await handleCreatePost(token, AllContent);
+        console.log(postData);
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาด:", error.error);
+      }
+    } else if (!AllContent.label) {
+      setErrorNoti("กรุณาใส่หัวข้อ");
+      setTimeout(() => {
+        setErrorNoti("");
+      }, 2000);
+    } else if (
+      AllContent.content ===
+      `<head></head><body><p style="text-align: center;"><br></p></body>`
+    ) {
+      setErrorNoti("กรุณาใส่เนื้อหา");
+      setTimeout(() => {
+        setErrorNoti("");
+      }, 2000);
     }
   };
+
   return (
     <Box sx={style} ref={ModalRef}>
       <IconButton
@@ -171,15 +255,22 @@ export const PostRichTextModal = forwardRef(({ ModalRef, onClose }) => {
         }}
       >
         <InputBase
-          placeholder="หัวข้อ"
+          placeholder={errorNoti ? errorNoti : "หัวข้อ"}
           value={labelText}
           onChange={(e) => setLabelText(e.target.value)}
           sx={{ width: 750, px: 7, fontWeight: "500", fontSize: 42 }}
+          inputProps={{ maxLength: 150 }}
+          required
+          autoFocus
         />
       </Box>
-      <Box sx={{ width: 750, height: 380, mt: 3, border: "1px red solid" }}>
+      <Box sx={{ width: 750, height: 380, mt: 3 }}>
         <Box sx={{ position: "relative", px: 7, height: 380 }}>
-          <RichTextEditor setContent={setContent} />
+          <RichTextEditor
+            content={content}
+            setContent={setContent}
+            errorNoti={errorNoti}
+          />
         </Box>
       </Box>
     </Box>

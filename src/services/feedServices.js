@@ -21,6 +21,7 @@ export const handleCreatePost = async (token, AllContent) => {
         isAnonymous: AllContent.isAnonymous,
         label: AllContent.label,
         content: AllContent.content,
+        attachImageArr: AllContent.attachImageArr,
       },
       {
         headers: {
