@@ -1,5 +1,6 @@
 import { PersonOutlineOutlined, SettingsOutlined } from "@mui/icons-material";
 import {
+  Avatar,
   Box,
   ListItemIcon,
   MenuItem,
@@ -27,7 +28,7 @@ export const ProfileCard = () => {
         src={
           userData.profileCover
             ? userData.profileCoverPath
-            : "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+            : "https://images.squarespace-cdn.com/content/v1/5b7fcdb28ab722e3da4af3cc/1592215617998-RGLPH8B4W7F4T2PBIGW1/Dust+Grey.jpeg"
         }
         style={{
           width: "100%",
@@ -60,15 +61,18 @@ export const ProfileCard = () => {
               height: 83,
             }}
           >
-            <img
+            <Avatar
               src={userData?.profileImagePath}
-              style={{
+              sx={{
                 width: 83,
                 height: 83,
-                objectFit: "cover",
-                borderRadius: "50%",
+                cursor: "pointer",
+                "&:hover": {
+                  opacity: "80%",
+                },
               }}
               alt="coverImage"
+              onClick={() => navigate("/mypost")}
             />
           </Box>
         </Box>

@@ -2,13 +2,17 @@ import { Box, Modal } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
-import { handleGetFeed } from "../../services/feedServices";
+import {
+  handleGetFeed,
+  handleGetKeepPost,
+  handleGetMyPost,
+} from "../../services/feedServices";
 import { useDispatch } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PostRichTextModal } from "./Feed/components/PostRichText/PostRichTextModal";
 
-export const Feed = ({ setCommentData }) => {
+export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   const ModalRef = useRef(null);
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
@@ -16,17 +20,31 @@ export const Feed = ({ setCommentData }) => {
   const [reflesh, setReflesh] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(richTextModalToggle);
+  const location = useLocation();
+  const currentURL = location.pathname;
+
   console.log(feedData);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const fectFeedData = async (token) => {
       try {
-        const response = await handleGetFeed(token);
-        dispatch(AddUserData(response.data.session));
-        setFeedData(response.data.response);
-        setCommentData(response.data.response[0].commentList);
+        if (currentURL === "/feed") {
+          const response = await handleGetFeed(token);
+          dispatch(AddUserData(response.data.session));
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+        } else if (currentURL === "/keeppost") {
+          const response = await handleGetKeepPost(token);
+          dispatch(AddUserData(response.data.session));
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+        } else if (currentURL === "/mypost") {
+          const response = await handleGetMyPost(token);
+          dispatch(AddUserData(response.data.session));
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+        }
       } catch (error) {
         const { response } = error;
         console.error("เกิดข้อผิดพลาด :", response?.data.error);
@@ -64,6 +82,7 @@ export const Feed = ({ setCommentData }) => {
             selectIndexComment={selectIndexComment}
             setSelectIndexComment={setSelectIndexComment}
             reflesh={reflesh}
+            setReflesh={setReflesh}
           />
         ))}
       </Box>

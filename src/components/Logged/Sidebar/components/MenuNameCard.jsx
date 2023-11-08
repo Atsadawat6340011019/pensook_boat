@@ -19,7 +19,10 @@ export const MenuNameCard = () => {
         pl: 2,
       }}
     >
-      {currentURL === "/setting" || currentURL === "/profile" ? (
+      {currentURL === "/setting" ||
+      currentURL === "/profile" ||
+      currentURL === "/keeppost" ||
+      currentURL === "/mypost" ? (
         <IconButton
           sx={{ color: "#000", mr: 2 }}
           onClick={() => navigate("/feed")}
@@ -32,6 +35,8 @@ export const MenuNameCard = () => {
         {currentURL === "/feed" && "หน้าหลัก"}
         {currentURL === "/profile" && "บัญชีของคุณ"}
         {currentURL === "/setting" && "การตั้งค่า"}
+        {currentURL === "/keeppost" && "โพสต์ที่คุณ Keep"}
+        {currentURL === "/mypost" && "โพสต์ของคุณ"}
       </Typography>
     </Box>
   );

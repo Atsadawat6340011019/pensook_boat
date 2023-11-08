@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import React, { forwardRef } from "react";
 import { useSelector } from "react-redux";
 
@@ -19,11 +19,9 @@ export const PostStatus = forwardRef(({ setRichTextModalToggle, ModalRef }) => {
       }}
       onClick={() => setRichTextModalToggle(true)}
     >
-      <img
+      <Avatar
         src={userData?.profileImagePath}
-        width={40}
-        height={40}
-        style={{ borderRadius: "50%", objectFit: "cover" }}
+        sx={{ width: 40, height: 40 }}
         alt="avatar"
       />
       <Box

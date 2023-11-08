@@ -4,7 +4,7 @@ import { Navbar } from "../components/Logged/Navbar";
 import { Outlet } from "react-router-dom";
 import { Stack } from "@mui/material";
 
-export const RootLayout = () => {
+export const RootLayout = ({ refleshKeepPost }) => {
   return (
     <>
       <Navbar />
@@ -14,7 +14,7 @@ export const RootLayout = () => {
         justifyContent={"space-between"}
         sx={{ bgcolor: "#F1F1F1" }}
       >
-        <Sidebar />
+        <Sidebar refleshKeepPost={refleshKeepPost} />
         <Outlet />
       </Stack>
     </>

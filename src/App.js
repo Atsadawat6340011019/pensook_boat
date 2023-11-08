@@ -12,6 +12,8 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { UnloggedRoute } from "./routes/UnloggedRoute";
 import { LoginPage } from "./pages/LoginPage";
+import { KeepPostPage } from "./pages/KeepPostPage";
+import { MyPostPage } from "./pages/MyPostPage";
 
 const HomePage = ({
   keepPostData,
@@ -37,6 +39,7 @@ const HomePage = ({
 function App() {
   const [commentData, setCommentData] = useState();
   const [keepPostData, setKeepPostData] = useState();
+  const [refleshKeepPost, setRefleshKeepPost] = useState();
 
   //const userData = useSelector((state) => state.user.userData);
 
@@ -60,11 +63,33 @@ function App() {
           <Route path="login" element={<LoginPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="" element={<RootLayout />}>
+          <Route
+            path=""
+            element={<RootLayout refleshKeepPost={refleshKeepPost} />}
+          >
             <Route
               path="feed"
               element={
                 <FeedAndCommentsPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                  setRefleshKeepPost={setRefleshKeepPost}
+                />
+              }
+            />
+            <Route
+              path="mypost"
+              element={
+                <MyPostPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                />
+              }
+            />
+            <Route
+              path="keeppost"
+              element={
+                <KeepPostPage
                   setCommentData={setCommentData}
                   commentData={commentData}
                 />

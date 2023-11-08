@@ -4,6 +4,7 @@ import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
 import {
   ArrowDropDown,
   ArrowDropUp,
+  Bookmark,
   BookmarkBorderOutlined,
   CommentOutlined,
 } from "@mui/icons-material";
@@ -15,9 +16,14 @@ import "./PostCard.css";
 import { PiShareFat } from "react-icons/pi";
 import {
   handleDownVotePost,
+  handleKeepPost,
+  handleUnKeepPost,
   handleUnVotePost,
   handleUpVotePost,
 } from "../../../../services/feedServices";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { UpdateData } from "../../../../store/userSlice";
 
 export const PostCard = ({
   data,
@@ -26,23 +32,27 @@ export const PostCard = ({
   selectIndexComment,
   setSelectIndexComment,
   reflesh,
+  setReflesh,
 }) => {
   const token = localStorage.getItem("token");
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
   const [voteValue, setVoteValue] = useState();
-  const [upVoteCountCurrent, setUpVoteCountCurrent] = useState(0);
-  console.log(voteValue);
+  const [upVoteCountCurrent, setUpVoteCountCurrent] = useState();
+  const [keepPostValue, setKeepPostValue] = useState();
+  const [keepPostCountCurrent, setKeepPostCountCurrent] = useState(0);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const currentURL = location.pathname;
+  const resultKeep = data?.isKeep ? "t" : "f";
 
   useEffect(() => {
     if (voteValue === "Up") {
       const handleVote = async () => {
         const vote = await handleUpVotePost(token, data?.postId);
         console.log(vote);
-        if (data?.voteCurrent === "Up") {
-          setUpVoteCountCurrent(0);
-        } else {
-          setUpVoteCountCurrent(1);
+        if (vote.response.status === "success") {
+          setUpVoteCountCurrent(vote.response.result.upVote.toString());
         }
       };
       handleVote();
@@ -50,12 +60,8 @@ export const PostCard = ({
       const handleVote = async () => {
         const vote = await handleDownVotePost(token, data?.postId);
         console.log(vote);
-        if (data?.voteCurrent === "Down") {
-          setUpVoteCountCurrent(0);
-        } else if (data?.upVote > 0) {
-          setUpVoteCountCurrent(-1);
-        } else {
-          setUpVoteCountCurrent(0);
+        if (vote.response.status === "success") {
+          setUpVoteCountCurrent(vote.response.result.upVote.toString());
         }
       };
       handleVote();
@@ -63,12 +69,8 @@ export const PostCard = ({
       const handleVote = async () => {
         const vote = await handleUnVotePost(token, data?.postId);
         console.log(vote);
-        if (data?.voteCurrent === null) {
-          setUpVoteCountCurrent(0);
-        } else if (data?.upVote > 0) {
-          setUpVoteCountCurrent(-1);
-        } else {
-          setUpVoteCountCurrent(0);
+        if (vote.response.status === "success") {
+          setUpVoteCountCurrent(vote.response.result.upVote.toString());
         }
       };
       handleVote();
@@ -76,8 +78,44 @@ export const PostCard = ({
   }, [voteValue]);
 
   useEffect(() => {
+    if (keepPostValue === "t") {
+      const handleKeepPostFinal = async () => {
+        const keepPost = await handleKeepPost(token, data?.postId);
+        console.log(keepPost);
+        if (keepPost.response.status === "success") {
+          setKeepPostCountCurrent(
+            keepPost.response.result.keepCount.toString()
+          );
+          dispatch(UpdateData(Math.floor(Math.random() * 101)));
+        }
+      };
+      handleKeepPostFinal();
+    } else if (keepPostValue === "f") {
+      const handleKeepPostFinal = async () => {
+        const keepPost = await handleUnKeepPost(token, data?.postId);
+        console.log("Unkeep");
+        console.log(keepPost);
+        if (keepPost.response.status === "success") {
+          setKeepPostCountCurrent(
+            keepPost.response.result.keepCount.toString()
+          );
+          dispatch(UpdateData(Math.floor(Math.random() * 101)));
+          if (keepPost.response.result.isKeep === false) {
+            if (currentURL === "/keeppost") {
+              setReflesh(Math.floor(Math.random() * 101));
+            }
+          }
+        }
+      };
+      handleKeepPostFinal();
+    }
+  }, [keepPostValue]);
+
+  useEffect(() => {
     setVoteValue("");
     setUpVoteCountCurrent(0);
+    setKeepPostValue("");
+    setKeepPostCountCurrent(0);
   }, [reflesh]);
 
   const handleChangeVote = (value) => {
@@ -88,6 +126,15 @@ export const PostCard = ({
       setVoteValue("unvote");
     } else {
       setVoteValue(value);
+    }
+  };
+
+  const handleChangeKeepPost = (value) => {
+    const result = data?.isKeep ? "t" : "f";
+    if (value === (keepPostValue || result)) {
+      setKeepPostValue("f");
+    } else {
+      setKeepPostValue(value);
     }
   };
 
@@ -216,7 +263,7 @@ export const PostCard = ({
             }}
             onClick={() => handleChangeVote("Up")}
           >
-            {data.upVote + upVoteCountCurrent} Up Vote
+            {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote} Up Vote
           </Button>
           <Button
             sx={{
@@ -294,18 +341,47 @@ export const PostCard = ({
                   bgcolor: "#ededed",
                 },
               }}
+              onClick={() => handleChangeKeepPost("t")}
             >
-              <BookmarkBorderOutlined
-                sx={{
-                  width: 25,
-                  height: 25,
-                  color: "#000",
-                }}
-              />
+              {keepPostValue ? (
+                keepPostValue === "t" ? (
+                  <Bookmark
+                    sx={{
+                      width: 25,
+                      height: 25,
+                      color: "#000",
+                    }}
+                  />
+                ) : (
+                  <BookmarkBorderOutlined
+                    sx={{
+                      width: 25,
+                      height: 25,
+                      color: "#000",
+                    }}
+                  />
+                )
+              ) : resultKeep === "t" ? (
+                <Bookmark
+                  sx={{
+                    width: 25,
+                    height: 25,
+                    color: "#000",
+                  }}
+                />
+              ) : (
+                <BookmarkBorderOutlined
+                  sx={{
+                    width: 25,
+                    height: 25,
+                    color: "#000",
+                  }}
+                />
+              )}
             </IconButton>
 
             <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 1 }}>
-              {data?.keepCount}
+              {keepPostCountCurrent ? keepPostCountCurrent : data?.keepCount}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>

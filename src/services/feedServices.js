@@ -13,6 +13,22 @@ export const handleGetFeed = (token) => {
   });
 };
 
+export const handleGetKeepPost = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getKeepPost`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
+export const handleGetMyPost = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getMyPost`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
 export const handleCreatePost = async (token, AllContent) => {
   try {
     const response = await axios.post(
@@ -83,6 +99,48 @@ export const handleUnVotePost = async (token, postId) => {
   try {
     const response = await axios.post(
       `${BACKEND_URL}/api/social/unVote`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleKeepPost = async (token, postId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/keepPost`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleUnKeepPost = async (token, postId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/unKeepPost`,
       {
         postId: postId,
       },
