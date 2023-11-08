@@ -24,6 +24,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UpdateData } from "../../../../store/userSlice";
+import SharePostDialog from "./PostDialog/sharePostDialog"
 
 export const PostCard = ({
   data,
@@ -45,6 +46,11 @@ export const PostCard = ({
   const location = useLocation();
   const currentURL = location.pathname;
   const resultKeep = data?.isKeep ? "t" : "f";
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (voteValue === "Up") {
@@ -386,6 +392,7 @@ export const PostCard = ({
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
             <IconButton
+              onClick={handleClick}
               sx={{
                 width: 40,
                 height: 40,
@@ -396,6 +403,7 @@ export const PostCard = ({
             >
               <PiShareFat color="#000" size={"60px"} />
             </IconButton>
+            <SharePostDialog open={open} onClose={() => setOpen(false)} postId={data?.postId} />
 
             <Typography sx={{ fontWeight: "500", fontSize: 16, ml: 1 }}>
               แชร์
