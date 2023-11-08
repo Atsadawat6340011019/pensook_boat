@@ -36,3 +36,66 @@ export const handleCreatePost = async (token, AllContent) => {
     throw error.response.data;
   }
 };
+
+export const handleUpVotePost = async (token, postId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/upVote`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleDownVotePost = async (token, postId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/downVote`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleUnVotePost = async (token, postId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/unVote`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

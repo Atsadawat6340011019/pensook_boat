@@ -63,6 +63,7 @@ export const Feed = ({ setCommentData }) => {
             setCommentData={setCommentData}
             selectIndexComment={selectIndexComment}
             setSelectIndexComment={setSelectIndexComment}
+            reflesh={reflesh}
           />
         ))}
       </Box>
