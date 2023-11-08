@@ -130,7 +130,7 @@ export function InsertImageUploadedDialogBody({ onClick }) {
           <input
             onChange={(e) => loadImage(e.target.files, altText)}
             hidden
-            accept="image/*"
+            accept="image/png, image/jpeg, image/jpg"
             multiple
             type="file"
           />
