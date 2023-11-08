@@ -6,6 +6,7 @@ import parse from "html-react-parser";
 import { formatTimestamp } from "../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
+import "./PostCard.css";
 
 export const PostCard = ({
   data,
@@ -62,39 +63,45 @@ export const PostCard = ({
           </Typography>
         </Box>
       </Box>
-      <Typography sx={{ fontWeight: "600", fontSize: 18, mt: 2 }}>
+      <Typography
+        sx={{ fontWeight: "600", fontSize: 18, mt: 2, wordBreak: "break-word" }}
+      >
         {data.label}
       </Typography>
-      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }}>
-        {showMore ? parse(data.content) : parse(data.content.substring(0, 200))}
-        <span
-          style={{ cursor: "pointer", color: "#007DFC" }}
-          onClick={() => setShowMore(!showMore)}
-        >
-          {showMore ? "แสดงน้อยลง" : "ดูเพิ่มเติม"}
-        </span>
+      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="test">
+        {showMore ? parse(data.content) : parse(data.content.substring(0, 250))}
+        {data.content?.length > 250 && (
+          <span
+            style={{ cursor: "pointer", color: "#007DFC" }}
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? "แสดงน้อยลง" : "แสดงเพิ่มเติม"}
+          </span>
+        )}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Box
-          sx={{
-            maxWidth: 600,
-          }}
-        >
-          {!imageSelect && (
-            <ImageShow
-              imageData={data.attachImageList}
-              setImageSelect={setImageSelect}
-            />
-          )}
-          {imageSelect && (
-            <ImageSlideShow
-              imageData={data.attachImageList}
-              imageSelectData={imageSelect}
-              setImageSelect={setImageSelect}
-            />
-          )}
+      {!showMore && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box
+            sx={{
+              maxWidth: 600,
+            }}
+          >
+            {!imageSelect && (
+              <ImageShow
+                imageData={data.attachImageList}
+                setImageSelect={setImageSelect}
+              />
+            )}
+            {imageSelect && (
+              <ImageSlideShow
+                imageData={data.attachImageList}
+                imageSelectData={imageSelect}
+                setImageSelect={setImageSelect}
+              />
+            )}
+          </Box>
         </Box>
-      </Box>
+      )}
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
         <Button

@@ -27,6 +27,7 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 import { CAN_USE_DOM } from "../../../../../../utils/canUseDom";
 import { $createImageNode, $isImageNode, ImageNode } from "../Nodes/ImageNode";
+import NoneImage from "../../../../../../assets/no_image.png";
 
 const style = {
   position: "relative",
@@ -34,7 +35,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 130,
+  minHeight: 130,
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -104,7 +105,7 @@ export function InsertImageUploadedDialogBody({ onClick }) {
     const reader = new FileReader();
     reader.onload = function () {
       if (typeof reader.result === "string") {
-        setFileName(files[0].name);
+        setFileName(URL.createObjectURL(files[0]));
         setSrc(reader.result);
       }
     };
@@ -114,10 +115,12 @@ export function InsertImageUploadedDialogBody({ onClick }) {
 
   return (
     <Box sx={style}>
-      <Typography sx={{ height: 40, pt: 2 }}>
-        ชื่อไฟล์ : {fileName ? fileName : "ยังไม่มีไฟล์"}
-      </Typography>
-      <Box pt={2}>
+      <img
+        src={fileName ? fileName : NoneImage}
+        width={200}
+        style={{ paddingTop: 20 }}
+      />
+      <Box pt={2} pb={3}>
         <Button
           sx={{ mr: 2, width: 100 }}
           variant="contained"

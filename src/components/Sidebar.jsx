@@ -7,7 +7,12 @@ export const Sidebar = ({ keepPostData }) => {
   const navigate = useNavigate();
 
   return (
-    <Box flex={1.5} sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}>
+    <Box
+      flex={1.5}
+      sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}
+      minWidth={300}
+      maxWidth={500}
+    >
       <Box
         bgcolor="#fff"
         sx={{

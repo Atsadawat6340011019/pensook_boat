@@ -21,8 +21,8 @@ export const ImageSlideShow = ({
           <img
             key={index}
             src={item}
-            width={100}
-            height={100}
+            width={imageData?.length > 5 ? 50 : 100}
+            height={imageData?.length > 5 ? 50 : 100}
             style={{
               objectFit: "cover",
               cursor: "pointer",

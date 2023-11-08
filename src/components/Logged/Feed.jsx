@@ -13,6 +13,7 @@ export const Feed = ({ setCommentData }) => {
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
   const [richTextModalToggle, setRichTextModalToggle] = useState(false);
+  const [reflesh, setReflesh] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log(richTextModalToggle);
@@ -37,15 +38,23 @@ export const Feed = ({ setCommentData }) => {
     };
 
     fectFeedData(token);
-  }, [setCommentData, dispatch, navigate]);
+  }, [setCommentData, dispatch, navigate, reflesh]);
 
   return (
-    <Box flex={3}>
+    <Box flex={3} maxWidth={750}>
       <PostStatus
         ModalRef={ModalRef}
         setRichTextModalToggle={setRichTextModalToggle}
       />
-      <Box sx={{ mt: 1, height: 750, overflow: "auto" }}>
+      <Box
+        sx={{
+          mt: 1,
+          maxWidth: 750,
+          height: 750,
+          overflow: "auto",
+          overflowX: "hidden",
+        }}
+      >
         {feedData?.map((item, index) => (
           <PostCard
             key={index}
@@ -64,6 +73,7 @@ export const Feed = ({ setCommentData }) => {
         <PostRichTextModal
           ModalRef={ModalRef}
           onClose={() => setRichTextModalToggle(false)}
+          setReflesh={setReflesh}
         />
       </Modal>
     </Box>
