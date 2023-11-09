@@ -71,6 +71,10 @@ export const PostCard = ({
     setOpenReport(true);
   };
 
+  const handleMenuClosed = () => {
+    setAnchorEl(null);
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -206,7 +210,7 @@ export const PostCard = ({
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
+        onClose={handleMenuClosed}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -238,7 +242,7 @@ export const PostCard = ({
             เพิ่มเติม
             <IconButton
               color="inherit"
-              onClick={handleMenuClose}
+              onClick={handleMenuClosed}
               aria-label="close"
             >
               <CloseIcon />

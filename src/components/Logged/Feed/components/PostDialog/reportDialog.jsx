@@ -18,7 +18,7 @@ import {
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-import SharePostDialogCopied from "./sharePostDialogCopied";
+import ReportDialogReported from "./reportDialogReported";
 
 const ReportDialog = ({ open, onClose, postId, commentId }) => {
   const userData = useSelector((state) => state.user.userData);
@@ -221,7 +221,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
         </DialogContent>
       </Dialog>
       {showCopiedDialog && (
-        <SharePostDialogCopied
+        <ReportDialogReported
           open={showCopiedDialog}
           onClose={() => setShowCopiedDialog(false)}
         />
