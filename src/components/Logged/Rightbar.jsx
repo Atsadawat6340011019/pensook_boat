@@ -73,6 +73,7 @@ export const Rightbar = ({ commentData, setCommentData }) => {
             </Typography>
           )}
         </Box>
+        <CommentStatus setRichTextModalToggle={setRichTextModalToggle} />
       </Box>
       <Modal
         open={richTextModalToggle}
@@ -80,7 +81,6 @@ export const Rightbar = ({ commentData, setCommentData }) => {
       >
         <PostRichTextModal onClose={() => setRichTextModalToggle(false)} />
       </Modal>
-      <CommentStatus setRichTextModalToggle={setRichTextModalToggle} />
     </Box>
   );
 };

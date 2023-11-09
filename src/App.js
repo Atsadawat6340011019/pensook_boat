@@ -87,6 +87,24 @@ function App() {
               }
             />
             <Route
+              path="myanonymouspost"
+              element={
+                <MyPostPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                />
+              }
+            />
+            <Route
+              path="myreplypost"
+              element={
+                <MyPostPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                />
+              }
+            />
+            <Route
               path="keeppost"
               element={
                 <KeepPostPage

@@ -246,7 +246,7 @@ export const PostRichTextModal = forwardRef(
             align="center"
             sx={{ fontWeight: "400", fontSize: 16, px: 6 }}
           >
-            โพสต์โดยไม่เปิดเผยตัวตน
+            ตอบกลับความคิดเห็นโดยไม่เปิดเผยตัวตน
           </Typography>
           <Box sx={{ px: 9 }}>
             <AntSwitch onClick={() => setIsAnonymous(!isAnonymous)} />

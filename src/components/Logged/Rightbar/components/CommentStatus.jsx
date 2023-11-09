@@ -20,7 +20,7 @@ export const CommentStatus = forwardRef(
           borderRadius: "8px",
           cursor: "pointer",
           position: "absolute",
-          bottom: 1,
+          bottom: 5,
           width: "90%",
         }}
         onClick={() => {
@@ -46,7 +46,7 @@ export const CommentStatus = forwardRef(
           }}
         >
           <Typography sx={{ userSelect: "none" }}>
-            ช่วงนี้คุณเป็นยังไงบ้าง...
+            ความคิดเห็นของคุณ...
           </Typography>
         </Box>
       </Box>

@@ -29,6 +29,22 @@ export const handleGetMyPost = (token) => {
   });
 };
 
+export const handleGetMyAnonymousPost = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getMyAnonymousPost`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
+export const handleGetMyReplyPost = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getReplyPost`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
 export const handleCreatePost = async (token, AllContent) => {
   try {
     const response = await axios.post(
