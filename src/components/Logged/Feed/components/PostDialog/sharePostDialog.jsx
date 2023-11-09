@@ -75,6 +75,7 @@ const SharePostDialog = ({ open, onClose, postId }) => {
               ...customFontStyle,
               width: "100%",
               textAlign: "center",
+              marginTop: "2px"
             }}
           >
             คัดลอกเพื่อแชร์โพสต์
