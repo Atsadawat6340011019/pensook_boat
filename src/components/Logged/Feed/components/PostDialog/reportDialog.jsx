@@ -19,23 +19,34 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import ReportDialogReported from "./reportDialogReported";
+import { handleSendReport } from "../../../../../services/feedServices";
 
 const ReportDialog = ({ open, onClose, postId, commentId }) => {
+  const token = localStorage.getItem("token");
   const userData = useSelector((state) => state.user.userData);
+  const [description, setDescription] = useState();
+  const [reportType, setReportType] = useState("none");
   const navigate = useNavigate();
-  const [link, setLink] = useState(
-    `${
-      process.env.REACT_APP_IS_PROD === "true"
-        ? process.env.REACT_APP_BACKEND_URL_PROD
-        : process.env.REACT_APP_BACKEND_URL
-    }/${postId}`
-  );
-
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(link);
-    setShowCopiedDialog(true);
+  const handleCopy = async () => {
+    const content = {
+      postId: postId,
+      reportType: reportType,
+      description: description,
+    };
+
+    console.log(content);
+
+    const sendReport = await handleSendReport(token, content);
+    console.log(sendReport);
+    if (sendReport.session) {
+      setShowCopiedDialog(true);
+    }
+  };
+
+  const handleSelectReportType = (event) => {
+    setReportType(event.target.value);
   };
 
   useEffect(() => {
@@ -78,12 +89,35 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             ...customFontStyle,
           }}
         >
-          <div style={{ flex: 1, textAlign: "center", position: "absolute", zIndex: 999, width: "80%" }}>
+          <div
+            style={{
+              flex: 1,
+              textAlign: "center",
+              position: "absolute",
+              zIndex: 999,
+              width: "80%",
+            }}
+          >
             รายงาน
           </div>
-          <div style={{display: "flex", justifyContent: "right", alignItems: "right", width: "100%"}}>
-            <IconButton color="inherit" onClick={onClose} aria-label="close">
-                <CloseIcon />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "right",
+              alignItems: "right",
+              width: "100%",
+            }}
+          >
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                onClose();
+                setReportType("none");
+                setDescription("");
+              }}
+              aria-label="close"
+            >
+              <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
@@ -134,11 +168,12 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             <FormControl>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
                 name="radio-buttons-group"
                 style={{
                   ...customFontStyle,
                 }}
+                value={reportType}
+                onChange={handleSelectReportType}
               >
                 <FormControlLabel
                   value="ความรุนแรง"
@@ -202,6 +237,8 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             style={{ marginTop: "5%", width: "80%" }}
             variant="standard"
             InputProps={{ disableUnderline: true }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <Button
             variant="contained"

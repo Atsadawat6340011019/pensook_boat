@@ -305,3 +305,26 @@ export const handleUnVoteComment = async (token, commentId) => {
     throw error.response.data;
   }
 };
+
+export const handleSendReport = async (token, AllContent) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/sendReport`,
+      {
+        postId: AllContent.postId,
+        reportType: AllContent.reportType,
+        description: AllContent.description,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
