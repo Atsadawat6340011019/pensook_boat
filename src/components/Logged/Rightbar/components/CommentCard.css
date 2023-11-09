@@ -1,0 +1,21 @@
+.test span {
+  word-wrap: break-word;
+}
+
+.test p {
+  word-wrap: break-word;
+}
+
+.spilt span {
+  white-space: nowrap !important;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.test img {
+  max-width: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

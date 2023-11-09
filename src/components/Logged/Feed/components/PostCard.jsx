@@ -36,6 +36,7 @@ import ReportDialog from "./PostDialog/reportDialog";
 import { MoreHoriz } from "@mui/icons-material";
 import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import CloseIcon from "@mui/icons-material/Close";
+import { AddPostId } from "../../../../store/selectSlice";
 
 export const PostCard = ({
   data,
@@ -421,8 +422,9 @@ export const PostCard = ({
                 },
               }}
               onClick={() => {
-                setCommentData(data.commentList);
+                setCommentData(data?.commentList);
                 setSelectIndexComment(index);
+                dispatch(AddPostId(data?.postId));
               }}
             >
               <CommentOutlined

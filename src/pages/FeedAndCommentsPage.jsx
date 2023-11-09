@@ -12,7 +12,7 @@ export const FeedAndCommentsPage = ({
         setCommentData={setCommentData}
         setRefleshKeepPost={setRefleshKeepPost}
       />
-      <Rightbar commentData={commentData} />
+      <Rightbar commentData={commentData} setCommentData={setCommentData} />
     </>
   );
 };
