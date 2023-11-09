@@ -30,9 +30,8 @@ const SharePostDialog = ({ open, onClose, postId }) => {
     if (showCopiedDialog) {
       const timeout = setTimeout(() => {
         setShowCopiedDialog(false);
-        onClose(); // Close the main dialog
-      }, 2000); // 2 seconds
-
+        onClose();
+      }, 2000);
       return () => clearTimeout(timeout);
     }
   }, [showCopiedDialog, onClose]);

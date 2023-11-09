@@ -1,4 +1,11 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
 import {
@@ -24,7 +31,11 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UpdateData } from "../../../../store/userSlice";
-import SharePostDialog from "./PostDialog/sharePostDialog"
+import SharePostDialog from "./PostDialog/sharePostDialog";
+import ReportDialog from "./PostDialog/reportDialog";
+import { MoreHoriz } from "@mui/icons-material";
+import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const PostCard = ({
   data,
@@ -47,6 +58,17 @@ export const PostCard = ({
   const currentURL = location.pathname;
   const resultKeep = data?.isKeep ? "t" : "f";
   const [open, setOpen] = React.useState(false);
+  const [openReport, setOpenReport] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setOpenReport(true);
+  };
 
   const handleClick = () => {
     setOpen(true);
@@ -169,6 +191,86 @@ export const PostCard = ({
           }}
         ></Box>
       )}
+      <IconButton
+        aria-controls="post-menu"
+        aria-haspopup="true"
+        onClick={handleMenuOpen}
+        style={{ position: "absolute", top: 10, right: 10 }}
+      >
+        <MoreHoriz />
+      </IconButton>
+
+      <Menu
+        id="post-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <div
+          style={{
+            width: "317px",
+            height: "60px",
+          }}
+        >
+          <div
+            style={{
+              paddingLeft: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "90%",
+              fontStyle: "normal",
+              fontWeight: "500",
+              fontSize: "16px",
+              lineHeight: "26px",
+            }}
+          >
+            เพิ่มเติม
+            <IconButton
+              color="inherit"
+              onClick={handleMenuClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </div>
+        <MenuItem
+          onClick={handleMenuClose}
+          style={{
+            width: "317px",
+            height: "50px",
+          }}
+        >
+          <ReportOutlinedIcon></ReportOutlinedIcon>
+          <div
+            style={{
+              paddingLeft: "5px",
+              fontStyle: "normal",
+              fontWeight: "500",
+              fontSize: "16px",
+              lineHeight: "26px",
+            }}
+          >
+            รายงาน
+          </div>
+        </MenuItem>
+      </Menu>
+      <ReportDialog
+        open={openReport}
+        onClose={() => setOpenReport(false)}
+        postId={data?.postId}
+      />
+
       <Box sx={{ display: "flex" }}>
         <img
           src={data.isAnonymous ? LogoPensook : data.userImagePath}
@@ -403,7 +505,11 @@ export const PostCard = ({
             >
               <PiShareFat color="#000" size={"60px"} />
             </IconButton>
-            <SharePostDialog open={open} onClose={() => setOpen(false)} postId={data?.postId} />
+            <SharePostDialog
+              open={open}
+              onClose={() => setOpen(false)}
+              postId={data?.postId}
+            />
 
             <Typography sx={{ fontWeight: "500", fontSize: 16, ml: 1 }}>
               แชร์
