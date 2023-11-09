@@ -10,8 +10,7 @@ export const Sidebar = ({ keepPostData }) => {
     <Box
       flex={1.5}
       sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}
-      minWidth={300}
-      maxWidth={500}
+      maxWidth={350}
     >
       <Box
         bgcolor="#fff"

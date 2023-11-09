@@ -1,10 +1,40 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Modal, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { CommentCard } from "./Rightbar/components/CommentCard";
+import { PostRichTextModal } from "./Rightbar/components/PostRichText/PostRichTextModal";
+import { CommentStatus } from "./Rightbar/components/CommentStatus";
+import { handleGetComment } from "../../services/feedServices";
+import { useDispatch, useSelector } from "react-redux";
+import { AddUserData } from "../../store/userSlice";
 
-export const Rightbar = ({ commentData }) => {
+export const Rightbar = ({ commentData, setCommentData }) => {
+  const token = localStorage.getItem("token");
+  const [richTextModalToggle, setRichTextModalToggle] = useState(false);
+  const postId = useSelector((state) => state.select.postIdSelect);
+  const updateComment = useSelector((state) => state.user.updateCommentData);
+  const dispatch = useDispatch();
+  console.log(postId);
+  console.log(commentData);
+  console.log(updateComment);
+
+  useEffect(() => {
+    const fecthData = async () => {
+      const response = await handleGetComment(token, postId);
+      console.log(response);
+      dispatch(AddUserData(response.data.session));
+      setCommentData(response.data.response);
+      console.log("อัพเดทคอมเม้น");
+    };
+    if (updateComment) {
+      fecthData();
+    }
+  }, [updateComment]);
   return (
-    <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box
+      flex={2}
+      sx={{ display: { xs: "none", sm: "block" }, position: "relative" }}
+      maxWidth={500}
+    >
       <Box
         bgcolor="#fff"
         sx={{
@@ -20,7 +50,7 @@ export const Rightbar = ({ commentData }) => {
         <Box
           sx={{
             px: 2,
-            height: 740,
+            height: 680,
             overflow: "auto",
             ...(commentData?.length === 0 && {
               display: "flex",
@@ -31,7 +61,11 @@ export const Rightbar = ({ commentData }) => {
         >
           {commentData?.length > 0 ? (
             commentData?.map((item, index) => (
-              <CommentCard key={index} data={item} />
+              <CommentCard
+                key={index}
+                data={item}
+                setRichTextModalToggle={setRichTextModalToggle}
+              />
             ))
           ) : (
             <Typography align="center" sx={{ fontSize: 18, fontWeight: "500" }}>
@@ -40,6 +74,13 @@ export const Rightbar = ({ commentData }) => {
           )}
         </Box>
       </Box>
+      <Modal
+        open={richTextModalToggle}
+        onClose={() => setRichTextModalToggle(false)}
+      >
+        <PostRichTextModal onClose={() => setRichTextModalToggle(false)} />
+      </Modal>
+      <CommentStatus setRichTextModalToggle={setRichTextModalToggle} />
     </Box>
   );
 };

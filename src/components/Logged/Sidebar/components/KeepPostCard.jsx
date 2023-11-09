@@ -52,7 +52,7 @@ export const KeepPostCard = ({ data }) => {
           sx={{
             fontWeight: "600",
             fontSize: 12,
-            maxWidth: windowSize.width / 5,
+            maxWidth: windowSize.width / 12,
           }}
           noWrap
         >

@@ -24,7 +24,8 @@ import {
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { UpdateData } from "../../../../store/userSlice";
-import SharePostDialog from "./PostDialog/sharePostDialog"
+import SharePostDialog from "./PostDialog/sharePostDialog";
+import { AddPostId } from "../../../../store/selectSlice";
 
 export const PostCard = ({
   data,
@@ -319,8 +320,9 @@ export const PostCard = ({
                 },
               }}
               onClick={() => {
-                setCommentData(data.commentList);
+                setCommentData(data?.commentList);
                 setSelectIndexComment(index);
+                dispatch(AddPostId(data?.postId));
               }}
             >
               <CommentOutlined
@@ -403,7 +405,11 @@ export const PostCard = ({
             >
               <PiShareFat color="#000" size={"60px"} />
             </IconButton>
-            <SharePostDialog open={open} onClose={() => setOpen(false)} postId={data?.postId} />
+            <SharePostDialog
+              open={open}
+              onClose={() => setOpen(false)}
+              postId={data?.postId}
+            />
 
             <Typography sx={{ fontWeight: "500", fontSize: 16, ml: 1 }}>
               แชร์

@@ -21,7 +21,11 @@ export const Sidebar = ({}) => {
     fecthData(token);
   }, [UpdateData]);
   return (
-    <Box flex={1.5} sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}>
+    <Box
+      flex={1.5}
+      sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}
+      maxWidth={350}
+    >
       <MenuNameCard />
       <ProfileCard />
       <Box bgcolor="#fff" sx={{ borderRadius: "8px", mt: 1 }}>

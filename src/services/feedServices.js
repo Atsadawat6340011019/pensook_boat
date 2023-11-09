@@ -157,3 +157,107 @@ export const handleUnKeepPost = async (token, postId) => {
     throw error.response.data;
   }
 };
+
+export const handleGetComment = (token, postId) => {
+  return axios.get(`${BACKEND_URL}/api/social/getComment`, {
+    params: {
+      postId: postId,
+    },
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
+export const handleCreateComment = async (token, AllContent) => {
+  try {
+    const requestBody = {
+      isAnonymous: AllContent.isAnonymous,
+      postId: AllContent.postId,
+      content: AllContent.content,
+      attachImageArr: AllContent.attachImageArr,
+    };
+
+    if (AllContent.commentId) {
+      requestBody.commentId = AllContent.commentId;
+    }
+
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/comment`,
+      requestBody,
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleUpVoteComment = async (token, commentId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/upVote`,
+      {
+        commentId: commentId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleDownVoteComment = async (token, commentId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/downVote`,
+      {
+        commentId: commentId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleUnVoteComment = async (token, commentId) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/unVote`,
+      {
+        commentId: commentId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

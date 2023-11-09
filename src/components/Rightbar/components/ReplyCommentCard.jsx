@@ -1,24 +1,34 @@
-import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
 import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import { ReplyCommentCardSecond } from "./ReplyCommentCardSecond";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../utils/functions";
+import "./CommentCard.css";
+import { ImageShow } from "./CommentImageShow/ImageShow";
+import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
 
 export const ReplyCommentCard = ({ data }) => {
   const [replyCommentToggle, setReplyCommentToggle] = useState(false);
-
+  const [showMore, setShowMore] = useState(false);
+  const [imageSelect, setImageSelect] = useState();
   return (
     <Box mb={1}>
       <Box sx={{ display: "flex" }}>
-        <img
+        <Avatar
           src={data.isAnonymous ? LogoPensook : data.userImagePath}
-          width={40}
-          height={40}
-          style={{ borderRadius: "50%" }}
+          sx={{ width: 40, height: 40 }}
           alt="avatar"
         />
+
         <Box sx={{ ml: 2 }}>
           <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
             {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
@@ -31,9 +41,42 @@ export const ReplyCommentCard = ({ data }) => {
         </Box>
       </Box>
       <Box sx={{ mt: 2, pl: 7 }}>
-        <Typography sx={{ fontWeight: "400", fontSize: 16 }}>
-          {parse(data.content)}
+        <Typography sx={{ fontWeight: "400", fontSize: 16 }} className="test">
+          {showMore
+            ? parse(data.content)
+            : parse(data.content.substring(0, 250))}
+          {data.content?.length > 250 && (
+            <span
+              style={{ cursor: "pointer", color: "#007DFC" }}
+              onClick={() => setShowMore(!showMore)}
+            >
+              {showMore ? "แสดงน้อยลง" : "แสดงเพิ่มเติม"}
+            </span>
+          )}
         </Typography>
+        {!showMore && (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                maxWidth: 600,
+              }}
+            >
+              {!imageSelect && (
+                <ImageShow
+                  imageData={data.attachImageList}
+                  setImageSelect={setImageSelect}
+                />
+              )}
+              {imageSelect && (
+                <ImageSlideShow
+                  imageData={data.attachImageList}
+                  imageSelectData={imageSelect}
+                  setImageSelect={setImageSelect}
+                />
+              )}
+            </Box>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{
