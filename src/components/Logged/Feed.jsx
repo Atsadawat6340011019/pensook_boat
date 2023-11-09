@@ -4,6 +4,7 @@ import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
 import {
   handleGetFeed,
+  handleGetFeedWithPostIdLogged,
   handleGetKeepPost,
   handleGetMyAnonymousPost,
   handleGetMyPost,
@@ -11,7 +12,7 @@ import {
 } from "../../services/feedServices";
 import { useDispatch } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PostRichTextModal } from "./Feed/components/PostRichText/PostRichTextModal";
 import { AddPostId } from "../../store/selectSlice";
 import { TabSelectCard } from "./Feed/components/TabSelectCard";
@@ -26,8 +27,9 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentURL = location.pathname;
-
+  const { id } = useParams();
   console.log(feedData);
+  console.log(id);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -59,6 +61,12 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (currentURL === "/myreplypost") {
           const response = await handleGetMyReplyPost(token);
+          dispatch(AddUserData(response.data.session));
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+          dispatch(AddPostId(response.data.response[0].postId));
+        } else if (id) {
+          const response = await handleGetFeedWithPostIdLogged(token, id);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);

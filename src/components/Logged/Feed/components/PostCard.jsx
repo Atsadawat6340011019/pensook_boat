@@ -5,6 +5,9 @@ import {
   Typography,
   Menu,
   MenuItem,
+  Dialog,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
@@ -13,7 +16,9 @@ import {
   ArrowDropUp,
   Bookmark,
   BookmarkBorderOutlined,
+  CheckCircleOutline,
   CommentOutlined,
+  EditOutlined,
 } from "@mui/icons-material";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../../utils/functions";
@@ -22,6 +27,7 @@ import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 import "./PostCard.css";
 import { PiShareFat } from "react-icons/pi";
 import {
+  handleDeletePost,
   handleDownVotePost,
   handleKeepPost,
   handleUnKeepPost,
@@ -29,7 +35,7 @@ import {
   handleUpVotePost,
 } from "../../../../services/feedServices";
 import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UpdateData } from "../../../../store/userSlice";
 import SharePostDialog from "./PostDialog/sharePostDialog";
 import ReportDialog from "./PostDialog/reportDialog";
@@ -37,6 +43,7 @@ import { MoreHoriz } from "@mui/icons-material";
 import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { AddPostId } from "../../../../store/selectSlice";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export const PostCard = ({
   data,
@@ -48,6 +55,7 @@ export const PostCard = ({
   setReflesh,
 }) => {
   const token = localStorage.getItem("token");
+  const userData = useSelector((state) => state.user.userData);
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
   const [voteValue, setVoteValue] = useState();
@@ -61,7 +69,7 @@ export const PostCard = ({
   const [open, setOpen] = React.useState(false);
   const [openReport, setOpenReport] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [dialogToggle, setDialogToggle] = useState(false);
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -171,6 +179,18 @@ export const PostCard = ({
     }
   };
 
+  const handleRemovePost = async () => {
+    const deletePost = await handleDeletePost(token, data?.postId);
+    console.log(deletePost);
+    if (deletePost.response.status === "success") {
+      setReflesh(Math.floor(Math.random() * 100) + 1);
+      setDialogToggle(true);
+      setTimeout(() => {
+        setDialogToggle(false);
+      }, 4000);
+    }
+  };
+
   return (
     <Box
       bgcolor="#fff"
@@ -204,72 +224,162 @@ export const PostCard = ({
       >
         <MoreHoriz />
       </IconButton>
-
-      <Menu
-        id="post-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClosed}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <div
-          style={{
-            width: "317px",
-            height: "60px",
+      {userData?.userId !== data?.userId && (
+        <Menu
+          id="post-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClosed}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
           }}
         >
           <div
             style={{
-              paddingLeft: "20px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              width: "90%",
-              fontStyle: "normal",
-              fontWeight: "500",
-              fontSize: "16px",
-              lineHeight: "26px",
+              width: "317px",
+              height: "60px",
             }}
           >
-            เพิ่มเติม
-            <IconButton
-              color="inherit"
-              onClick={handleMenuClosed}
-              aria-label="close"
+            <div
+              style={{
+                paddingLeft: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "90%",
+                fontStyle: "normal",
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "26px",
+              }}
             >
-              <CloseIcon />
-            </IconButton>
+              เพิ่มเติม
+              <IconButton
+                color="inherit"
+                onClick={handleMenuClosed}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
           </div>
-        </div>
-        <MenuItem
-          onClick={handleMenuClose}
-          style={{
-            width: "317px",
-            height: "50px",
-          }}
-        >
-          <ReportOutlinedIcon></ReportOutlinedIcon>
-          <div
+          <MenuItem
+            onClick={handleMenuClose}
             style={{
-              paddingLeft: "5px",
-              fontStyle: "normal",
-              fontWeight: "500",
-              fontSize: "16px",
-              lineHeight: "26px",
+              width: "317px",
+              height: "50px",
             }}
           >
-            รายงาน
+            <ReportOutlinedIcon />
+            <div
+              style={{
+                paddingLeft: "5px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "26px",
+              }}
+            >
+              รายงาน
+            </div>
+          </MenuItem>
+        </Menu>
+      )}
+
+      {userData?.userId === data?.userId && (
+        <Menu
+          id="post-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClosed}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <div
+            style={{
+              width: "317px",
+              height: "60px",
+            }}
+          >
+            <div
+              style={{
+                paddingLeft: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "90%",
+                fontStyle: "normal",
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "26px",
+              }}
+            >
+              เพิ่มเติม
+              <IconButton
+                color="inherit"
+                onClick={handleMenuClosed}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </div>
           </div>
-        </MenuItem>
-      </Menu>
+          <MenuItem
+            onClick={handleMenuClose}
+            style={{
+              width: "317px",
+              height: "50px",
+            }}
+          >
+            <EditOutlined />
+            <div
+              style={{
+                paddingLeft: "5px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "26px",
+              }}
+            >
+              แก้ไขโพสต์
+            </div>
+          </MenuItem>
+          <MenuItem
+            onClick={handleRemovePost}
+            style={{
+              width: "317px",
+              height: "50px",
+            }}
+          >
+            <RiDeleteBin6Line size={20} />
+            <div
+              style={{
+                paddingLeft: "10px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                fontSize: "16px",
+                lineHeight: "26px",
+              }}
+            >
+              ลบโพสต์
+            </div>
+          </MenuItem>
+        </Menu>
+      )}
+
       <ReportDialog
         open={openReport}
         onClose={() => setOpenReport(false)}
@@ -523,6 +633,37 @@ export const PostCard = ({
           </Box>
         </Box>
       </Box>
+      <Dialog
+        open={dialogToggle}
+        sx={{
+          "& .MuiPaper-root": { borderRadius: "8px" },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            py: 5,
+            px: 8,
+          }}
+        >
+          <CheckCircleOutline
+            sx={{
+              width: 63,
+              height: 63,
+              color: "#75f24c",
+            }}
+          />
+          <DialogContentText
+            id="alert-dialog-description"
+            align="center"
+            sx={{ fontSize: 24 }}
+          >
+            ลบโพสต์สำเร็จ
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

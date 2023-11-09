@@ -4,21 +4,13 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  TextField,
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SharePostDialogCopied from "./sharePostDialogCopied";
 
 const SharePostDialog = ({ open, onClose, postId }) => {
-  const [link, setLink] = useState(
-    `${
-      process.env.REACT_APP_IS_PROD === "true"
-        ? process.env.REACT_APP_BACKEND_URL_PROD
-        : process.env.REACT_APP_BACKEND_URL
-    }/${postId}`
-  );
-
+  const [link, setLink] = useState(`${window.location.host}/${postId}`);
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
 
   const handleCopy = () => {
@@ -74,7 +66,7 @@ const SharePostDialog = ({ open, onClose, postId }) => {
               ...customFontStyle,
               width: "100%",
               textAlign: "center",
-              marginTop: "2px"
+              marginTop: "2px",
             }}
           >
             คัดลอกเพื่อแชร์โพสต์

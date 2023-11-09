@@ -1,8 +1,8 @@
-.test span {
+.testComment span {
   word-wrap: break-word;
 }
 
-.test p {
+.testComment p {
   word-wrap: break-word;
 }
 
@@ -14,7 +14,7 @@
   text-overflow: ellipsis;
 }
 
-.test img {
+.testComment img {
   max-width: 250px;
   display: block;
   margin-left: auto;

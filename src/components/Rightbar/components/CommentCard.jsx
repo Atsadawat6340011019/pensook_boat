@@ -40,7 +40,10 @@ export const CommentCard = ({ data }) => {
         </Box>
       </Box>
       <Box sx={{ px: 7, py: 2 }}>
-        <Typography sx={{ fontWeight: "400", fontSize: 16 }} className="test">
+        <Typography
+          sx={{ fontWeight: "400", fontSize: 16 }}
+          className="testComment"
+        >
           {showMore
             ? parse(data.content)
             : parse(data.content.substring(0, 250))}

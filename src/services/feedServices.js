@@ -13,6 +13,14 @@ export const handleGetFeed = (token) => {
   });
 };
 
+export const handleGetFeedWithPostIdLogged = (token, postId) => {
+  return axios.get(`${BACKEND_URL}/api/social/getFeed?postId=${postId}`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
+
 export const handleGetKeepPost = (token) => {
   return axios.get(`${BACKEND_URL}/api/social/getKeepPost`, {
     headers: {
@@ -59,6 +67,26 @@ export const handleCreatePost = async (token, AllContent) => {
         headers: {
           "x-access-token": token,
           "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleDeletePost = async (token, postId) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/social/deletePost`,
+      {
+        postId: postId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
         },
       }
     );

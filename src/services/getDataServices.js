@@ -8,3 +8,7 @@ const BACKEND_URL =
 export const handleGetFeed = () => {
   return axios.get(`${BACKEND_URL}/auth/getFeed`);
 };
+
+export const handleGetFeedWithPostId = (postId) => {
+  return axios.get(`${BACKEND_URL}/auth/getFeed?postId=${postId}`);
+};

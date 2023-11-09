@@ -98,7 +98,10 @@ export const ReplyCommentCard = ({ data, setRichTextModalToggle }) => {
         </Box>
       </Box>
       <Box sx={{ mt: 2, pl: 7 }}>
-        <Typography sx={{ fontWeight: "400", fontSize: 16 }} className="test">
+        <Typography
+          sx={{ fontWeight: "400", fontSize: 16 }}
+          className="testComment"
+        >
           {showMore
             ? parse(data.content)
             : parse(data.content.substring(0, 250))}

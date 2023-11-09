@@ -86,7 +86,16 @@ export const Navbar = () => {
             justifyContent: "space-between",
           }}
         >
-          <img src={LogoPensook} width={125} height={28} alt="logoPensook" />
+          <a href="/feed" style={{ height: 28 }}>
+            <img
+              src={LogoPensook}
+              width={125}
+              height={28}
+              alt="logoPensook"
+              style={{ cursor: "pointer" }}
+            />
+          </a>
+
           <Search>
             <InputBase fullWidth placeholder="ค้นหา....." />
           </Search>

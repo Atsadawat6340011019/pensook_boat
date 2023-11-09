@@ -58,6 +58,17 @@ function App() {
               />
             }
           />
+          <Route
+            path="/:id"
+            element={
+              <HomePage
+                keepPostData={keepPostData}
+                setCommentData={setCommentData}
+                setKeepPostData={setKeepPostData}
+                commentData={commentData}
+              />
+            }
+          />
         </Route>
         <Route element={<UnloggedRoute />}>
           <Route path="login" element={<LoginPage />} />
@@ -69,6 +80,16 @@ function App() {
           >
             <Route
               path="feed"
+              element={
+                <FeedAndCommentsPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                  setRefleshKeepPost={setRefleshKeepPost}
+                />
+              }
+            />
+            <Route
+              path="feed/:id"
               element={
                 <FeedAndCommentsPage
                   setCommentData={setCommentData}
