@@ -1,12 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
+import { ArrowDropUp, Bookmark, CommentOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const KeepPostCard = ({ data }) => {
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,6 +72,17 @@ export const KeepPostCard = ({ data }) => {
             <Typography sx={{ fontWeight: "400", fontSize: 10, ml: 2 }}>
               {data.commentList?.length}
             </Typography>
+          </Box>
+          <Box
+            sx={{
+              ml: 3,
+              display: "flex",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate(`/feed/${data?.postId}`)}
+          >
+            <Bookmark sx={{ width: 20 }} />
           </Box>
         </Box>
       </Box>

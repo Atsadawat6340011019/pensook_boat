@@ -84,6 +84,7 @@ export const PostRichTextModal = forwardRef(
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [errorNoti, setErrorNoti] = useState("");
     const [loading, setLoading] = useState(false);
+    const [buttonDisable, setButtonDisable] = useState(false);
 
     console.log(content);
 
@@ -154,7 +155,7 @@ export const PostRichTextModal = forwardRef(
         attachImageArr: extractImgSrc(content),
       };
       console.log(AllContent);
-
+      setButtonDisable(true);
       if (
         AllContent?.label &&
         !(
@@ -167,9 +168,7 @@ export const PostRichTextModal = forwardRef(
           console.log(postData);
           if (postData.response.status === "success") {
             setReflesh(Math.floor(Math.random() * 101));
-            setLoading(true);
             setTimeout(() => {
-              setLoading(false);
               onClose();
             }, 4000);
           }
@@ -178,6 +177,7 @@ export const PostRichTextModal = forwardRef(
         }
       } else if (!AllContent.label) {
         setErrorNoti("กรุณาใส่หัวข้อ");
+        setButtonDisable(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);
@@ -186,6 +186,7 @@ export const PostRichTextModal = forwardRef(
         `<head></head><body><p style="text-align: center;"><br></p></body>`
       ) {
         setErrorNoti("กรุณาใส่เนื้อหา");
+        setButtonDisable(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);
@@ -272,6 +273,7 @@ export const PostRichTextModal = forwardRef(
             color="primary"
             sx={{ width: 103, height: 40, borderRadius: "8px", fontSize: 16 }}
             onClick={handleSubmit}
+            disabled={buttonDisable}
           >
             โพสต์
           </Button>

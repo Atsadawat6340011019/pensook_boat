@@ -179,11 +179,9 @@ export const PostRichTextModal = forwardRef(
           console.log(commentData);
           if (commentData.response.status === "success") {
             dispatch(UpdataCommentData(Math.floor(Math.random() * 100) + 1));
-            setLoading(true);
             setTimeout(() => {
-              setLoading(false);
               onClose();
-            }, 2000);
+            }, 1000);
           }
         } catch (error) {
           console.error("เกิดข้อผิดพลาด:", error.error);

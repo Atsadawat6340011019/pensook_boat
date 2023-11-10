@@ -5,7 +5,7 @@ export const KeepPostPage = ({ setCommentData, commentData }) => {
   return (
     <>
       <Feed setCommentData={setCommentData} />
-      <Rightbar commentData={commentData} />
+      <Rightbar commentData={commentData} setCommentData={setCommentData} />
     </>
   );
 };
