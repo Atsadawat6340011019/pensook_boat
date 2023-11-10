@@ -90,7 +90,7 @@ export const PostRichTextModal = forwardRef(
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [errorNoti, setErrorNoti] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const [buttonDisable, setButtonDisable] = useState(false);
     console.log(content);
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
@@ -162,7 +162,7 @@ export const PostRichTextModal = forwardRef(
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
         attachImageArr: extractImgSrc(content),
       };
-
+      setButtonDisable(true);
       if (commentId) {
         AllContent.commentId = commentId;
       }
@@ -171,7 +171,7 @@ export const PostRichTextModal = forwardRef(
       if (
         !(
           AllContent.content ===
-          `<head></head><body><p style="text-align: center;"><br></p></body>`
+          `<head></head><body><p style=\"text-align: center;\" classname=\"spilt\"><br></p></body>`
         )
       ) {
         try {
@@ -188,9 +188,10 @@ export const PostRichTextModal = forwardRef(
         }
       } else if (
         AllContent.content ===
-        `<head></head><body><p style="text-align: center;"><br></p></body>`
+        `<head></head><body><p style=\"text-align: center;\" classname=\"spilt\"><br></p></body>`
       ) {
         setErrorNoti("กรุณาใส่เนื้อหา");
+        setButtonDisable(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);
@@ -279,6 +280,7 @@ export const PostRichTextModal = forwardRef(
             color="primary"
             sx={{ width: 103, height: 40, borderRadius: "8px", fontSize: 16 }}
             onClick={handleSubmit}
+            disabled={buttonDisable}
           >
             ส่ง
           </Button>
