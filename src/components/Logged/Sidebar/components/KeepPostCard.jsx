@@ -34,7 +34,9 @@ export const KeepPostCard = ({ data }) => {
         display: "flex",
         alignItems: "center",
         mb: 1,
+        cursor: "pointer",
       }}
+      onClick={() => navigate(`/feed/${data?.postId}`)}
     >
       {data.attachImageList.length > 0 && (
         <img
@@ -80,7 +82,6 @@ export const KeepPostCard = ({ data }) => {
               alignItems: "center",
               cursor: "pointer",
             }}
-            onClick={() => navigate(`/feed/${data?.postId}`)}
           >
             <Bookmark sx={{ width: 20 }} />
           </Box>
