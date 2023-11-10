@@ -14,7 +14,7 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,6 +22,7 @@ import {
   handleUpdateProfile,
 } from "../../../services/profileServices";
 import { AddUserData } from "../../../store/userSlice";
+import ImageCropperDialog from "./imageCropperDialog";
 
 export const Profile = () => {
   const userData = useSelector((state) => state.user.userData);
@@ -35,6 +36,53 @@ export const Profile = () => {
   const [imageProflieCoverFile, setImageProflieCoverFile] = useState();
   const [fileProfile, setFileProfile] = React.useState();
   const [fileProfileCover, setFileProfileCover] = React.useState();
+
+  // Crop start
+  const [cropperProps, setCropperProps] = useState({
+    imagePath: "",
+    imageObject: undefined,
+    aspectRatio: 1 / 1,
+    sharp: "rect",
+    action: "",
+  });
+  const [openCropper, setOpenCropper] = useState(false);
+
+  const handleEditLogo = (image) => {
+    if (image) {
+      setCropperProps({
+        imagePath: URL.createObjectURL(image),
+        imageObject: image,
+        aspectRatio: 1 / 1,
+        sharp: "round",
+        action: "logo",
+      });
+      setOpenCropper(true);
+    }
+  };
+
+  const handleEditCover = (image) => {
+    if (image) {
+        setCropperProps({
+            imagePath: URL.createObjectURL(image),
+            imageObject: image,
+            aspectRatio: 3 / 1,
+            sharp: 'rect',
+            action: 'cover'
+        });
+        setOpenCropper(true);
+    }
+  };
+
+  const handleImageChange = (data) => {
+    if (cropperProps.action === "logo") {
+      setImageProflieFile(data)
+      setFileProfile(data)
+    } else if (cropperProps.action === "cover") {
+      setImageProflieCoverFile(data)
+      setFileProfileCover(data)
+    }
+  };
+  // Crop end
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -55,29 +103,12 @@ export const Profile = () => {
     fectProfileData(token);
   }, [dispatch, navigate, stateEdit]);
 
-  const convertToBase64ForProfile = (selectedFile) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedFile);
-    reader.onload = () => {
-      setImageProflieFile(reader.result);
-    };
-  };
-
   const convertToBase64ForProfileCover = (selectedFile) => {
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
     reader.onload = () => {
       setImageProflieCoverFile(reader.result);
     };
-  };
-
-  const handleChangeFileProfile = (e) => {
-    if (e.target.files[0]) {
-      setFileProfile(URL.createObjectURL(e.target.files[0]));
-      convertToBase64ForProfile(e.target.files[0]);
-    } else {
-      setFileProfile(null);
-    }
   };
 
   const handleChangeFileProfileCover = (e) => {
@@ -203,7 +234,17 @@ export const Profile = () => {
                   id="imagePF"
                   type="file"
                   accept="image/png, image/jpeg, image/jpg"
-                  onChange={handleChangeFileProfile}
+                  onChange={(e) => handleEditLogo(e.target.files[0])}
+                />
+                <ImageCropperDialog
+                  open={openCropper}
+                  onClose={() => {
+                    setOpenCropper(false);
+                  }}
+                  callback={handleImageChange}
+                  imagePath={cropperProps.imagePath}
+                  aspectRatio={cropperProps.aspectRatio}
+                  shape={cropperProps.sharp}
                 />
               </Box>
             </Box>
@@ -294,7 +335,7 @@ export const Profile = () => {
                   id="imagePFC"
                   type="file"
                   accept="image/png, image/jpeg, image/jpg"
-                  onChange={handleChangeFileProfileCover}
+                  onChange={(e) => handleEditCover(e.target.files[0])}
                 />
               </Box>
             </Box>
