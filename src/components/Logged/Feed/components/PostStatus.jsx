@@ -37,7 +37,7 @@ export const PostStatus = forwardRef(({ setRichTextModalToggle, ModalRef }) => {
         }}
       >
         <Typography sx={{ userSelect: "none" }}>
-        เนื้อหา...
+        ช่วงนี้คุณเป็นยังไงบ้าง...
         </Typography>
       </Box>
     </Box>

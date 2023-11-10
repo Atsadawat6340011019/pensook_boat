@@ -32,7 +32,7 @@ export const PostStatus = () => {
           px: 2,
         }}
       >
-        <Typography>เนื้อหา...</Typography>
+        <Typography>ช่วงนี้คุณเป็นยังไงบ้าง...</Typography>
       </Box>
     </Box>
   );
