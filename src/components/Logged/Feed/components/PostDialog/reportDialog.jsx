@@ -129,13 +129,13 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             textAlign: "center",
             ...customFontStyle,
             // height: "760px",
-            overflow: "hidden",
+            overflowX: "hidden",
           }}
         >
           <div
             style={{
               width: "100%",
-              height: "70px",
+              height: "60px",
               display: "flex",
               alignItems: "center",
               textAlign: "left",
@@ -234,7 +234,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             multiline
             rows={4}
             placeholder="เขียนอธิบายบางอย่างว่าเกิดอะไรขึ้นกับโพสต์ หรือความคิดเห็นนี้..."
-            style={{ marginTop: "5%", width: "80%" }}
+            style={{ marginTop: "5px", width: "80%" }}
             variant="standard"
             InputProps={{ disableUnderline: true }}
             value={description}
@@ -247,7 +247,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             style={{
               ...customFontStyle,
               width: "100px",
-              marginTop: "5%",
+              marginTop: "5px",
               height: "50px",
               fontWeight: 500,
               borderRadius: "8px",
