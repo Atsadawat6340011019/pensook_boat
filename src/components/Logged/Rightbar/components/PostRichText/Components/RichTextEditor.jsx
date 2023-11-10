@@ -199,9 +199,13 @@ export const RichTextEditor = ({ setContent, content, errorNoti }) => {
         }
         placeholder={
           errorNoti === "กรุณาใส่เนื้อหา" ? (
-            <div className="placeholder">กรุณาใส่เนื้อหา</div>
+            <div className="placeholder" style={{ pointerEvents: "none" }}>
+              กรุณาใส่เนื้อหา
+            </div>
           ) : (
-            <div className="placeholder">ความคิดเห็นของคุณ....</div>
+            <div className="placeholder" style={{ pointerEvents: "none" }}>
+              ความคิดเห็นของคุณ....
+            </div>
           )
         }
         ErrorBoundary={LexicalErrorBoundary}
