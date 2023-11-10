@@ -14,8 +14,13 @@ const SharePostDialog = ({ open, onClose, postId }) => {
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(link);
-    setShowCopiedDialog(true);
+    if (window.isSecureContext) {
+      navigator.clipboard.writeText(link);
+      setShowCopiedDialog(true);
+    } else {
+      alert('คัดลอกลิงค์สามารถใช้ได้สำหรับ Server Production เท่านั้น')
+    }
+    
   };
 
   useEffect(() => {
