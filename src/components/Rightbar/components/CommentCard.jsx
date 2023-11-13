@@ -128,7 +128,7 @@ export const CommentCard = ({ data }) => {
         </Box>
       </Box>
       <Divider />
-      {replyCommentToggle && (
+      {replyCommentToggle && data.commentList.length > 0 && (
         <Box sx={{ pl: 7, pt: 2 }}>
           {data?.commentList.map((item, index) => (
             <ReplyCommentCard key={index} data={item} />

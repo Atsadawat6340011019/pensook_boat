@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
+  Modal,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
@@ -44,6 +45,7 @@ import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { AddPostId } from "../../../../store/selectSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { PostRichTextModalEdit } from "./PostRichTextEditor/PostRichTextModalEdit";
 
 export const PostCard = ({
   data,
@@ -70,6 +72,7 @@ export const PostCard = ({
   const [openReport, setOpenReport] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialogToggle, setDialogToggle] = useState(false);
+  const [editorToggle, setEditorToggle] = useState(false);
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -338,7 +341,7 @@ export const PostCard = ({
             </div>
           </div>
           <MenuItem
-            onClick={handleMenuClose}
+            onClick={() => setEditorToggle(true)}
             style={{
               width: "317px",
               height: "50px",
@@ -394,6 +397,7 @@ export const PostCard = ({
           style={{ borderRadius: "50%", objectFit: "cover" }}
           alt="avatar"
           referrerPolicy="no-referrer"
+          loading="lazy"
         />
         <Box sx={{ ml: 2 }}>
           <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
@@ -664,6 +668,17 @@ export const PostCard = ({
           </DialogContentText>
         </DialogContent>
       </Dialog>
+      <Modal open={editorToggle} onClose={() => setEditorToggle(false)}>
+        <PostRichTextModalEdit
+          postId={data?.postId}
+          html={data?.content}
+          label={data?.label}
+          anonymous={data?.isAnonymous}
+          editorToggle={editorToggle}
+          onClose={() => setEditorToggle(false)}
+          setReflesh={setReflesh}
+        />
+      </Modal>
     </Box>
   );
 };

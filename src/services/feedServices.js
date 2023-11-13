@@ -77,6 +77,29 @@ export const handleCreatePost = async (token, AllContent) => {
   }
 };
 
+export const handleUpdatePost = async (token, AllContent) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/social/updatePost`,
+      {
+        postId: AllContent.postId,
+        label: AllContent.label,
+        content: AllContent.content,
+        attachImageArr: AllContent.attachImageArr,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 export const handleDeletePost = async (token, postId) => {
   try {
     const response = await axios.patch(

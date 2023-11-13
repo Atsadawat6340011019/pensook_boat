@@ -122,7 +122,7 @@ export const Navbar = () => {
               },
             }}
           >
-            <Badge badgeContent={4} color="error">
+            {/*<Badge badgeContent={4} color="error">
               <NotificationsNone
                 sx={{
                   width: 40,
@@ -134,7 +134,7 @@ export const Navbar = () => {
                   },
                 }}
               />
-            </Badge>
+            </Badge>*/}
           </IconButton>
           <Avatar
             src={userData?.profileImagePath}

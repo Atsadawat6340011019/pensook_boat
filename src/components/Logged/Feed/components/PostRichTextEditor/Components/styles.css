@@ -1,0 +1,31 @@
+.contentEditable {
+  height: 100%;
+  width: 638px;
+  font-size: 20px;
+  overflow: auto;
+}
+
+.contentEditable::-webkit-scrollbar {
+  width: 0.1rem;
+}
+
+.contentEditable:focus {
+  outline: none;
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  font-size: 20px;
+  color: #808080;
+  user-select: none;
+}
+
+.contentEditable img {
+  max-width: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
