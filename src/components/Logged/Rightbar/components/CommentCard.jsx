@@ -265,7 +265,7 @@ export const CommentCard = ({ data, setRichTextModalToggle }) => {
         ตอบกลับ
       </Typography>
       <Divider />
-      {replyCommentToggle && (
+      {replyCommentToggle && data.commentList.length > 0 && (
         <Box sx={{ pl: 7, pt: 2 }}>
           {data?.commentList.map((item, index) => (
             <ReplyCommentCard
