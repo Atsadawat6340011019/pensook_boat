@@ -237,7 +237,7 @@ export const PostRichTextModalEdit = forwardRef(
         >
           แก้ไขโพสต์
         </Typography>
-        <Box
+        {/*<Box
           sx={{
             border: "1px #808080 solid",
             borderRadius: "8px",
@@ -262,7 +262,8 @@ export const PostRichTextModalEdit = forwardRef(
               disabled
             />
           </Box>
-        </Box>
+        </Box>*/}
+        <Box sx={{ height: 35 }}></Box>
         <Box
           sx={{
             width: 750,
@@ -292,7 +293,7 @@ export const PostRichTextModalEdit = forwardRef(
             onClick={handleSubmit}
             disabled={buttonDisable}
           >
-            โพสต์
+            แก้ไข
           </Button>
         </Box>
         <Box
