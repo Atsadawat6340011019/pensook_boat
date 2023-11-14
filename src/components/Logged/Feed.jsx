@@ -74,9 +74,8 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(response.data.response[0].postId));
         }
       } catch (error) {
-        const { response } = error;
-        console.error("เกิดข้อผิดพลาด :", response?.data.error);
-        if (response?.data.error === "Token not found") {
+        console.log("เกิดข้อผิดพลาด :", error.error);
+        if (error.error === "Token not found") {
           localStorage.removeItem("token");
           navigate("/");
         }

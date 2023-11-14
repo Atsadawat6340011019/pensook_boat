@@ -1,13 +1,17 @@
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AddKeepPostId } from "../../../../store/selectSlice";
 
 export const MenuNameCard = () => {
+  const keepPostId = useSelector((state) => state.select.keepPostIdSelect);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const currentURL = location.pathname;
-  console.log(currentURL);
+
   return (
     <Box
       bgcolor="#fff"
@@ -29,7 +33,10 @@ export const MenuNameCard = () => {
       currentURL.includes("/feed/") ? (
         <IconButton
           sx={{ color: "#000", mr: 2 }}
-          onClick={() => navigate("/feed")}
+          onClick={() => {
+            navigate("/feed");
+            dispatch(AddKeepPostId([]));
+          }}
         >
           <ArrowBackIosNewRounded />
         </IconButton>
@@ -43,7 +50,8 @@ export const MenuNameCard = () => {
         {currentURL === "/mypost" && "โพสต์ของคุณ"}
         {currentURL === "/myanonymouspost" && "โพสต์ของคุณ"}
         {currentURL === "/myreplypost" && "โพสต์ของคุณ"}
-        {currentURL.includes("/feed/") && "หน้าหลัก"}
+        {currentURL.includes("/feed/") && !keepPostId && "หน้าหลัก"}
+        {currentURL.includes("/feed/") && keepPostId && "โพสต์ที่คุณ Keep"}
       </Typography>
     </Box>
   );

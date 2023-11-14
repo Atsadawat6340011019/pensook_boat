@@ -8,12 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { AddKeepPostId } from "../../../../store/selectSlice";
 
 export const ProfileCard = () => {
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Box
@@ -72,7 +74,10 @@ export const ProfileCard = () => {
                 },
               }}
               alt="coverImage"
-              onClick={() => navigate("/mypost")}
+              onClick={() => {
+                navigate("/mypost");
+                dispatch(AddKeepPostId([]));
+              }}
             />
           </Box>
         </Box>
@@ -84,7 +89,12 @@ export const ProfileCard = () => {
         {userData?.firstName} {userData?.lastName}
       </Typography>
       <MenuList sx={{ mt: 1.5 }}>
-        <MenuItem onClick={() => navigate("/profile")}>
+        <MenuItem
+          onClick={() => {
+            navigate("/profile");
+            dispatch(AddKeepPostId([]));
+          }}
+        >
           <ListItemIcon>
             <PersonOutlineOutlined fontSize="medium" sx={{ color: "#000" }} />
           </ListItemIcon>
@@ -99,7 +109,10 @@ export const ProfileCard = () => {
               borderBottomRightRadius: "8px",
             },
           }}
-          onClick={() => navigate("/setting")}
+          onClick={() => {
+            navigate("/setting");
+            dispatch(AddKeepPostId([]));
+          }}
         >
           <ListItemIcon>
             <SettingsOutlined fontSize="medium" sx={{ color: "#000" }} />

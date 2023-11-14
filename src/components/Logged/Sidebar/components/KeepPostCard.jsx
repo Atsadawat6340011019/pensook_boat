@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ArrowDropUp, Bookmark, CommentOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AddKeepPostId } from "../../../../store/selectSlice";
 
 export const KeepPostCard = ({ data }) => {
   const [windowSize, setWindowSize] = useState({
@@ -9,6 +11,7 @@ export const KeepPostCard = ({ data }) => {
     height: window.innerHeight,
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +39,10 @@ export const KeepPostCard = ({ data }) => {
         mb: 1,
         cursor: "pointer",
       }}
-      onClick={() => navigate(`/feed/${data?.postId}`)}
+      onClick={() => {
+        navigate(`/feed/${data?.postId}`);
+        dispatch(AddKeepPostId(data?.postId));
+      }}
     >
       {data.attachImageList.length > 0 && (
         <img

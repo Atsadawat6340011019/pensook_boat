@@ -23,9 +23,8 @@ export const Rightbar = ({ commentData, setCommentData }) => {
       console.log(response);
       dispatch(AddUserData(response.data.session));
       setCommentData(response.data.response);
-      console.log("อัพเดทคอมเม้น");
     };
-    if (updateComment) {
+    if (updateComment && postId) {
       fecthData();
     }
   }, [updateComment]);

@@ -37,7 +37,7 @@ import {
 } from "../../../../services/feedServices";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { UpdateData } from "../../../../store/userSlice";
+import { UpdataCommentData, UpdateData } from "../../../../store/userSlice";
 import SharePostDialog from "./PostDialog/sharePostDialog";
 import ReportDialog from "./PostDialog/reportDialog";
 import { MoreHoriz } from "@mui/icons-material";
@@ -72,6 +72,7 @@ export const PostCard = ({
   const [openReport, setOpenReport] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialogToggle, setDialogToggle] = useState(false);
+  const [dialogTogglePostDel, setDialogTogglePostDel] = useState(false);
   const [editorToggle, setEditorToggle] = useState(false);
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -102,6 +103,14 @@ export const PostCard = ({
           }
         } catch (error) {
           console.log(error.error);
+          if (error.error === "postId is not found") {
+            setDialogTogglePostDel(true);
+            setTimeout(() => {
+              setDialogTogglePostDel(false);
+              dispatch(AddPostId(""));
+              dispatch(UpdataCommentData(Math.floor(Math.random() * 101)));
+            }, 1000);
+          }
         }
       };
       handleVote();
@@ -115,6 +124,14 @@ export const PostCard = ({
           }
         } catch (error) {
           console.log(error.error);
+          if (error.error === "postId is not found") {
+            setDialogTogglePostDel(true);
+            setTimeout(() => {
+              setDialogTogglePostDel(false);
+              dispatch(AddPostId(""));
+              dispatch(UpdataCommentData(Math.floor(Math.random() * 101)));
+            }, 1000);
+          }
         }
       };
       handleVote();
@@ -128,6 +145,14 @@ export const PostCard = ({
           }
         } catch (error) {
           console.log(error.error);
+          if (error.error === "postId is not found") {
+            setDialogTogglePostDel(true);
+            setTimeout(() => {
+              setDialogTogglePostDel(false);
+              dispatch(AddPostId(""));
+              dispatch(UpdataCommentData(Math.floor(Math.random() * 101)));
+            }, 1000);
+          }
         }
       };
       handleVote();
@@ -678,6 +703,30 @@ export const PostCard = ({
             sx={{ fontSize: 24 }}
           >
             ลบโพสต์สำเร็จ
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={dialogTogglePostDel}
+        sx={{
+          "& .MuiPaper-root": { borderRadius: "8px" },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            py: 5,
+            px: 8,
+          }}
+        >
+          <DialogContentText
+            id="alert-dialog-description"
+            align="center"
+            sx={{ fontSize: 24 }}
+          >
+            โพสต์นี้ได้ถูกลบแล้ว
           </DialogContentText>
         </DialogContent>
       </Dialog>
