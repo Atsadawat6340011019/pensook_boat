@@ -10,7 +10,7 @@ import {
   handleGetMyPost,
   handleGetMyReplyPost,
 } from "../../services/feedServices";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PostRichTextModal } from "./Feed/components/PostRichText/PostRichTextModal";
@@ -23,6 +23,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   const [selectIndexComment, setSelectIndexComment] = useState(0);
   const [richTextModalToggle, setRichTextModalToggle] = useState(false);
   const [reflesh, setReflesh] = useState("");
+  const updateComment = useSelector((state) => state.user.updateCommentData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,7 +84,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
     };
 
     fectFeedData(token);
-  }, [setCommentData, dispatch, navigate, reflesh]);
+  }, [setCommentData, dispatch, navigate, reflesh, updateComment]);
 
   return (
     <Box flex={3} maxWidth={1000}>
@@ -91,10 +92,13 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
         (currentURL === "/myanonymouspost" && <TabSelectCard />) ||
         (currentURL === "/myreplypost" && <TabSelectCard />)}
 
-      <PostStatus
-        ModalRef={ModalRef}
-        setRichTextModalToggle={setRichTextModalToggle}
-      />
+      {currentURL === "/feed" && (
+        <PostStatus
+          ModalRef={ModalRef}
+          setRichTextModalToggle={setRichTextModalToggle}
+        />
+      )}
+
       <Box
         sx={{
           mt: 1,

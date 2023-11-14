@@ -28,6 +28,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
   const [reportType, setReportType] = useState("none");
   const navigate = useNavigate();
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
+  const [disabledButton, setDisableButton] = useState(false);
 
   const handleCopy = async () => {
     const content = {
@@ -37,11 +38,14 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
     };
 
     console.log(content);
-
+    setDisableButton(true);
     const sendReport = await handleSendReport(token, content);
     console.log(sendReport);
     if (sendReport.session) {
       setShowCopiedDialog(true);
+      setDisableButton(false);
+    } else {
+      setDisableButton(false);
     }
   };
 
@@ -244,6 +248,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             variant="contained"
             color="primary"
             onClick={handleCopy}
+            disabled={disabledButton}
             style={{
               ...customFontStyle,
               width: "100px",

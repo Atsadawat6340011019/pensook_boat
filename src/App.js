@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { Feed } from "./components/Feed";
