@@ -7,9 +7,11 @@ import {
   handleGetFeedWithPostId,
 } from "../services/getDataServices";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Feed = ({ setCommentData, setKeepPostData }) => {
   const token = localStorage.getItem("token");
+  const postIdSelect = useSelector((state) => state.select.postIdSelect);
   const [feedData, setFeedData] = useState([]);
   const [selectIndexComment, setSelectIndexComment] = useState(0);
   const { id } = useParams();
@@ -20,7 +22,6 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
         try {
           const response = await handleGetFeedWithPostId(id);
           setFeedData(response.data.response);
-          setKeepPostData(response.data.response);
           setCommentData(response.data.response[0].commentList);
         } catch (error) {
           console.error("เกิดข้อผิดพลาด :", error);
@@ -29,7 +30,6 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
         try {
           const response = await handleGetFeed();
           setFeedData(response.data.response);
-          setKeepPostData(response.data.response);
           setCommentData(response.data.response[0].commentList);
         } catch (error) {
           console.error("เกิดข้อผิดพลาด :", error);
@@ -37,8 +37,18 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
       }
     };
 
+    const fetchFeedDataPost = async () => {
+      try {
+        const response = await handleGetFeed();
+        setKeepPostData(response.data.response);
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาด :", error);
+      }
+    };
+
     fectFeedData();
-  }, [setCommentData, setKeepPostData]);
+    fetchFeedDataPost();
+  }, [setCommentData, setKeepPostData, postIdSelect]);
 
   return (
     <Box flex={3} maxWidth={1000}>

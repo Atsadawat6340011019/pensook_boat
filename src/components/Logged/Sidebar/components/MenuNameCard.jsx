@@ -7,6 +7,7 @@ export const MenuNameCard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentURL = location.pathname;
+  console.log(currentURL);
   return (
     <Box
       bgcolor="#fff"
@@ -24,7 +25,8 @@ export const MenuNameCard = () => {
       currentURL === "/keeppost" ||
       currentURL === "/mypost" ||
       currentURL === "/myanonymouspost" ||
-      currentURL === "/myreplypost" ? (
+      currentURL === "/myreplypost" ||
+      currentURL.includes("/feed/") ? (
         <IconButton
           sx={{ color: "#000", mr: 2 }}
           onClick={() => navigate("/feed")}
@@ -41,6 +43,7 @@ export const MenuNameCard = () => {
         {currentURL === "/mypost" && "โพสต์ของคุณ"}
         {currentURL === "/myanonymouspost" && "โพสต์ของคุณ"}
         {currentURL === "/myreplypost" && "โพสต์ของคุณ"}
+        {currentURL.includes("/feed/") && "หน้าหลัก"}
       </Typography>
     </Box>
   );
