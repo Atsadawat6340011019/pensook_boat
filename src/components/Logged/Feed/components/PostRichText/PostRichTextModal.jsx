@@ -86,8 +86,6 @@ export const PostRichTextModal = forwardRef(
     const [loading, setLoading] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false);
 
-    console.log(content);
-
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
     }

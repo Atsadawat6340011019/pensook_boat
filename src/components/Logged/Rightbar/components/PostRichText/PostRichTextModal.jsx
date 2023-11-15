@@ -91,7 +91,6 @@ export const PostRichTextModal = forwardRef(
     const [errorNoti, setErrorNoti] = useState("");
     const [loading, setLoading] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false);
-    console.log(content);
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(
@@ -166,7 +165,6 @@ export const PostRichTextModal = forwardRef(
       if (commentId) {
         AllContent.commentId = commentId;
       }
-      console.log(AllContent);
 
       if (
         !(

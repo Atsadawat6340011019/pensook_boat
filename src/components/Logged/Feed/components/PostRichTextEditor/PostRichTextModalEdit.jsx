@@ -98,8 +98,6 @@ export const PostRichTextModalEdit = forwardRef(
     const [loading, setLoading] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false);
 
-    console.log(content);
-
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
     }
@@ -167,7 +165,6 @@ export const PostRichTextModalEdit = forwardRef(
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
         attachImageArr: extractImgSrc(content),
       };
-      console.log(AllContent);
       setButtonDisable(true);
       if (
         AllContent?.label &&
