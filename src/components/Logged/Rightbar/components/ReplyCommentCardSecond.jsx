@@ -23,28 +23,40 @@ export const ReplyCommentCardSecond = ({ data }) => {
   useEffect(() => {
     if (voteValue === "Up") {
       const handleVote = async () => {
-        const vote = await handleUpVoteComment(token, data?.commentId);
-        console.log(vote);
-        if (vote.response.status === "success") {
-          setUpVoteCountCurrent(vote.response.result.upVote.toString());
+        try {
+          const vote = await handleUpVoteComment(token, data?.commentId);
+          console.log(vote);
+          if (vote.response.status === "success") {
+            setUpVoteCountCurrent(vote.response.result.upVote.toString());
+          }
+        } catch (error) {
+          console.log(error.error);
         }
       };
       handleVote();
     } else if (voteValue === "Down") {
       const handleVote = async () => {
-        const vote = await handleDownVoteComment(token, data?.commentId);
-        console.log(vote);
-        if (vote.response.status === "success") {
-          setUpVoteCountCurrent(vote.response.result.upVote.toString());
+        try {
+          const vote = await handleDownVoteComment(token, data?.commentId);
+          console.log(vote);
+          if (vote.response.status === "success") {
+            setUpVoteCountCurrent(vote.response.result.upVote.toString());
+          }
+        } catch (error) {
+          console.log(error.error);
         }
       };
       handleVote();
     } else if (voteValue === "unvote") {
       const handleVote = async () => {
-        const vote = await handleUnVoteComment(token, data?.commentId);
-        console.log(vote);
-        if (vote.response.status === "success") {
-          setUpVoteCountCurrent(vote.response.result.upVote.toString());
+        try {
+          const vote = await handleUnVoteComment(token, data?.commentId);
+          console.log(vote);
+          if (vote.response.status === "success") {
+            setUpVoteCountCurrent(vote.response.result.upVote.toString());
+          }
+        } catch (error) {
+          console.log(error.error);
         }
       };
       handleVote();
