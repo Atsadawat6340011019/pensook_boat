@@ -22,6 +22,7 @@ import {
 } from "lexical";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
+import Resizer from "react-image-file-resizer";
 
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
@@ -96,21 +97,52 @@ export function InsertImageUploadedDialogBody({ onClick }) {
   console.log(fileName);
   const isDisabled = src === "";
 
-  const loadImage = (files, altText) => {
-    console.log(files);
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file[0],
+        500,
+        500,
+        "JPEG",
+        80,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
+
+  const onChangeResize = async (file) => {
+    try {
+      const image = await resizeFile(file);
+      return image;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadImage = async (files, altText) => {
     if (files === null || !files[0]) {
       return false; // ถ้าไม่มีไฟล์หรือไม่มีไฟล์ในอาร์เรย์
     }
 
-    const reader = new FileReader();
-    reader.onload = function () {
-      if (typeof reader.result === "string") {
-        setFileName(URL.createObjectURL(files[0]));
-        setSrc(reader.result);
-      }
-    };
+    try {
+      const ResizeImage = await onChangeResize(files);
 
-    reader.readAsDataURL(files[0]);
+      const reader = new FileReader();
+      reader.onload = function () {
+        if (typeof reader.result === "string") {
+          setFileName(URL.createObjectURL(files[0]));
+          setSrc(ResizeImage);
+        }
+      };
+
+      reader.readAsDataURL(files[0]);
+    } catch (err) {
+      console.log(err);
+      // สามารถเพิ่มการจัดการข้อผิดพลาดเพิ่มเติมตามความต้องการ
+    }
   };
 
   return (
