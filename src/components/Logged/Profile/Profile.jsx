@@ -62,24 +62,24 @@ export const Profile = () => {
 
   const handleEditCover = (image) => {
     if (image) {
-        setCropperProps({
-            imagePath: URL.createObjectURL(image),
-            imageObject: image,
-            aspectRatio: 3 / 1,
-            sharp: 'rect',
-            action: 'cover'
-        });
-        setOpenCropper(true);
+      setCropperProps({
+        imagePath: URL.createObjectURL(image),
+        imageObject: image,
+        aspectRatio: 3 / 1,
+        sharp: "rect",
+        action: "cover",
+      });
+      setOpenCropper(true);
     }
   };
 
   const handleImageChange = (data) => {
     if (cropperProps.action === "logo") {
-      setImageProflieFile(data)
-      setFileProfile(data)
+      setImageProflieFile(data);
+      setFileProfile(data);
     } else if (cropperProps.action === "cover") {
-      setImageProflieCoverFile(data)
-      setFileProfileCover(data)
+      setImageProflieCoverFile(data);
+      setFileProfileCover(data);
     }
   };
   // Crop end
@@ -91,9 +91,8 @@ export const Profile = () => {
         const response = await handleGetMyProfile(token);
         dispatch(AddUserData(response.data.session));
       } catch (error) {
-        const { response } = error;
-        console.error("เกิดข้อผิดพลาด :", response?.data.error);
-        if (response?.data.error === "Token not found") {
+        console.log("เกิดข้อผิดพลาด :", error.error);
+        if (error.error === "Token not found") {
           localStorage.removeItem("token");
           navigate("/");
         }
@@ -148,8 +147,11 @@ export const Profile = () => {
         }, 2000);
       }
     } catch (error) {
-      console.error("เกิดข้อผิดพลาด:", error.error);
+      console.log("เกิดข้อผิดพลาด:", error.error);
       setErrorNoti("กำลังปรับปรุงระบบ");
+      setTimeout(() => {
+        setErrorNoti("");
+      }, 1500);
     }
   };
 

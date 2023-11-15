@@ -24,7 +24,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
         } catch (error) {
-          console.error("เกิดข้อผิดพลาด :", error);
+          console.error("เกิดข้อผิดพลาด :", error.error);
         }
       } else {
         try {
@@ -32,7 +32,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
         } catch (error) {
-          console.error("เกิดข้อผิดพลาด :", error);
+          console.error("เกิดข้อผิดพลาด :", error.error);
         }
       }
     };
@@ -42,7 +42,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
         const response = await handleGetFeed();
         setKeepPostData(response.data.response);
       } catch (error) {
-        console.error("เกิดข้อผิดพลาด :", error);
+        console.error("เกิดข้อผิดพลาด :", error.error);
       }
     };
 

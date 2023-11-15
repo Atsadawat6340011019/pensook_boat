@@ -29,6 +29,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
   const navigate = useNavigate();
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
   const [disabledButton, setDisableButton] = useState(false);
+  const [errorNoti, setErrorNoti] = useState("");
 
   const handleCopy = async () => {
     const content = {
@@ -39,13 +40,19 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
 
     console.log(content);
     setDisableButton(true);
-    const sendReport = await handleSendReport(token, content);
-    console.log(sendReport);
-    if (sendReport.session) {
-      setShowCopiedDialog(true);
-      setDisableButton(false);
+    if (content.reportType !== "none") {
+      const sendReport = await handleSendReport(token, content);
+      console.log(sendReport);
+      if (sendReport.session) {
+        setShowCopiedDialog(true);
+        setDisableButton(false);
+      }
     } else {
-      setDisableButton(false);
+      setErrorNoti("กรุณาเลือกประเภทที่ต้องการรายงาน");
+      setTimeout(() => {
+        setErrorNoti("");
+        setDisableButton(false);
+      }, 1500);
     }
   };
 
@@ -244,6 +251,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <Typography sx={{ color: "red" }}>{errorNoti}</Typography>
           <Button
             variant="contained"
             color="primary"

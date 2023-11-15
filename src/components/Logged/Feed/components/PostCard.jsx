@@ -162,31 +162,39 @@ export const PostCard = ({
   useEffect(() => {
     if (keepPostValue === "t") {
       const handleKeepPostFinal = async () => {
-        const keepPost = await handleKeepPost(token, data?.postId);
-        console.log(keepPost);
-        if (keepPost.response.status === "success") {
-          setKeepPostCountCurrent(
-            keepPost.response.result.keepCount.toString()
-          );
-          dispatch(UpdateData(Math.floor(Math.random() * 101)));
+        try {
+          const keepPost = await handleKeepPost(token, data?.postId);
+          console.log(keepPost);
+          if (keepPost.response.status === "success") {
+            setKeepPostCountCurrent(
+              keepPost.response.result.keepCount.toString()
+            );
+            dispatch(UpdateData(Math.floor(Math.random() * 101)));
+          }
+        } catch (error) {
+          console.log(error.error);
         }
       };
       handleKeepPostFinal();
     } else if (keepPostValue === "f") {
       const handleKeepPostFinal = async () => {
-        const keepPost = await handleUnKeepPost(token, data?.postId);
-        console.log("Unkeep");
-        console.log(keepPost);
-        if (keepPost.response.status === "success") {
-          setKeepPostCountCurrent(
-            keepPost.response.result.keepCount.toString()
-          );
-          dispatch(UpdateData(Math.floor(Math.random() * 101)));
-          if (keepPost.response.result.isKeep === false) {
-            if (currentURL === "/keeppost") {
-              setReflesh(Math.floor(Math.random() * 101));
+        try {
+          const keepPost = await handleUnKeepPost(token, data?.postId);
+          console.log("Unkeep");
+          console.log(keepPost);
+          if (keepPost.response.status === "success") {
+            setKeepPostCountCurrent(
+              keepPost.response.result.keepCount.toString()
+            );
+            dispatch(UpdateData(Math.floor(Math.random() * 101)));
+            if (keepPost.response.result.isKeep === false) {
+              if (currentURL === "/keeppost") {
+                setReflesh(Math.floor(Math.random() * 101));
+              }
             }
           }
+        } catch (error) {
+          console.log(error.error);
         }
       };
       handleKeepPostFinal();
@@ -221,14 +229,18 @@ export const PostCard = ({
   };
 
   const handleRemovePost = async () => {
-    const deletePost = await handleDeletePost(token, data?.postId);
-    console.log(deletePost);
-    if (deletePost.response.status === "success") {
-      setReflesh(Math.floor(Math.random() * 100) + 1);
-      setDialogToggle(true);
-      setTimeout(() => {
-        setDialogToggle(false);
-      }, 4000);
+    try {
+      const deletePost = await handleDeletePost(token, data?.postId);
+      console.log(deletePost);
+      if (deletePost.response.status === "success") {
+        setReflesh(Math.floor(Math.random() * 100) + 1);
+        setDialogToggle(true);
+        setTimeout(() => {
+          setDialogToggle(false);
+        }, 4000);
+      }
+    } catch (error) {
+      console.log(error.error);
     }
   };
 

@@ -34,9 +34,8 @@ export const Setting = () => {
         const response = await handleGetMyProfile(token);
         dispatch(AddUserData(response.data.session));
       } catch (error) {
-        const { response } = error;
-        console.error("เกิดข้อผิดพลาด :", response?.data.error);
-        if (response?.data.error === "Token not found") {
+        console.log("เกิดข้อผิดพลาด :", error.error);
+        if (error.error === "Token not found") {
           localStorage.removeItem("token");
           navigate("/");
         }
