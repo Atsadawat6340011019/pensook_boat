@@ -61,7 +61,7 @@ export const handleCreatePost = async (token, AllContent) => {
         isAnonymous: AllContent.isAnonymous,
         label: AllContent.label,
         content: AllContent.content,
-        attachImageArr: AllContent.attachImageArr,
+        //attachImageArr: AllContent.attachImageArr,
       },
       {
         headers: {
@@ -85,7 +85,7 @@ export const handleUpdatePost = async (token, AllContent) => {
         postId: AllContent.postId,
         label: AllContent.label,
         content: AllContent.content,
-        attachImageArr: AllContent.attachImageArr,
+        //attachImageArr: AllContent.attachImageArr,
       },
       {
         headers: {
@@ -242,7 +242,7 @@ export const handleCreateComment = async (token, AllContent) => {
       isAnonymous: AllContent.isAnonymous,
       postId: AllContent.postId,
       content: AllContent.content,
-      attachImageArr: AllContent.attachImageArr,
+      //attachImageArr: AllContent.attachImageArr,
     };
 
     if (AllContent.commentId) {

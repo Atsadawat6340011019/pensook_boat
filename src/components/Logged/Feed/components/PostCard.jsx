@@ -469,7 +469,9 @@ export const PostCard = ({
         </Typography>
       </Box>
       <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="test">
-        {showMore ? parse(data.content) : parse(data.content.substring(0, 250))}
+        {showMore
+          ? parse(data.content)
+          : parse(data.contentText.substring(0, 250))}
         {data.content?.length > 250 && (
           <span
             style={{ cursor: "pointer", color: "#007DFC" }}

@@ -159,7 +159,7 @@ export const PostRichTextModal = forwardRef(
         isAnonymous: isAnonymous,
         postId: postId,
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
-        attachImageArr: extractImgSrc(content),
+        //attachImageArr: extractImgSrc(content),
       };
       setButtonDisable(true);
       if (commentId) {
