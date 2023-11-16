@@ -89,11 +89,11 @@ function LinePlugin() {
 
 function HtmlConvertToDOM({ html }) {
   function replaceParagraphsWithCenterAlignment(htmlText) {
-    const centeredHtml = htmlText.replace(
+    const centeredHtml = htmlText?.replace(
       /<p>/g,
       '<p style="text-align: center;">'
     );
-    const leftAlignedHtml = centeredHtml.replace(
+    const leftAlignedHtml = centeredHtml?.replace(
       /<p style="text-align: center;">/g,
       "<p>"
     );

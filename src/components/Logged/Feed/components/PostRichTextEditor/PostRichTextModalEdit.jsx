@@ -97,6 +97,7 @@ export const PostRichTextModalEdit = forwardRef(
     const [errorNoti, setErrorNoti] = useState("");
     const [loading, setLoading] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false);
+    const [htmlBase64, setHtmlBase64] = useState();
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
@@ -118,6 +119,42 @@ export const PostRichTextModalEdit = forwardRef(
 
       return imgSrcArray;
     };
+
+    async function imageUrlToBase64(url) {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function replaceImageUrlsWithBase64(html) {
+      const imgRegex = /<img[^>]+src="([^"]+)"[^>]*>/g;
+      const matches = html.match(imgRegex);
+
+      if (matches) {
+        for (const match of matches) {
+          const imageUrl = match.match(/src="([^"]+)"/)[1];
+          const base64String = await imageUrlToBase64(imageUrl);
+          const updatedImgTag = match.replace(
+            imageUrl,
+            `data:image/png;base64,${base64String}`
+          );
+          html = html.replace(match, updatedImgTag);
+        }
+      }
+
+      return html;
+    }
+
+    replaceImageUrlsWithBase64(html)
+      .then((resultHtml) => {
+        setHtmlBase64(resultHtml);
+      })
+      .catch((error) => console.error(error));
 
     const filterConsecutiveEmptyParagraphs = (htmlString, maxConsecutive) => {
       var parser = new DOMParser();
@@ -163,8 +200,9 @@ export const PostRichTextModalEdit = forwardRef(
         isAnonymous: isAnonymous,
         label: labelText,
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
-        attachImageArr: extractImgSrc(content),
+        //attachImageArr: extractImgSrc(content),
       };
+
       setButtonDisable(true);
       if (
         AllContent?.label &&
@@ -311,13 +349,15 @@ export const PostRichTextModalEdit = forwardRef(
         </Box>
         <Box sx={{ width: 750, height: 380, mt: 3 }}>
           <Box sx={{ position: "relative", px: 7, height: 380 }}>
-            <RichTextEditor
-              content={content}
-              setContent={setContent}
-              errorNoti={errorNoti}
-              html={html}
-              editorToggle={editorToggle}
-            />
+            {htmlBase64 && (
+              <RichTextEditor
+                content={content}
+                setContent={setContent}
+                errorNoti={errorNoti}
+                html={htmlBase64}
+                editorToggle={editorToggle}
+              />
+            )}
           </Box>
         </Box>
       </Box>
