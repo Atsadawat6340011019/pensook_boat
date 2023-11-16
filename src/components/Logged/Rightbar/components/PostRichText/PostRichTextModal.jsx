@@ -161,6 +161,7 @@ export const PostRichTextModal = forwardRef(
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
         //attachImageArr: extractImgSrc(content),
       };
+      setLoading(true);
       setButtonDisable(true);
       if (commentId) {
         AllContent.commentId = commentId;
@@ -178,6 +179,7 @@ export const PostRichTextModal = forwardRef(
           if (commentData.response.status === "success") {
             dispatch(UpdataCommentData(Math.floor(Math.random() * 100) + 1));
             setTimeout(() => {
+              setLoading(false);
               onClose();
             }, 1000);
           }

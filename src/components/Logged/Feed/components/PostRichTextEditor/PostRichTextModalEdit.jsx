@@ -202,7 +202,7 @@ export const PostRichTextModalEdit = forwardRef(
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
         //attachImageArr: extractImgSrc(content),
       };
-
+      setLoading(true);
       setButtonDisable(true);
       if (
         AllContent?.label &&
@@ -217,6 +217,7 @@ export const PostRichTextModalEdit = forwardRef(
           if (postData.response.status === "success") {
             setReflesh(Math.floor(Math.random() * 101));
             setTimeout(() => {
+              setLoading(false);
               onClose();
             }, 1000);
           }

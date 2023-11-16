@@ -150,9 +150,10 @@ export const PostRichTextModal = forwardRef(
         isAnonymous: isAnonymous,
         label: labelText,
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
-        attachImageArr: extractImgSrc(content),
+        //attachImageArr: extractImgSrc(content),
       };
       console.log(AllContent);
+      setLoading(true);
       setButtonDisable(true);
       if (
         AllContent?.label &&
@@ -167,8 +168,9 @@ export const PostRichTextModal = forwardRef(
           if (postData.response.status === "success") {
             setReflesh(Math.floor(Math.random() * 101));
             setTimeout(() => {
+              setLoading(false);
               onClose();
-            }, 4000);
+            }, 2000);
           }
         } catch (error) {
           console.error("เกิดข้อผิดพลาด:", error.error);
