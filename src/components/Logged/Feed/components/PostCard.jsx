@@ -483,7 +483,7 @@ export const PostCard = ({
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
-              maxWidth: 600,
+              width: "100%",
             }}
           >
             {!imageSelect && (

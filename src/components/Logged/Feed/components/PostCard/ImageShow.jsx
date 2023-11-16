@@ -9,9 +9,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           <Grid item xs={12}>
             <img
               src={imageData[0]}
-              style={{ objectFit: "cover" }}
-              width={500}
-              height={530}
+              style={{ objectFit: "cover", height: "100%", width: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -28,7 +26,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             <img
               src={imageData[0]}
               style={{ objectFit: "cover" }}
-              width={300}
+              width={"100%"}
               height={300}
               alt="contentImage"
             />
@@ -42,7 +40,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             <img
               src={imageData[1]}
               style={{ objectFit: "cover" }}
-              width={300}
+              width={"100%"}
               height={300}
               alt="contentImage"
             />
@@ -60,7 +58,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[0]}
-              width={600}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -74,7 +72,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[1]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -88,7 +86,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[2]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -107,7 +105,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[0]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -122,7 +120,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[1]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -136,7 +134,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[2]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -150,7 +148,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[3]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -169,7 +167,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[0]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -184,7 +182,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[1]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -198,7 +196,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[2]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -212,7 +210,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[3]}
-              width={300}
+              width={"100%"}
               height={300}
               style={{ opacity: "70%", objectFit: "cover" }}
               alt="contentImage"
