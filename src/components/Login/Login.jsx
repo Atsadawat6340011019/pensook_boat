@@ -299,58 +299,191 @@ export const Login = () => {
                 component="h2"
                 sx={{ color: "#4F4F4F" }}
               >
-                Terms and Condition
+                ข้อกำหนดและเงื่อนไขการใช้งานเว็บไซต์
               </Typography>
               <Typography sx={{ color: "#4F4F4F" }}>
-                Last updated July 21, 2023
+                ปรับปรุง ณ วันที่ 13 พฤศจิกายน 2566
               </Typography>
             </Grid>
           </Grid>
           <Divider />
-          <Typography
-            component="h3"
-            sx={{ fontSize: 20, color: "#4F4F4F", mt: 2 }}
-          >
-            Terms
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim
-          </Typography>
-          <Typography
-            component="h3"
-            sx={{ fontSize: 20, color: "#4F4F4F", mt: 2 }}
-          >
-            Condition
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim
-          </Typography>
+          <Box overflow={"auto"} height={600}>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              ข้อกำหนดและเงื่อนไขนี้ (“ข้อกำหนด”) ควบคุมการใช้งานเว็บไซต์
+              PENSOOK ซึ่งรวมถึงหน้าทั้งหมดในเว็บไซต์นี้ รวมเรียกว่า “เว็บไซต์
+              PENSOOK” ของท่าน ภายใต้การเป็นเจ้าของและดำเนินการโดยบริษัท เป็นสุข
+              เฮลท์แคร์ เทคโนโลยี จำกัด ในข้อกำหนดนี้ คำว่า "บริษัท" "ของเรา"
+              หรือ "เรา" อ้างถึง บริษัท เป็นสุข เฮลท์แคร์ เทคโนโลยี จำกัด และ
+              "ท่าน" หรือ "ของท่าน" อ้างถึง ท่านผู้ใช้งานเว็บไซต์ PENSOOK
+            </Typography>
+            <Typography
+              component="h3"
+              sx={{ fontSize: 20, color: "#4F4F4F", mt: 2 }}
+            >
+              ข้อตกลงของข้อกำหนด
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              การเข้าถึงหรือการใช้เว็บไซต์ PENSOOK
+              เป็นการยอมรับการผูกพันตามข้อกำหนดเหล่านี้
+              หากท่านไม่ตกลงตามข้อกำหนดเหล่านี้
+              ท่านจะไม่ได้รับอนุญาตอย่างชัดเจนในการใช้เว็บไซต์ PENSOOK
+              และต้องหยุดการใช้งานโดยทันที
+              บริษัทขอสงวนสิทธิ์ในการเปลี่ยนแปลงหรือแก้ไขข้อกำหนดเหล่านี้ได้ทุกเมื่อตามดุลพินิจของเราแต่เพียงผู้เดียว
+              ข้อกำหนดใดที่มีการแก้ไขแล้วจะมีผลบังคับใช้ทันทีหลังจากการลงประกาศ
+              ดังนั้นเป็นความรับผิดชอบของท่านที่ควรตรวจสอบข้อกำหนดเหล่านี้เป็นระยะเพื่อรับทราบการเปลี่ยนแปลงที่อาจเกิดขึ้น
+              หากท่านยังคงใช้งานเว็บไซต์ PENSOOK หลังจากการลงประกาศ
+              ถือว่าท่านยอมรับการเปลี่ยนแปลงหรือแก้ไขดังกล่าว
+            </Typography>
+            <Typography
+              component="h3"
+              sx={{ fontSize: 20, color: "#4F4F4F", mt: 2 }}
+            >
+              นโยบายสิทธิส่วนบุคคล
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              ขอขอบพระคุณท่านผู้ใช้บริการทุกท่าน ที่เข้ามาเยี่ยมชมและใช้บริการ
+              ทำธุรกรรมต่าง ๆ ผ่านเว็บไซต์ของบริษัท
+              เพื่อเป็นการสร้างความเชื่อมั่น
+              และทำความเข้าใจเกี่ยวกับการใช้บริการเว็บไซต์ของเรา
+              เราขอเรียนว่าบริษัทมีนโยบาย
+              ในการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้บริการทุกท่านโดยสังเขปดังนี้
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; ข้อมูลส่วนบุคคล (Privacy notes)
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              ข้อมูลส่วนบุคคลที่ท่านได้ให้
+              หรือใช้ผ่านการประมวลผลของเครื่องคอมพิวเตอร์
+              ที่ควบคุมการทำงานของเว็บไซต์ของบริษัททั้งหมดนั้น
+              ท่านยอมรับและตกลงว่าเป็นสิทธิ และกรรมสิทธิ์ของบริษัท
+              ซึ่งบริษัทจะให้ความคุ้มครองความลับดังกล่าวอย่างดีที่สุด
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; ความไม่เป็นตัวแทนข้อมูลข่าวสาร (Disclaimer policy)
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              ข้อมูลที่บริษัทได้รับจากท่าน บริษัทจะนำมาพัฒนาแก้ไข
+              ปรับปรุงเพื่อให้บริการเว็บไซต์ของบริษัทมีประสิทธิภาพ
+              และก่อให้เกิดประโยชน์สูงสุดแก่ผู้ใช้บริการ การนำเสนอข้อมูล ข่าวสาร
+              บทความ หรือข้อความอื่นใดทั้งหมดในเว็บไซต์นี้เป็นเพียงการให้บริการ
+              รวบรวมข้อมูล ความรู้ ฐานข้อมูลทางวิชาการ และความรู้ด้านต่าง ๆ
+              รวมทั้งเป็นเวทีแสดงความคิดเห็น หรือแลกเปลี่ยน ข้อมูลข่าวสาร
+              ระหว่างผู้ใช้บริการด้วยกันเท่านั้น ดังนั้น
+              บริษัทจึงไม่รับรองความถูกต้องของบรรดาข้อมูล ข่าวสาร บทความ ภาพ
+              หรือข้อความอื่นใดกำหนดในเว็บไซต์นี้ หรือลิงค์ต่าง ๆ
+              ทั้งทางตรงและทางอ้อม ทั้งนี้
+              บริษัทจะไม่รับผิดชอบในความผิดพลาดที่อาจเกิดขึ้นจากการใช้ข้อมูลดังกล่าว
+              ข้างต้น ไม่ว่าจะเป็นการสื่อความหมาย
+              หรือเพื่อวัตถุประสงค์ใดโดยเฉพาะ
+              และบริษัทมีสิทธิที่จะระงับหรืองดการนำเสนอข้อมูลดังกล่าวข้างต้น
+              โดยไม่จำต้องบอกกล่าวล่วงหน้า บริษัทขอเรียนว่า บริษัทไม่ใช่ตัวแทน
+              ห้างหุ้นส่วน หรือบุคคลที่มีนิติสัมพันธ์ใด ๆ กับเจ้าของข้อมูล
+              ข่าวสาร บทความ หรือข้อความใด ๆ ซึ่งปรากฏอยู่บนเว็บไซต์ของบริษัท
+              บริษัทขอเรียนว่าเว็บไซต์นี้เป็นเพียงสื่อกลางที่ใช้ในการส่งผ่านข้อมูล
+              ระหว่าง ผู้ใช้บริการ และเจ้าของข้อมูลข่าวสาร ในด้านต่าง ๆ เท่านั้น
+              โดยบริษัทไม่สามารถตรวจสอบ หรือทราบถึงแหล่งที่มา และ /
+              หรือรายละเอียด ของเนื้อหา ทั้งหมดของเว็บไซต์
+              ดังนั้นการนำเสนอข้อมูลดังกล่าวหาก ก่อให้เกิดความเสียหาย
+              แก่ผู้ใช้บริการ หรือบุคคลภายนอก จึงไม่ก่อให้เกิดสิทธิ ความรับผิด
+              และ / หรือ ภาระผูกพันทางกฎหมายไม่ว่ากรณีใด ๆ ทั้งสิ้น
+              ระหว่างบริษัท เจ้าของข้อมูลข่าวสาร ผู้ใช้บริการ สมาชิกของเว็บไซต์
+              และบุคคลภายนอก
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; ลิขสิทธิ์ตามกฎหมาย (Copyrights)
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              บริษัทขอแจ้งให้ผู้ใช้บริการทั่วไปทราบว่า บรรดาข้อความ ภาพ เสียง
+              เนื้อหา ส่วนประกอบใด ๆ ทั้งหมดของเว็บไซต์
+              โดยให้หมายรวมถึงเครื่องหมายการค้า เครื่องหมายบริการ ชื่อ
+              ชื่อทางการค้า สิทธิบัตร โนว์ฮาว (Know How) ทรัพย์สินทางปัญญา ฯลฯ
+              ที่ปรากฏบนเว็บไซต์ของบริษัทนี้
+              เป็นงานอันได้รับความคุ้มครองตามกฎหมายทรัพย์สินทางปัญญาของไทยโดยชอบด้วยกฎหมายของบริษัท
+              แต่เพียงผู้เดียว หากบุคคลใด ลอกเลียน ปลอมแปลง ทำซ้ำ ดัดแปลง
+              เผยแพร่ต่อสาธารณชน จำหน่าย มีไว้ให้เช่า หรือ กระทำการใด ๆ
+              ในลักษณะที่เป็นการแสวงหาประโยชน์ทางการค้า หรือ ประโยชน์โดยมิชอบ
+              ไม่ว่าโดยประการใด ๆ จากทรัพย์สินทางปัญญา ดังกล่าวข้างต้น
+              โดยไม่ได้รับอนุญาตจากบริษัท บริษัทจะดำเนินการตามกฎหมาย
+              กับผู้ละเมิดสิทธิดังกล่าวโดยทันที
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; การจำกัดความรับผิด
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              ผู้ใช้บริการทราบและยอมรับว่า การใช้บริการผ่านเว็บไซต์ของบริษัท
+              ถือเป็นความเสี่ยงของผู้ใช้บริการแต่เพียงผู้เดียว
+              บริษัทจะไม่รับผิดชอบต่อความเสียหายใด ๆ ไม่ว่าโดยทางตรงหรือทางอ้อม
+              ความเสียหายอันเป็นผลต่อเนื่อง ความเสียหายเชิงลงโทษ การสูญเสียกำไร
+              ผลประโยชน์ ข้อมูล หรือความสูญเสียอื่น ๆ
+              ทั้งที่จับต้องได้และที่ไม่สามารถจับต้องได้อันเป็นผลอันเนื่องมาจากการใช้บริการ
+              การส่งต่อข้อมูล หรือการเข้ามาใช้บริการโดยไม่ได้รับอนุญาต
+              หรือเนื้อหาสาระใด ๆ ที่เกี่ยวข้องกับบริการ
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; เว็บไซต์ของบุคคลภายนอก
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              เว็บไซต์ PENSOOK
+              อาจมีการเชื่อมต่อไปยังเว็บไซต์อื่นที่ดำเนินการโดยบุคคลภายนอก
+              ("เว็บไซต์ของบุคคลภายนอก")
+              โดยเว็บไซต์ของบุคคลภายนอกเหล่านี้ไม่อยู่ภายใต้การควบคุมของบริษัท
+              และท่านยอมรับและรับทราบว่าเราไม่มีส่วนรับผิดชอบต่อความถูกต้อง
+              การปฏิบัติตามลิขสิทธิ์ ความถูกต้องตามกฎหมาย ความเหมาะสม
+              หรือลักษณะอื่นใดของเนื้อหาบนเว็บไซต์ของบุคคลภายนอกดังกล่าว
+              การที่มีลิงค์ของเว็บไซต์ของบุคคลภายนอกดังกล่าวในเว็บไซต์ PENSOOK
+              ไม่ได้หมายความว่าเว็บไซต์ของบุคคลภายนอกได้รับการอนุมัติหรือรับรองจากเรา
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; การลงทะเบียนผู้ใช้งาน
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              ท่านอาจต้องทำการลงทะเบียนเพื่อเข้าใช้งานเว็บ PENSOOK
+              ท่านยอมรับที่จะเก็บรักษารหัสผ่านของท่านไว้เป็นความลับและรับผิดชอบต่อการใช้งานทั้งหมดที่เกิดขึ้นภายใต้บัญชีและรหัสผ่านของท่าน
+              บริษัทขอสงวนสิทธิในการลบ เรียกคืน
+              หรือเปลี่ยนแปลงชื่อผู้ใช้งานที่ท่านเลือก
+              หากบริษัทพิจารณาตามที่เห็นสมควรแต่เพียงผู้เดียวว่าชื่อผู้ใช้งานดังกล่าวไม่เหมาะสม
+              ไม่สุภาพ หรือน่ารังเกียจ
+            </Typography>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2, color: "#4F4F4F" }}
+            >
+              &nbsp; การสิ้นสุดการใช้งาน
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2, ml: 1 }}>
+              บริษัทขอสงวนสิทธิ์ในการยกเลิกบัญชีของท่านหรือการเข้าถึงเว็บไซต์
+              PENSOOK ไม่ว่าด้วยเหตุผลใด ๆ ตามดุลพินิจของบริษัทแต่เพียงผู้เดียว
+              ถ้าพิจารณาว่าการใช้งานของท่านไม่เหมาะสม
+              หรือในกรณีที่ท่านฝ่าผืนข้อกำหนดเหล่านี้
+              บริษัทอาจทำการแจ้งเตือนหรือไม่แจ้งให้ทราบก่อนการยกเลิกการใช้งานเว็บไซต์ของท่าน
+              หากบริษัทยกเลิก หรือระงับบัญชีของท่านไม่ว่าด้วยเหตุผลใด ๆ ก็ตาม
+              ท่านไม่ได้รับอนุญาตให้ลงทะเบียน และสร้างบัญชีใหม่ภายใต้ชื่อของท่าน
+              ชื่อปลอมหรือชื่อที่ยืมมา หรือชื่อของบุคคลภายนอก
+              แม้ว่าท่านจะกระทำแทนบุคคลภายนอกก็ตาม นอกจากการยกเลิก
+              หรือการระงับบัญชีของท่าน
+              บริษัทขอสงวนสิทธิ์ในการดำเนินการที่เหมาะสมตามกฎหมาย
+              ซึ่งรวมถึงแต่ไม่จำกัดเพียงการดำเนินการทั้งทางแพ่ง อาญา
+              และคำสั่งศาล
+            </Typography>
+          </Box>
         </Box>
       </Modal>
     </Grid>
