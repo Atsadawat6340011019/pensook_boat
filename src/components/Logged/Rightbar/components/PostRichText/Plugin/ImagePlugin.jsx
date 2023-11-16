@@ -125,22 +125,41 @@ export function InsertImageUploadedDialogBody({ onClick }) {
     if (files === null || !files[0]) {
       return false; // ถ้าไม่มีไฟล์หรือไม่มีไฟล์ในอาร์เรย์
     }
+    const fileSizeInBytes = files[0].size;
+    const fileSizeInKb = fileSizeInBytes / 1024;
+    console.log(`File size: ${fileSizeInKb} KB`);
+    let percent = (2000 / fileSizeInKb).toFixed(2);
+    console.log(percent);
+    if (percent < 1) {
+      percent *= 100;
+      console.log(percent);
+      try {
+        const ResizeImage = await onChangeResize(files, percent);
 
-    try {
-      const ResizeImage = await onChangeResize(files);
+        const reader = new FileReader();
+        reader.onload = function () {
+          if (typeof reader.result === "string") {
+            setFileName(URL.createObjectURL(files[0]));
+            setSrc(ResizeImage);
+            console.log("แปลงแล้ว");
+          }
+        };
 
+        reader.readAsDataURL(files[0]);
+      } catch (err) {
+        console.log(err);
+        // สามารถเพิ่มการจัดการข้อผิดพลาดเพิ่มเติมตามความต้องการ
+      }
+    } else {
       const reader = new FileReader();
       reader.onload = function () {
         if (typeof reader.result === "string") {
           setFileName(URL.createObjectURL(files[0]));
-          setSrc(ResizeImage);
+          setSrc(reader.result);
         }
       };
 
       reader.readAsDataURL(files[0]);
-    } catch (err) {
-      console.log(err);
-      // สามารถเพิ่มการจัดการข้อผิดพลาดเพิ่มเติมตามความต้องการ
     }
   };
 
