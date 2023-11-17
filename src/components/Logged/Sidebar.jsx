@@ -41,7 +41,7 @@ export const Sidebar = ({}) => {
           >
             โพสต์ที่คุณ Keep
           </Typography>
-          {keepPostData.length > 0 && (
+          {keepPostData?.length > 0 && (
             <Typography
               sx={{
                 fontSize: 14,
