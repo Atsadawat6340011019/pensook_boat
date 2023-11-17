@@ -41,20 +41,22 @@ export const Sidebar = ({}) => {
           >
             โพสต์ที่คุณ Keep
           </Typography>
-          <Typography
-            sx={{
-              fontSize: 14,
-              pr: 2,
-              color: "#007DFC",
-              cursor: "pointer",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            }}
-            onClick={() => navigate("/keeppost")}
-          >
-            {"ดูทั้งหมด >"}
-          </Typography>
+          {keepPostData.length > 0 && (
+            <Typography
+              sx={{
+                fontSize: 14,
+                pr: 2,
+                color: "#007DFC",
+                cursor: "pointer",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
+              onClick={() => navigate("/keeppost")}
+            >
+              {"ดูทั้งหมด >"}
+            </Typography>
+          )}
         </Box>
 
         <Box sx={{ px: 2, overflow: "auto", height: 430 }}>

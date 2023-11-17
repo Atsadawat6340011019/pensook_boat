@@ -49,9 +49,13 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetKeepPost(token);
           dispatch(AddUserData(response.data.session));
-          setFeedData(response.data.response);
-          setCommentData(response.data.response[0].commentList);
-          dispatch(AddPostId(response.data.response[0].postId));
+          if (response.data.response.length === 0) {
+            navigate("/feed");
+          } else {
+            setFeedData(response.data.response);
+            setCommentData(response.data.response[0].commentList);
+            dispatch(AddPostId(response.data.response[0].postId));
+          }
         } else if (currentURL === "/mypost") {
           setCommentData([]);
           dispatch(AddPostId(""));
