@@ -272,9 +272,8 @@ export const Login = () => {
           <Typography sx={{ fontWeight: "600", fontSize: 60, lineHeight: 1 }}>
             Welcome to our community
           </Typography>
-          <Typography sx={{ fontWeight: "400", fontSize: 18, pt: 2 }}>
-            Lorem ipsum clarity gives you the blocks & components you need to
-            create a truly professional website.
+          <Typography sx={{ fontWeight: "400", fontSize: 18, pt: 2, pl: 1 }}>
+            ชีวิตดี ๆ เริ่มต้นที่ เป็นสุข
           </Typography>
         </Box>
       </Grid>

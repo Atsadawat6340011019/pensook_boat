@@ -44,6 +44,7 @@ import {
   createLinkMatcherWithRegExp,
 } from "@lexical/react/LexicalAutoLinkPlugin";
 import { AutoLinkNode } from "@lexical/link";
+import { useSelector } from "react-redux";
 
 const theme = {
   // Theme styling goes here
@@ -124,6 +125,10 @@ const MATCHERS = [
 ];
 
 function ToolbarPlugin({ setModalUploadImage, content }) {
+  const checkSecondComment = useSelector(
+    (state) => state.select.checkSecondComment
+  );
+
   function countImgTags(htmlString) {
     const div = document.createElement("div");
     div.innerHTML = htmlString;
@@ -151,18 +156,20 @@ function ToolbarPlugin({ setModalUploadImage, content }) {
       }}
     >
       <Box sx={{ pl: 6 }}>
-        <IconButton
-          onClick={() => setModalUploadImage(true)}
-          disabled={countImgTags(content) >= 3}
-        >
-          <CropOriginal
-            sx={{
-              color: countImgTags(content) >= 3 ? "#cdcdcd" : "#000",
-              width: 24,
-              height: 24,
-            }}
-          />
-        </IconButton>
+        {!checkSecondComment && (
+          <IconButton
+            onClick={() => setModalUploadImage(true)}
+            disabled={countImgTags(content) >= 3}
+          >
+            <CropOriginal
+              sx={{
+                color: countImgTags(content) >= 3 ? "#cdcdcd" : "#000",
+                width: 24,
+                height: 24,
+              }}
+            />
+          </IconButton>
+        )}
       </Box>
       <Box sx={{ pr: 6 }}>
         <ListToolbarPlugin />

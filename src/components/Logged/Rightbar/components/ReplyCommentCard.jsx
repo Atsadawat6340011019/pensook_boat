@@ -19,7 +19,10 @@ import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../../utils/functions";
 import { useDispatch } from "react-redux";
-import { AddCommentId } from "../../../../store/selectSlice";
+import {
+  AddCommentId,
+  CheckSecondComment,
+} from "../../../../store/selectSlice";
 import {
   handleDownVoteComment,
   handleUnVoteComment,
@@ -116,7 +119,7 @@ export const ReplyCommentCard = ({ data, setRichTextModalToggle }) => {
         >
           {showMore
             ? parse(data.content)
-            : parse(data.content.substring(0, 250))}
+            : parse(data.contentText.substring(0, 250))}
           {data.content?.length > 250 && (
             <span
               style={{ cursor: "pointer", color: "#007DFC" }}
@@ -275,6 +278,7 @@ export const ReplyCommentCard = ({ data, setRichTextModalToggle }) => {
         }}
         onClick={() => {
           dispatch(AddCommentId(data?.commentId));
+          dispatch(CheckSecondComment(true));
           setRichTextModalToggle(true);
         }}
       >

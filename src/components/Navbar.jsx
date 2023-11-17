@@ -55,9 +55,9 @@ export const Navbar = () => {
           }}
         >
           <img src={LogoPensook} width={125} height={28} alt="logoPensook" />
-          <Search>
+          {/*<Search>
             <InputBase fullWidth placeholder="ค้นหา....." />
-          </Search>
+          </Search>*/}
         </Box>
         <Box
           sx={{

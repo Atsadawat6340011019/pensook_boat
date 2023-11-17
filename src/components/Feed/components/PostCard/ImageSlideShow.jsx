@@ -38,9 +38,8 @@ export const ImageSlideShow = ({
         <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
           <img
             src={imageSelectData}
-            width={500}
-            height={530}
-            style={{ objectFit: "cover" }}
+            width={"100%"}
+            style={{ objectFit: "contain", maxHeight: 500 }}
             alt="imageSelect"
           />
         </Box>

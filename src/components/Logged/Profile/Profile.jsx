@@ -430,7 +430,7 @@ export const Profile = () => {
               src={
                 userData.profileCover
                   ? userData.profileCoverPath
-                  : "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+                  : "https://images.squarespace-cdn.com/content/v1/5b7fcdb28ab722e3da4af3cc/1592215617998-RGLPH8B4W7F4T2PBIGW1/Dust+Grey.jpeg"
               }
               style={{
                 width: 640,

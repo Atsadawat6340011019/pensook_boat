@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PostRichTextModal } from "./Feed/components/PostRichText/PostRichTextModal";
-import { AddPostId } from "../../store/selectSlice";
+import { AddCommentId, AddPostId } from "../../store/selectSlice";
 import { TabSelectCard } from "./Feed/components/TabSelectCard";
 
 export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
@@ -37,36 +37,48 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
     const fectFeedData = async (token) => {
       try {
         if (currentURL === "/feed") {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetFeed(token);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (currentURL === "/keeppost") {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetKeepPost(token);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (currentURL === "/mypost") {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetMyPost(token);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (currentURL === "/myanonymouspost") {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetMyAnonymousPost(token);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (currentURL === "/myreplypost") {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetMyReplyPost(token);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
         } else if (id) {
+          setCommentData([]);
+          dispatch(AddPostId(""));
           const response = await handleGetFeedWithPostIdLogged(token, id);
           dispatch(AddUserData(response.data.session));
           setFeedData(response.data.response);
@@ -106,7 +118,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
             currentURL === "/mypost" ||
             currentURL === "/myanonymouspost" ||
             currentURL === "/myreplypost"
-              ? 700
+              ? 770
               : 750,
           overflow: "auto",
           overflowX: "hidden",

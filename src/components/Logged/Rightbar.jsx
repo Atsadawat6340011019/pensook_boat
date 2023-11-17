@@ -6,6 +6,7 @@ import { CommentStatus } from "./Rightbar/components/CommentStatus";
 import { handleGetComment } from "../../services/feedServices";
 import { useDispatch, useSelector } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
+import { CheckSecondComment } from "../../store/selectSlice";
 
 export const Rightbar = ({ commentData, setCommentData }) => {
   const token = localStorage.getItem("token");
@@ -76,7 +77,10 @@ export const Rightbar = ({ commentData, setCommentData }) => {
       </Box>
       <Modal
         open={richTextModalToggle}
-        onClose={() => setRichTextModalToggle(false)}
+        onClose={() => {
+          setRichTextModalToggle(false);
+          dispatch(CheckSecondComment(false));
+        }}
       >
         <PostRichTextModal onClose={() => setRichTextModalToggle(false)} />
       </Modal>

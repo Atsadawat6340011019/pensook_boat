@@ -46,7 +46,7 @@ export const CommentCard = ({ data }) => {
         >
           {showMore
             ? parse(data.content)
-            : parse(data.content.substring(0, 250))}
+            : parse(data.contentText.substring(0, 250))}
           {data.content?.length > 250 && (
             <span
               style={{ cursor: "pointer", color: "#007DFC" }}

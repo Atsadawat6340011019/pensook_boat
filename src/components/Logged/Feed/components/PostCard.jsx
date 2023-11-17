@@ -391,7 +391,10 @@ export const PostCard = ({
             </div>
           </div>
           <MenuItem
-            onClick={() => setEditorToggle(true)}
+            onClick={() => {
+              setEditorToggle(true);
+              handleMenuClosed();
+            }}
             style={{
               width: "317px",
               height: "50px",
@@ -411,7 +414,10 @@ export const PostCard = ({
             </div>
           </MenuItem>
           <MenuItem
-            onClick={handleRemovePost}
+            onClick={() => {
+              handleRemovePost();
+              handleMenuClosed();
+            }}
             style={{
               width: "317px",
               height: "50px",

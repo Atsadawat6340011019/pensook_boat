@@ -4,6 +4,7 @@ const initialState = {
   postIdSelect: [],
   commentIdSelect: [],
   keepPostIdSelect: undefined,
+  checkSecondComment: false,
 };
 
 export const selectSlice = createSlice({
@@ -19,9 +20,13 @@ export const selectSlice = createSlice({
     AddKeepPostId: (state, action) => {
       state.keepPostIdSelect = action.payload;
     },
+    CheckSecondComment: (state, action) => {
+      state.checkSecondComment = action.payload;
+    },
   },
 });
 
-export const { AddPostId, AddCommentId, AddKeepPostId } = selectSlice.actions;
+export const { AddPostId, AddCommentId, AddKeepPostId, CheckSecondComment } =
+  selectSlice.actions;
 
 export default selectSlice.reducer;

@@ -96,9 +96,9 @@ export const Navbar = () => {
             />
           </a>
 
-          <Search>
+          {/*<Search>
             <InputBase fullWidth placeholder="ค้นหา....." />
-          </Search>
+          </Search>*/}
         </Box>
         <Box
           sx={{

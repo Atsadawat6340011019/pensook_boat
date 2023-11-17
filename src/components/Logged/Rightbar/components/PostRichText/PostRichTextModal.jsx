@@ -19,6 +19,7 @@ import {
 } from "../../../../../services/feedServices";
 import { Oval } from "react-loader-spinner";
 import { UpdataCommentData } from "../../../../../store/userSlice";
+import { CheckSecondComment } from "../../../../../store/selectSlice";
 
 const style = {
   position: "relative",
@@ -178,6 +179,7 @@ export const PostRichTextModal = forwardRef(
           console.log(commentData);
           if (commentData.response.status === "success") {
             dispatch(UpdataCommentData(Math.floor(Math.random() * 100) + 1));
+            dispatch(CheckSecondComment(false));
             setTimeout(() => {
               setLoading(false);
               onClose();
@@ -219,7 +221,10 @@ export const PostRichTextModal = forwardRef(
 
         <IconButton
           sx={{ position: "absolute", top: 15, right: 15 }}
-          onClick={onClose}
+          onClick={() => {
+            onClose();
+            dispatch(CheckSecondComment(false));
+          }}
         >
           <Close sx={{ color: "#000", width: 29, height: 29 }} />
         </IconButton>

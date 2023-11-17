@@ -9,9 +9,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           <Grid item xs={12}>
             <img
               src={imageData[0]}
-              style={{ objectFit: "cover" }}
-              width={200}
-              height={200}
+              style={{ objectFit: "cover", height: "100%", width: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -28,7 +26,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             <img
               src={imageData[0]}
               style={{ objectFit: "cover" }}
-              width={150}
+              width={"100%"}
               height={150}
               alt="contentImage"
             />
@@ -42,7 +40,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             <img
               src={imageData[1]}
               style={{ objectFit: "cover" }}
-              width={150}
+              width={"100%"}
               height={150}
               alt="contentImage"
             />
@@ -60,7 +58,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[0]}
-              width={300}
+              width={"100%"}
               height={150}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -74,7 +72,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[1]}
-              width={150}
+              width={"100%"}
               height={150}
               style={{ objectFit: "cover" }}
               alt="contentImage"
@@ -88,7 +86,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
           >
             <img
               src={imageData[2]}
-              width={150}
+              width={"100%"}
               height={150}
               style={{ objectFit: "cover" }}
               alt="contentImage"
