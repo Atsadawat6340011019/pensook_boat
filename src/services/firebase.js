@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
-const isProduction = false;
+const isProduction = true;
 
 const firebaseConfig = {
   apiKey: "AIzaSyB6M3_DZX7N5J3aV1HM5sZHPMhyYfP_MqY",
