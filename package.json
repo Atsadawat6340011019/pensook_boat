@@ -31,11 +31,12 @@
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "socket.io-client": "^4.7.2",
     "web-vitals": "^2.1.4",
     "yjs": "^13.6.8"
   },
   "scripts": {
-    "start": "PORT=3010 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

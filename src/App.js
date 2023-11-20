@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
@@ -15,6 +15,7 @@ import { UnloggedRoute } from "./routes/UnloggedRoute";
 import { LoginPage } from "./pages/LoginPage";
 import { KeepPostPage } from "./pages/KeepPostPage";
 import { MyPostPage } from "./pages/MyPostPage";
+import io from 'socket.io-client';
 
 const HomePage = ({
   keepPostData,
@@ -43,6 +44,28 @@ function App() {
   const [refleshKeepPost, setRefleshKeepPost] = useState();
 
   //const userData = useSelector((state) => state.user.userData);
+
+  useEffect(() => {
+    const socket = io(
+      process.env.REACT_APP_IS_PROD == 'true'
+        ? process.env.REACT_APP_BACKEND_URL_PROD
+        : process.env.REACT_APP_BACKEND_URL
+    );
+  
+    socket.on("notification", (data) => {
+      let socketMessage = JSON.parse(data)
+      let userId = "someIdfromcookie"
+      console.log(JSON.parse(data))
+      if (socketMessage.receiverUserId == userId) {
+        // if have data call API getNotification
+      }
+    })
+  
+    return () => {
+      socket.disconnect();
+    };
+  
+  }, []);
 
   return (
     <Box bgcolor="#F1F1F1" sx={{ height: "100vh" }}>
