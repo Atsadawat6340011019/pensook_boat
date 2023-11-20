@@ -12,14 +12,15 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LogoPensook from "../../assets/LogoPensook.png";
 import LogoPensook32 from "../../assets/PENSOOK_logo_32.png";
-import { NotificationsNone } from "@mui/icons-material";
+import { NotificationsNone, SearchOutlined } from "@mui/icons-material";
 import { auth } from "../../services/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddUserData } from "../../store/userSlice";
+import { handleGetSearchList } from "../../services/getDataServices";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -33,6 +34,7 @@ const Search = styled("div")(({ theme }) => ({
   borderRadius: "8px",
   border: "1px #E7EAEE solid",
   width: "50%",
+  display: "flex",
 }));
 
 const Icons = styled(Box)(({ theme }) => ({
@@ -54,11 +56,17 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 export const Navbar = () => {
+  const token = localStorage.getItem("token");
   const [anchorEl, setAnchorEl] = useState();
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
+  const searchBoxRef = useRef();
+  const [showResults, setShowResults] = useState(false);
+  const [dataSearch, setDataSearch] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,6 +81,44 @@ export const Navbar = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    if (term !== "") {
+      const results = dataSearch.filter((item) =>
+        item.label.toLowerCase().includes(term.toLowerCase())
+      );
+
+      setSearchResults(results);
+      setShowResults(true);
+    } else {
+      setSearchResults();
+      setShowResults(false);
+    }
+  };
+
+  const handleClickOutside = (e) => {
+    if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
+      setShowResults(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    handleGetSearchList(token)
+      .then((response) => {
+        console.log(response.data);
+        setDataSearch(response.data.response.searchList);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <AppBar position="sticky" sx={{ background: "#fff", mb: 2 }}>
@@ -95,10 +141,72 @@ export const Navbar = () => {
               style={{ cursor: "pointer" }}
             />
           </a>
-
-          {/*<Search>
-            <InputBase fullWidth placeholder="ค้นหา....." />
-          </Search>*/}
+          <Box
+            sx={{ display: "flex", alignItems: "center", position: "relative" }}
+            ref={searchBoxRef}
+          >
+            <Typography
+              sx={{
+                bgcolor: "#007DFC",
+                fontSize: 14,
+                fontWeight: 500,
+                px: 1,
+                height: 40,
+                borderTopLeftRadius: "8px",
+                borderBottomLeftRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              ค้นหา
+            </Typography>
+            <InputBase
+              ref={searchBoxRef}
+              fullWidth
+              placeholder="ช่วงนี้คุณเป็นยังไงบ้าง..."
+              sx={{
+                border: "1px solid #E7EAEE",
+                borderTopRightRadius: "8px",
+                borderBottomRightRadius: "8px",
+                height: 40,
+                fontSize: 14,
+                width: 300,
+                pl: 2,
+              }}
+              endAdornment={<SearchOutlined />}
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            {showResults && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  color: "#000",
+                  border: "1px solid #E7EAEE",
+                  bgcolor: "#fff",
+                  width: 350,
+                  top: 45,
+                  borderRadius: "8px",
+                  left: -2,
+                  maxHeight: 182,
+                  overflow: "auto",
+                }}
+              >
+                {searchResults?.map((item) => (
+                  <MenuItem
+                    key={item._id}
+                    onClick={() => navigate(`/feed/${item._id}`)}
+                  >
+                    <div
+                      style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    >
+                      {item.label}
+                    </div>
+                  </MenuItem>
+                ))}
+              </Box>
+            )}
+          </Box>
         </Box>
         <Box
           sx={{

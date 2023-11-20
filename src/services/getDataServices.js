@@ -12,3 +12,11 @@ export const handleGetFeed = () => {
 export const handleGetFeedWithPostId = (postId) => {
   return axios.get(`${BACKEND_URL}/auth/getFeed?postId=${postId}`);
 };
+
+export const handleGetSearchList = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getSearchList`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
