@@ -165,6 +165,7 @@ export default function Notification({ onClose }) {
             sx={{
               fontSize: 18,
               ml: 1,
+              textTransform: 'none',
               "&.MuiButtonBase-root": {
                 color: "#808080",
               },
