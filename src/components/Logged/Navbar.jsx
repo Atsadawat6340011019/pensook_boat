@@ -105,7 +105,7 @@ export const Navbar = () => {
   };
 
   const handleButtonSearch = () => {
-    const postArray = searchResults.map((item) => item._id);
+    const postArray = searchResults?.map((item) => item._id);
     dispatch(AddSearchPostId(postArray));
     navigate("/search");
   };
@@ -213,7 +213,11 @@ export const Navbar = () => {
                 {searchResults?.map((item) => (
                   <MenuItem
                     key={item._id}
-                    onClick={() => navigate(`/feed/${item._id}`)}
+                    onClick={() => {
+                      dispatch(AddSearchPostId([item?._id]));
+                      setSearchTerm(item?.label);
+                      navigate(`/search`);
+                    }}
                   >
                     <div
                       style={{ overflow: "hidden", textOverflow: "ellipsis" }}
