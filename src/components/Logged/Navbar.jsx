@@ -95,8 +95,10 @@ export const Navbar = () => {
 
       if (e.key === "Enter") {
         const postArray = results.map((item) => item._id);
-        dispatch(AddSearchPostId(postArray));
-        navigate("/search");
+        if (postArray) {
+          dispatch(AddSearchPostId(postArray));
+          navigate("/search");
+        }
         setShowResults(false);
       }
     } else {
@@ -107,8 +109,10 @@ export const Navbar = () => {
 
   const handleButtonSearch = () => {
     const postArray = searchResults?.map((item) => item._id);
-    dispatch(AddSearchPostId(postArray));
-    navigate("/search");
+    if (postArray) {
+      dispatch(AddSearchPostId(postArray));
+      navigate("/search");
+    }
   };
 
   const handleClickOutside = (e) => {
