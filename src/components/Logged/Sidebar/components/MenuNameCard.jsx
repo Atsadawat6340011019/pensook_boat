@@ -30,6 +30,7 @@ export const MenuNameCard = () => {
       currentURL === "/mypost" ||
       currentURL === "/myanonymouspost" ||
       currentURL === "/myreplypost" ||
+      currentURL === "/search" ||
       currentURL.includes("/feed/") ? (
         <IconButton
           sx={{ color: "#000", mr: 2 }}
@@ -50,6 +51,7 @@ export const MenuNameCard = () => {
         {currentURL === "/mypost" && "โพสต์ของคุณ"}
         {currentURL === "/myanonymouspost" && "โพสต์ของคุณ"}
         {currentURL === "/myreplypost" && "โพสต์ของคุณ"}
+        {currentURL === "/search" && "ผลการค้นหา"}
         {currentURL.includes("/feed/") && !keepPostId && "หน้าหลัก"}
         {currentURL.includes("/feed/") && keepPostId && "โพสต์ที่คุณ Keep"}
       </Typography>

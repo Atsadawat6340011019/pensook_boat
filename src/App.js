@@ -15,7 +15,7 @@ import { UnloggedRoute } from "./routes/UnloggedRoute";
 import { LoginPage } from "./pages/LoginPage";
 import { KeepPostPage } from "./pages/KeepPostPage";
 import { MyPostPage } from "./pages/MyPostPage";
-import io from 'socket.io-client';
+import io from "socket.io-client";
 
 const HomePage = ({
   keepPostData,
@@ -47,24 +47,23 @@ function App() {
 
   useEffect(() => {
     const socket = io(
-      process.env.REACT_APP_IS_PROD == 'true'
+      process.env.REACT_APP_IS_PROD == "true"
         ? process.env.REACT_APP_BACKEND_URL_PROD
         : process.env.REACT_APP_BACKEND_URL
     );
-  
+
     socket.on("notification", (data) => {
-      let socketMessage = JSON.parse(data)
-      let userId = "someIdfromcookie"
-      console.log(JSON.parse(data))
+      let socketMessage = JSON.parse(data);
+      let userId = "someIdfromcookie";
+      console.log(JSON.parse(data));
       if (socketMessage.receiverUserId == userId) {
         // if have data call API getNotification
       }
-    })
-  
+    });
+
     return () => {
       socket.disconnect();
     };
-  
   }, []);
 
   return (
@@ -114,6 +113,16 @@ function App() {
             />
             <Route
               path="feed/:id"
+              element={
+                <FeedAndCommentsPage
+                  setCommentData={setCommentData}
+                  commentData={commentData}
+                  setRefleshKeepPost={setRefleshKeepPost}
+                />
+              }
+            />
+            <Route
+              path="search"
               element={
                 <FeedAndCommentsPage
                   setCommentData={setCommentData}

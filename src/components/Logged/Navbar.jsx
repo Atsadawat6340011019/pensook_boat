@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddUserData } from "../../store/userSlice";
 import { handleGetSearchList } from "../../services/getDataServices";
+import { AddSearchPostId } from "../../store/selectSlice";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -89,9 +90,14 @@ export const Navbar = () => {
       const results = dataSearch.filter((item) =>
         item.label.toLowerCase().includes(term.toLowerCase())
       );
-
       setSearchResults(results);
       setShowResults(true);
+
+      if (e.key === "Enter") {
+        const postArray = results.map((item) => item._id);
+        dispatch(AddSearchPostId(postArray));
+        navigate("/search");
+      }
     } else {
       setSearchResults();
       setShowResults(false);
@@ -176,6 +182,7 @@ export const Navbar = () => {
               endAdornment={<SearchOutlined />}
               value={searchTerm}
               onChange={handleSearch}
+              onKeyDown={handleSearch}
             />
             {showResults && (
               <Box

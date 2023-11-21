@@ -4,6 +4,7 @@ import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
 import {
   handleGetFeed,
+  handleGetFeedBySearch,
   handleGetFeedWithPostIdLogged,
   handleGetKeepPost,
   handleGetMyAnonymousPost,
@@ -24,6 +25,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   const [richTextModalToggle, setRichTextModalToggle] = useState(false);
   const [reflesh, setReflesh] = useState("");
   const updateComment = useSelector((state) => state.user.updateCommentData);
+  const postArray = useSelector((state) => state.select.postArray);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -88,6 +90,15 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
+        } else if (currentURL === "/search") {
+          console.log(postArray);
+          setCommentData([]);
+          dispatch(AddPostId(""));
+          const response = await handleGetFeedBySearch(token, postArray);
+          dispatch(AddUserData(response.data.session));
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+          dispatch(AddPostId(response.data.response[0].postId));
         }
       } catch (error) {
         console.log("เกิดข้อผิดพลาด :", error.error);
@@ -99,7 +110,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
     };
 
     fectFeedData(token);
-  }, [setCommentData, dispatch, navigate, reflesh, updateComment]);
+  }, [setCommentData, dispatch, navigate, reflesh, updateComment, postArray]);
 
   return (
     <Box flex={3} maxWidth={1000}>
@@ -123,6 +134,8 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
             currentURL === "/myanonymouspost" ||
             currentURL === "/myreplypost"
               ? 770
+              : currentURL === "/search"
+              ? 820
               : 750,
           overflow: "auto",
           overflowX: "hidden",

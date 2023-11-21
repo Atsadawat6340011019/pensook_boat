@@ -13,6 +13,19 @@ export const handleGetFeed = (token) => {
   });
 };
 
+export const handleGetFeedBySearch = (token, postArray) => {
+  const postArrayJson = JSON.stringify(postArray);
+
+  return axios.get(
+    `${BACKEND_URL}/api/social/getFeed?postArray=${postArrayJson}`,
+    {
+      headers: {
+        "x-access-token": token,
+      },
+    }
+  );
+};
+
 export const handleGetFeedWithPostIdLogged = (token, postId) => {
   return axios.get(`${BACKEND_URL}/api/social/getFeed?postId=${postId}`, {
     headers: {
