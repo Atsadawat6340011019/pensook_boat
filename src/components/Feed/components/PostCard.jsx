@@ -7,6 +7,7 @@ import { formatTimestamp } from "../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 import "./PostCard.css";
+import { useNavigate } from "react-router-dom";
 
 export const PostCard = ({
   data,
@@ -17,6 +18,7 @@ export const PostCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -117,6 +119,7 @@ export const PostCard = ({
               bgcolor: "#ededed",
             },
           }}
+          onClick={() => navigate("/login")}
         >
           {data.upVote} Up Vote
         </Button>

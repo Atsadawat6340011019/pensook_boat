@@ -1,10 +1,20 @@
 import styled from "@emotion/styled";
-import { AppBar, Avatar, Box, Button, InputBase, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  InputBase,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import LogoPensook from "../assets/LogoPensook.png";
 import LogoPensook32 from "../assets/PENSOOK_logo_32.png";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { SearchOutlined } from "@mui/icons-material";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -55,9 +65,45 @@ export const Navbar = () => {
           }}
         >
           <img src={LogoPensook} width={125} height={28} alt="logoPensook" />
-          {/*<Search>
-            <InputBase fullWidth placeholder="ค้นหา....." />
-          </Search>*/}
+          <Box
+            sx={{ display: "flex", alignItems: "center", position: "relative" }}
+            onClick={() => navigate("/login")}
+          >
+            <Typography
+              sx={{
+                bgcolor: "#007DFC",
+                fontSize: 14,
+                fontWeight: 500,
+                px: 1,
+                height: 40,
+                borderTopLeftRadius: "8px",
+                borderBottomLeftRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              ค้นหา
+            </Typography>
+            <InputBase
+              fullWidth
+              placeholder="ช่วงนี้คุณเป็นยังไงบ้าง..."
+              sx={{
+                border: "1px solid #E7EAEE",
+                borderTopRightRadius: "8px",
+                borderBottomRightRadius: "8px",
+                height: 40,
+                fontSize: 14,
+                width: 300,
+                pl: 2,
+                pr: 1,
+              }}
+              endAdornment={
+                <IconButton>
+                  <SearchOutlined sx={{ color: "#000" }} />
+                </IconButton>
+              }
+            />
+          </Box>
         </Box>
         <Box
           sx={{
