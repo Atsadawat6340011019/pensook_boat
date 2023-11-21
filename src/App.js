@@ -16,6 +16,9 @@ import { LoginPage } from "./pages/LoginPage";
 import { KeepPostPage } from "./pages/KeepPostPage";
 import { MyPostPage } from "./pages/MyPostPage";
 import io from "socket.io-client";
+import { handleGetNotification } from "./services/getDataServices";
+import { useDispatch, useSelector } from "react-redux";
+import { AddNotificationData } from "./store/userSlice";
 
 const HomePage = ({
   keepPostData,
@@ -42,8 +45,19 @@ function App() {
   const [commentData, setCommentData] = useState();
   const [keepPostData, setKeepPostData] = useState();
   const [refleshKeepPost, setRefleshKeepPost] = useState();
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const userData = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
 
-  //const userData = useSelector((state) => state.user.userData);
+  const handleGetNoti = async () => {
+    try {
+      const notification = await handleGetNotification(token);
+      dispatch(AddNotificationData(notification.data.response));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const socket = io(
@@ -54,10 +68,12 @@ function App() {
 
     socket.on("notification", (data) => {
       let socketMessage = JSON.parse(data);
-      let userId = "someIdfromcookie";
+
       console.log(JSON.parse(data));
+      console.log(socketMessage.receiverUserId == userId);
       if (socketMessage.receiverUserId == userId) {
-        // if have data call API getNotification
+        console.log("Update ข้อมูล");
+        handleGetNoti();
       }
     });
 

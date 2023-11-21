@@ -364,3 +364,23 @@ export const handleSendReport = async (token, AllContent) => {
     throw error.response.data;
   }
 };
+
+export const handleUpdateNotification = async (token, type) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/social/updateNotification`,
+      {
+        updateType: type,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

@@ -19,9 +19,13 @@ import { NotificationsNone, SearchOutlined } from "@mui/icons-material";
 import { auth } from "../../services/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AddUserData } from "../../store/userSlice";
-import { handleGetSearchList } from "../../services/getDataServices";
+import { AddNotificationData, AddUserData } from "../../store/userSlice";
+import {
+  handleGetNotification,
+  handleGetSearchList,
+} from "../../services/getDataServices";
 import { AddSearchPostId } from "../../store/selectSlice";
+import Notification from "./Notification";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -60,9 +64,18 @@ export const Navbar = () => {
   const token = localStorage.getItem("token");
   const [anchorEl, setAnchorEl] = useState();
   const userData = useSelector((state) => state.user.userData);
+  const notification = useSelector((state) => state.user.notification);
+  const unreadNotificationsNotiList = notification.notiList?.filter(
+    (notification) => !notification.isRead
+  );
+  const unreadNotificationsNotiKeepList = notification.notiKeepList?.filter(
+    (notification) => !notification.isRead
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
+  const [notificationToggle, setNotificationToggle] = useState(false);
+  const openNoti = Boolean(notificationToggle);
   const searchBoxRef = useRef();
   const [showResults, setShowResults] = useState(false);
   const [dataSearch, setDataSearch] = useState();
@@ -80,6 +93,7 @@ export const Navbar = () => {
     auth.signOut();
     dispatch(AddUserData([]));
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     navigate("/");
   };
 
@@ -112,6 +126,15 @@ export const Navbar = () => {
     if (postArray) {
       dispatch(AddSearchPostId(postArray));
       navigate("/search");
+    }
+  };
+
+  const handleGetNoti = async () => {
+    try {
+      const notification = await handleGetNotification(token);
+      dispatch(AddNotificationData(notification.data.response));
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -203,7 +226,13 @@ export const Navbar = () => {
               }
               value={searchTerm}
               onChange={handleSearch}
-              onKeyDown={handleSearch}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowDown") {
+                  document.getElementById(`searchResult-${0}`)?.focus();
+                } else if (e.key === "Enter") {
+                  handleSearch(e);
+                }
+              }}
             />
             {showResults && (
               <Box
@@ -220,7 +249,7 @@ export const Navbar = () => {
                   overflow: "auto",
                 }}
               >
-                {searchResults?.map((item) => (
+                {searchResults?.map((item, index) => (
                   <MenuItem
                     key={item._id}
                     onClick={() => {
@@ -229,6 +258,32 @@ export const Navbar = () => {
                       setShowResults(false);
                       navigate(`/search`);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        dispatch(AddSearchPostId([item?._id]));
+                        setSearchTerm(item?.label);
+                        setShowResults(false);
+                        navigate(`/search`);
+                      } else if (e.key === "ArrowUp" && index > 0) {
+                        // Handle arrow up
+                        // Move focus to the previous item if it's not the first item
+                        document
+                          .getElementById(`searchResult-${index - 1}`)
+                          ?.focus();
+                      } else if (
+                        e.key === "ArrowDown" &&
+                        index < searchResults.length - 1
+                      ) {
+                        // Handle arrow down
+                        // Move focus to the next item if it's not the last item
+                        document
+                          .getElementById(`searchResult-${index + 1}`)
+                          ?.focus();
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    id={`searchResult-${index}`}
                   >
                     <div
                       style={{ overflow: "hidden", textOverflow: "ellipsis" }}
@@ -258,21 +313,25 @@ export const Navbar = () => {
                 mt: 1,
                 mr: 1,
               },
-              "&:hover": {
-                background: "#D5EAFF",
-              },
+            }}
+            onClick={(event) => {
+              setNotificationToggle(event.currentTarget);
+              handleGetNoti();
             }}
           >
-            <Badge badgeContent={4} color="error">
+            <Badge
+              badgeContent={
+                unreadNotificationsNotiList?.length +
+                unreadNotificationsNotiKeepList?.length
+              }
+              color="error"
+            >
               <NotificationsNone
                 sx={{
                   width: 40,
                   height: 40,
                   color: "#000",
                   cursor: "pointer",
-                  "&:hover": {
-                    color: "#007DFC",
-                  },
                 }}
               />
             </Badge>
@@ -301,6 +360,7 @@ export const Navbar = () => {
         </UserBox>
       </StyledToolbar>
 
+      {/*Profile Menu*/}
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -355,6 +415,36 @@ export const Navbar = () => {
             ออกจากระบบ
           </Typography>
         </MenuItem>
+      </Menu>
+
+      {/*Notification*/}
+
+      <Menu
+        anchorEl={notificationToggle}
+        id="account-menu"
+        open={openNoti}
+        onClose={() => {
+          setNotificationToggle(false);
+          handleGetNoti();
+        }}
+        sx={{
+          "& .MuiPopover-paper": {
+            borderRadius: "8px",
+          },
+        }}
+        PaperProps={{
+          borderradius: 100,
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <Notification onClose={() => setNotificationToggle(null)} />
       </Menu>
     </AppBar>
   );

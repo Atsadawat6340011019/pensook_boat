@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userData: [],
+  notification: [],
   updateData: [],
   updateCommentData: undefined,
 };
@@ -13,6 +14,9 @@ export const userSlice = createSlice({
     AddUserData: (state, action) => {
       state.userData = action.payload;
     },
+    AddNotificationData: (state, action) => {
+      state.notification = action.payload;
+    },
     UpdateData: (state, action) => {
       state.updateData = action.payload;
     },
@@ -22,6 +26,11 @@ export const userSlice = createSlice({
   },
 });
 
-export const { AddUserData, UpdateData, UpdataCommentData } = userSlice.actions;
+export const {
+  AddUserData,
+  UpdateData,
+  UpdataCommentData,
+  AddNotificationData,
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,4 +1,4 @@
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
@@ -12,7 +12,7 @@ import {
   handleGetMyReplyPost,
 } from "../../services/feedServices";
 import { useDispatch, useSelector } from "react-redux";
-import { AddUserData } from "../../store/userSlice";
+import { AddNotificationData, AddUserData } from "../../store/userSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { PostRichTextModal } from "./Feed/components/PostRichText/PostRichTextModal";
 import { AddCommentId, AddPostId } from "../../store/selectSlice";
@@ -42,7 +42,9 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           setCommentData([]);
           dispatch(AddPostId(""));
           const response = await handleGetFeed(token);
+          localStorage.setItem("userId", response.data.session.userId);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -51,6 +53,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetKeepPost(token);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           if (response.data.response.length === 0) {
             navigate("/feed");
           } else {
@@ -63,6 +66,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetMyPost(token);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -71,6 +75,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetMyAnonymousPost(token);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -79,6 +84,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetMyReplyPost(token);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -87,6 +93,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetFeedWithPostIdLogged(token, id);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -96,6 +103,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           dispatch(AddPostId(""));
           const response = await handleGetFeedBySearch(token, postArray);
           dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           setCommentData(response.data.response[0].commentList);
           dispatch(AddPostId(response.data.response[0].postId));
@@ -141,18 +149,23 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           overflowX: "hidden",
         }}
       >
-        {feedData?.map((item, index) => (
-          <PostCard
-            key={index}
-            index={index}
-            data={item}
-            setCommentData={setCommentData}
-            selectIndexComment={selectIndexComment}
-            setSelectIndexComment={setSelectIndexComment}
-            reflesh={reflesh}
-            setReflesh={setReflesh}
-          />
-        ))}
+        {feedData &&
+          feedData?.map((item, index) => (
+            <PostCard
+              key={index}
+              index={index}
+              data={item}
+              setCommentData={setCommentData}
+              selectIndexComment={selectIndexComment}
+              setSelectIndexComment={setSelectIndexComment}
+              reflesh={reflesh}
+              setReflesh={setReflesh}
+            />
+          ))}
+
+        {feedData.length === 0 && (
+          <Typography align="center">ไม่พบข้อมูล</Typography>
+        )}
       </Box>
       <Modal
         open={richTextModalToggle}

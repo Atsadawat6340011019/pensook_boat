@@ -20,3 +20,11 @@ export const handleGetSearchList = (token) => {
     },
   });
 };
+
+export const handleGetNotification = (token) => {
+  return axios.get(`${BACKEND_URL}/api/social/getNotification`, {
+    headers: {
+      "x-access-token": token,
+    },
+  });
+};
