@@ -239,6 +239,7 @@ export default function Notification({ onClose }) {
                 background: item.isRead ? "#fff" : "#E9E9E9",
               }}
               key={item._id}
+              onClick={() => navigate(`/feed/${item.post}`)}
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
               <Box>
