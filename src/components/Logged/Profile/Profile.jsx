@@ -23,6 +23,7 @@ import {
 } from "../../../services/profileServices";
 import { AddUserData } from "../../../store/userSlice";
 import ImageCropperDialog from "./imageCropperDialog";
+import Resizer from "react-image-file-resizer";
 
 export const Profile = () => {
   const userData = useSelector((state) => state.user.userData);
@@ -73,16 +74,67 @@ export const Profile = () => {
     }
   };
 
+  // const handleImageChange = (data) => {
+  //   if (cropperProps.action === "logo") {
+  //     setImageProflieFile(data);
+  //     setFileProfile(data);
+  //   } else if (cropperProps.action === "cover") {
+  //     setImageProflieCoverFile(data);
+  //     setFileProfileCover(data);
+  //   }
+  // };
+
   const handleImageChange = (data) => {
-    if (cropperProps.action === "logo") {
-      setImageProflieFile(data);
-      setFileProfile(data);
-    } else if (cropperProps.action === "cover") {
-      setImageProflieCoverFile(data);
-      setFileProfileCover(data);
+    const maxSize = 2 * 1024 * 1024; // 2MB
+
+    // Convert base64 data URI to Blob
+    const byteString = atob(data.split(",")[1]);
+    const mimeString = data.split(",")[0].split(":")[1].split(";")[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
     }
+    const blob = new Blob([ab], { type: mimeString });
+
+    // Resize the image
+    Resizer.imageFileResizer(
+      blob,
+      300, // Width (adjust as needed)
+      300, // Height (adjust as needed)
+      "JPEG", // Output format (you can change it to 'PNG' or others)
+      100, // Quality (adjust as needed)
+      0, // Rotation (0 for no rotation)
+      (resizedImage) => {
+        // Check if resized image is under 2MB
+        const reader = new FileReader();
+        reader.readAsDataURL(resizedImage);
+        reader.onloadend = () => {
+          const base64Data = reader.result;
+
+          // Check if resized image is under 2MB
+          if (resizedImage.size <= maxSize) {
+            if (cropperProps.action === "logo") {
+              setImageProflieFile(base64Data);
+              setFileProfile(base64Data);
+            } else if (cropperProps.action === "cover") {
+              setImageProflieCoverFile(base64Data);
+              setFileProfileCover(base64Data);
+            }
+          } else {
+            console.error("Resized image exceeds 2MB limit.");
+            // Handle the case where the resized image is still too large
+          }
+        };
+      },
+      "blob", // Output type ('blob' or 'base64')
+      0, // Cross-Origin Access Control (CORS) setting (0 for no CORS)
+      (error) => {
+        console.error("Error resizing image:", error);
+        // Handle the error
+      }
+    );
   };
-  // Crop end
 
   useEffect(() => {
     const token = localStorage.getItem("token");
