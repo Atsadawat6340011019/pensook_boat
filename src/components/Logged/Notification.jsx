@@ -237,6 +237,7 @@ export default function Notification({ onClose }) {
                 borderBottom: "1px solid #E9E9E9",
                 py: 2,
                 background: item.isRead ? "#fff" : "#E9E9E9",
+                cursor: "pointer",
               }}
               key={item._id}
               onClick={() => navigate(`/feed/${item.post}`)}
