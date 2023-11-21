@@ -97,6 +97,7 @@ export const Navbar = () => {
         const postArray = results.map((item) => item._id);
         dispatch(AddSearchPostId(postArray));
         navigate("/search");
+        setShowResults(false);
       }
     } else {
       setSearchResults();
@@ -187,7 +188,12 @@ export const Navbar = () => {
                 pr: 1,
               }}
               endAdornment={
-                <IconButton onClick={handleButtonSearch}>
+                <IconButton
+                  onClick={() => {
+                    handleButtonSearch();
+                    setShowResults(false);
+                  }}
+                >
                   <SearchOutlined sx={{ color: "#000" }} />
                 </IconButton>
               }
@@ -216,6 +222,7 @@ export const Navbar = () => {
                     onClick={() => {
                       dispatch(AddSearchPostId([item?._id]));
                       setSearchTerm(item?.label);
+                      setShowResults(false);
                       navigate(`/search`);
                     }}
                   >
