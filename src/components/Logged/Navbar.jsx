@@ -104,6 +104,12 @@ export const Navbar = () => {
     }
   };
 
+  const handleButtonSearch = () => {
+    const postArray = searchResults.map((item) => item._id);
+    dispatch(AddSearchPostId(postArray));
+    navigate("/search");
+  };
+
   const handleClickOutside = (e) => {
     if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
       setShowResults(false);
@@ -178,8 +184,13 @@ export const Navbar = () => {
                 fontSize: 14,
                 width: 300,
                 pl: 2,
+                pr: 1,
               }}
-              endAdornment={<SearchOutlined />}
+              endAdornment={
+                <IconButton onClick={handleButtonSearch}>
+                  <SearchOutlined sx={{ color: "#000" }} />
+                </IconButton>
+              }
               value={searchTerm}
               onChange={handleSearch}
               onKeyDown={handleSearch}

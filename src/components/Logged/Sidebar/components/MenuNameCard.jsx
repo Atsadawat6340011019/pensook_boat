@@ -36,7 +36,7 @@ export const MenuNameCard = () => {
           sx={{ color: "#000", mr: 2 }}
           onClick={() => {
             navigate("/feed");
-            dispatch(AddKeepPostId([]));
+            dispatch(AddKeepPostId());
           }}
         >
           <ArrowBackIosNewRounded />

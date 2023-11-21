@@ -76,7 +76,7 @@ export const ProfileCard = () => {
               alt="coverImage"
               onClick={() => {
                 navigate("/mypost");
-                dispatch(AddKeepPostId([]));
+                dispatch(AddKeepPostId());
               }}
             />
           </Box>
@@ -92,7 +92,7 @@ export const ProfileCard = () => {
         <MenuItem
           onClick={() => {
             navigate("/profile");
-            dispatch(AddKeepPostId([]));
+            dispatch(AddKeepPostId());
           }}
         >
           <ListItemIcon>
@@ -111,7 +111,7 @@ export const ProfileCard = () => {
           }}
           onClick={() => {
             navigate("/setting");
-            dispatch(AddKeepPostId([]));
+            dispatch(AddKeepPostId());
           }}
         >
           <ListItemIcon>
