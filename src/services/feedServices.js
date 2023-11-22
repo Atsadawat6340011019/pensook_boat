@@ -279,6 +279,48 @@ export const handleCreateComment = async (token, AllContent) => {
   }
 };
 
+export const handleUpdateComment = async (token, AllContent) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/social/updateComment`,
+      {
+        commentId: AllContent.commentId,
+        content: AllContent.content,
+        //attachImageArr: AllContent.attachImageArr,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const handleDeleteComment = async (token, commentId) => {
+  try {
+    const response = await axios.patch(
+      `${BACKEND_URL}/api/social/deleteComment`,
+      {
+        commentId: commentId,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 export const handleUpVoteComment = async (token, commentId) => {
   try {
     const response = await axios.post(

@@ -11,6 +11,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddKeepPostId } from "../../../../store/selectSlice";
+import { UpdataCommentData } from "../../../../store/userSlice";
 
 export const ProfileCard = () => {
   const userData = useSelector((state) => state.user.userData);
@@ -77,6 +78,7 @@ export const ProfileCard = () => {
               onClick={() => {
                 navigate("/mypost");
                 dispatch(AddKeepPostId());
+                dispatch(UpdataCommentData());
               }}
             />
           </Box>
@@ -93,6 +95,7 @@ export const ProfileCard = () => {
           onClick={() => {
             navigate("/profile");
             dispatch(AddKeepPostId());
+            dispatch(UpdataCommentData());
           }}
         >
           <ListItemIcon>
@@ -112,6 +115,7 @@ export const ProfileCard = () => {
           onClick={() => {
             navigate("/setting");
             dispatch(AddKeepPostId());
+            dispatch(UpdataCommentData());
           }}
         >
           <ListItemIcon>

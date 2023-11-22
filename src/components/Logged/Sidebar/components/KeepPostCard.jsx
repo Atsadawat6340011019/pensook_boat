@@ -38,6 +38,9 @@ export const KeepPostCard = ({ data }) => {
         alignItems: "center",
         mb: 1,
         cursor: "pointer",
+        "&:hover": {
+          backgroundColor: "#f2f6fa",
+        },
       }}
       onClick={() => {
         navigate(`/feed/${data?.postId}`);

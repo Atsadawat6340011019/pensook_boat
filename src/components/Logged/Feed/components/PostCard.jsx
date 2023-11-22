@@ -9,18 +9,13 @@ import {
   DialogContent,
   DialogContentText,
   Modal,
+  Tooltip,
 } from "@mui/material";
+import { tooltipClasses } from "@mui/material/Tooltip";
 import React, { useEffect, useState } from "react";
 import LogoPensook from "../../../../assets/PENSOOK_logo_32.png";
-import {
-  ArrowDropDown,
-  ArrowDropUp,
-  Bookmark,
-  BookmarkBorderOutlined,
-  CheckCircleOutline,
-  CommentOutlined,
-  EditOutlined,
-} from "@mui/icons-material";
+import { CheckCircleOutline, EditOutlined } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
@@ -45,7 +40,23 @@ import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { AddPostId } from "../../../../store/selectSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { CiFaceSmile } from "react-icons/ci";
+import { PiSmileySadThin } from "react-icons/pi";
+import { TfiCommentAlt } from "react-icons/tfi";
+import { PiBookmarkSimpleLight } from "react-icons/pi";
+import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { PostRichTextModalEdit } from "./PostRichTextEditor/PostRichTextModalEdit";
+
+const GrayTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#F1F1F1",
+    color: "rgba(0, 0, 0, 0.87)",
+    boxShadow: theme.shadows[1],
+    fontSize: 12,
+  },
+}));
 
 export const PostCard = ({
   data,
@@ -513,105 +524,104 @@ export const PostCard = ({
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button
-            startIcon={<ArrowDropUp sx={{ width: 30, height: 30 }} />}
-            sx={{
-              border: "1px solid #bfbfbf",
-              borderTopRightRadius: "0px",
-              borderBottomRightRadius: "0px",
-              borderTopLeftRadius: "8px",
-              borderBottomLeftRadius: "8px",
-              color: voteValue
-                ? voteValue === "Up"
+          <GrayTooltip title="ชอบ" placement="top">
+            <Button
+              startIcon={<CiFaceSmile size={25} />}
+              sx={{
+                border: "1px solid #bfbfbf",
+                borderTopRightRadius: "0px",
+                borderBottomRightRadius: "0px",
+                borderTopLeftRadius: "8px",
+                borderBottomLeftRadius: "8px",
+                color: voteValue
+                  ? voteValue === "Up"
+                    ? "#007DFC"
+                    : "#000"
+                  : data?.voteCurrent === "Up"
                   ? "#007DFC"
-                  : "#000"
-                : data?.voteCurrent === "Up"
-                ? "#007DFC"
-                : "#000",
-              bgcolor: voteValue
-                ? voteValue === "Up"
-                  ? "#E4F1FF"
-                  : ""
-                : data?.voteCurrent === "Up"
-                ? "#E4F1FF"
-                : "",
-              height: 32,
-              "&:hover": {
+                  : "#000",
                 bgcolor: voteValue
                   ? voteValue === "Up"
                     ? "#E4F1FF"
-                    : "#ededed"
+                    : ""
                   : data?.voteCurrent === "Up"
                   ? "#E4F1FF"
-                  : "#ededed",
-              },
-            }}
-            onClick={() => handleChangeVote("Up")}
-          >
-            {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote} Up Vote
-          </Button>
-          <Button
-            sx={{
-              border: "1px solid #bfbfbf",
-              borderTopRightRadius: "8px",
-              borderBottomRightRadius: "8px",
-              borderTopLeftRadius: "0px",
-              borderBottomLeftRadius: "0px",
-              color: voteValue
-                ? voteValue === "Down"
+                  : "",
+                height: 32,
+                "&:hover": {
+                  bgcolor: voteValue
+                    ? voteValue === "Up"
+                      ? "#E4F1FF"
+                      : "#ededed"
+                    : data?.voteCurrent === "Up"
+                    ? "#E4F1FF"
+                    : "#ededed",
+                },
+              }}
+              onClick={() => handleChangeVote("Up")}
+            >
+              {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
+            </Button>
+          </GrayTooltip>
+          <GrayTooltip title="ไม่ชอบ" placement="top">
+            <Button
+              sx={{
+                border: "1px solid #bfbfbf",
+                borderTopRightRadius: "8px",
+                borderBottomRightRadius: "8px",
+                borderTopLeftRadius: "0px",
+                borderBottomLeftRadius: "0px",
+                color: voteValue
+                  ? voteValue === "Down"
+                    ? "#FF0000"
+                    : "#000"
+                  : data?.voteCurrent === "Down"
                   ? "#FF0000"
-                  : "#000"
-                : data?.voteCurrent === "Down"
-                ? "#FF0000"
-                : "#000",
-              bgcolor: voteValue
-                ? voteValue === "Down"
-                  ? "#FFE9E9"
-                  : ""
-                : data?.voteCurrent === "Down"
-                ? "#FFE9E9"
-                : "",
-              minWidth: 10,
-              height: 32,
-              padding: 0,
-              "&:hover": {
+                  : "#000",
                 bgcolor: voteValue
                   ? voteValue === "Down"
                     ? "#FFE9E9"
-                    : "#ededed"
+                    : ""
                   : data?.voteCurrent === "Down"
                   ? "#FFE9E9"
-                  : "#ededed",
-              },
-            }}
-            onClick={() => handleChangeVote("Down")}
-          >
-            <ArrowDropDown sx={{ width: 30, height: 30 }} />
-          </Button>
-          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-            <IconButton
-              sx={{
-                width: 30,
-                height: 30,
+                  : "",
+                minWidth: 10,
+                height: 32,
+                padding: 0,
                 "&:hover": {
-                  bgcolor: "#ededed",
+                  bgcolor: voteValue
+                    ? voteValue === "Down"
+                      ? "#FFE9E9"
+                      : "#ededed"
+                    : data?.voteCurrent === "Down"
+                    ? "#FFE9E9"
+                    : "#ededed",
                 },
               }}
-              onClick={() => {
-                setCommentData(data?.commentList);
-                setSelectIndexComment(index);
-                dispatch(AddPostId(data?.postId));
-              }}
+              onClick={() => handleChangeVote("Down")}
             >
-              <CommentOutlined
+              <PiSmileySadThin size={25} />
+            </Button>
+          </GrayTooltip>
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+            <GrayTooltip title="ความคิดเห็น" placement="top">
+              <IconButton
                 sx={{
-                  width: 20,
-                  height: 20,
-                  color: "#000",
+                  width: 35,
+                  height: 35,
+                  "&:hover": {
+                    bgcolor: "#ededed",
+                  },
                 }}
-              />
-            </IconButton>
-
+                onClick={() => {
+                  setCommentData(data?.commentList);
+                  setSelectIndexComment(index);
+                  dispatch(AddPostId(data?.postId));
+                }}
+              >
+                <TfiCommentAlt size={35} color="#000" />
+              </IconButton>
+            </GrayTooltip>
             <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
               {data?.commentList?.length}
             </Typography>
@@ -619,70 +629,49 @@ export const PostCard = ({
         </Box>
         <Box sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-            <IconButton
-              sx={{
-                width: 30,
-                height: 30,
-                "&:hover": {
-                  bgcolor: "#ededed",
-                },
-              }}
-              onClick={() => handleChangeKeepPost("t")}
-            >
-              {keepPostValue ? (
-                keepPostValue === "t" ? (
-                  <Bookmark
-                    sx={{
-                      width: 25,
-                      height: 25,
-                      color: "#000",
-                    }}
-                  />
+            <GrayTooltip title="Keep โพสต์" placement="top">
+              <IconButton
+                sx={{
+                  width: 40,
+                  height: 40,
+                  "&:hover": {
+                    bgcolor: "#ededed",
+                  },
+                }}
+                onClick={() => handleChangeKeepPost("t")}
+              >
+                {keepPostValue ? (
+                  keepPostValue === "t" ? (
+                    <PiBookmarkSimpleFill size={35} color="#000" />
+                  ) : (
+                    <PiBookmarkSimpleLight size={35} color="#000" />
+                  )
+                ) : resultKeep === "t" ? (
+                  <PiBookmarkSimpleFill size={35} color="#000" />
                 ) : (
-                  <BookmarkBorderOutlined
-                    sx={{
-                      width: 25,
-                      height: 25,
-                      color: "#000",
-                    }}
-                  />
-                )
-              ) : resultKeep === "t" ? (
-                <Bookmark
-                  sx={{
-                    width: 25,
-                    height: 25,
-                    color: "#000",
-                  }}
-                />
-              ) : (
-                <BookmarkBorderOutlined
-                  sx={{
-                    width: 25,
-                    height: 25,
-                    color: "#000",
-                  }}
-                />
-              )}
-            </IconButton>
-
+                  <PiBookmarkSimpleLight size={35} color="#000" />
+                )}
+              </IconButton>
+            </GrayTooltip>
             <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 1 }}>
               {keepPostCountCurrent ? keepPostCountCurrent : data?.keepCount}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
-            <IconButton
-              onClick={handleClick}
-              sx={{
-                width: 40,
-                height: 40,
-                "&:hover": {
-                  bgcolor: "#ededed",
-                },
-              }}
-            >
-              <PiShareFat color="#000" size={"60px"} />
-            </IconButton>
+            <GrayTooltip title="แชร์" placement="top">
+              <IconButton
+                onClick={handleClick}
+                sx={{
+                  width: 40,
+                  height: 40,
+                  "&:hover": {
+                    bgcolor: "#ededed",
+                  },
+                }}
+              >
+                <PiShareFat color="#000" size={"60px"} />
+              </IconButton>
+            </GrayTooltip>
             <SharePostDialog
               open={open}
               onClose={() => setOpen(false)}

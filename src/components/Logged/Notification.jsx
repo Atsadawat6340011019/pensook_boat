@@ -232,7 +232,13 @@ export default function Notification({ onClose }) {
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
               <Box>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: 440,
+                  }}
+                >
                   <Typography sx={{ fontSize: 10, color: "#808080", mb: 1 }}>
                     {formatTimestamp(item?.createTime)}
                   </Typography>
@@ -276,7 +282,13 @@ export default function Notification({ onClose }) {
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
               <Box>
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: 440,
+                  }}
+                >
                   <Typography sx={{ fontSize: 10, color: "#808080", mb: 1 }}>
                     {formatTimestamp(item?.createTime)}
                   </Typography>

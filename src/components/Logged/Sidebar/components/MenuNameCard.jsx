@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AddKeepPostId } from "../../../../store/selectSlice";
+import { UpdataCommentData } from "../../../../store/userSlice";
 
 export const MenuNameCard = () => {
   const keepPostId = useSelector((state) => state.select.keepPostIdSelect);
@@ -37,6 +38,7 @@ export const MenuNameCard = () => {
           onClick={() => {
             navigate("/feed");
             dispatch(AddKeepPostId());
+            dispatch(UpdataCommentData());
           }}
         >
           <ArrowBackIosNewRounded />

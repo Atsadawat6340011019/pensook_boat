@@ -10,14 +10,16 @@ import {
   Typography,
 } from "@mui/material";
 import React, { forwardRef, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RichTextEditor } from "./Components/RichTextEditor";
 import LogoPensook from "../../../../../assets/PENSOOK_logo_32.png";
 import {
   handleCreatePost,
+  handleUpdateComment,
   handleUpdatePost,
 } from "../../../../../services/feedServices";
 import { Oval } from "react-loader-spinner";
+import { UpdataCommentData } from "../../../../../store/userSlice";
 
 const style = {
   position: "relative",
@@ -25,7 +27,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 800,
-  height: 785,
+  height: 700,
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -91,13 +93,14 @@ export const PostRichTextModalEdit = forwardRef(
   }) => {
     const userData = useSelector((state) => state.user.userData);
     const token = localStorage.getItem("token");
+    const commentId = useSelector((state) => state.select.commentIdSelect);
     const [content, setContent] = useState();
-    const [labelText, setLabelText] = useState(label);
     const [isAnonymous, setIsAnonymous] = useState(anonymous);
     const [errorNoti, setErrorNoti] = useState("");
     const [loading, setLoading] = useState(false);
     const [buttonDisable, setButtonDisable] = useState(false);
     const [htmlBase64, setHtmlBase64] = useState();
+    const dispatch = useDispatch();
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
@@ -202,26 +205,23 @@ export const PostRichTextModalEdit = forwardRef(
       const linkTargetContent = addTargetBlankToAllLinks(linkContent);
 
       const AllContent = {
-        postId: postId,
-        isAnonymous: isAnonymous,
-        label: labelText,
+        commentId: commentId,
         content: replaceParagraphsWithCenterAlignment(linkTargetContent),
         //attachImageArr: extractImgSrc(content),
       };
       setLoading(true);
       setButtonDisable(true);
       if (
-        AllContent?.label &&
         !(
           AllContent.content ===
           `<head></head><body><p style="text-align: center;"><br></p></body>`
         )
       ) {
         try {
-          const postData = await handleUpdatePost(token, AllContent);
+          const postData = await handleUpdateComment(token, AllContent);
           console.log(postData);
           if (postData.response.status === "success") {
-            setReflesh(Math.floor(Math.random() * 101));
+            dispatch(UpdataCommentData(Math.floor(Math.random() * 101)));
             setTimeout(() => {
               setLoading(false);
               onClose();
@@ -230,12 +230,6 @@ export const PostRichTextModalEdit = forwardRef(
         } catch (error) {
           console.error("เกิดข้อผิดพลาด:", error.error);
         }
-      } else if (!AllContent.label) {
-        setErrorNoti("กรุณาใส่หัวข้อ");
-        setButtonDisable(false);
-        setTimeout(() => {
-          setErrorNoti("");
-        }, 2000);
       } else if (
         AllContent.content ===
         `<head></head><body><p style="text-align: center;"><br></p></body>`
@@ -277,7 +271,7 @@ export const PostRichTextModalEdit = forwardRef(
           align="center"
           sx={{ fontWeight: "500", fontSize: 18, pt: 3 }}
         >
-          แก้ไขโพสต์
+          แก้ไขความคิดเห็น
         </Typography>
         {/*<Box
           sx={{
@@ -337,22 +331,6 @@ export const PostRichTextModalEdit = forwardRef(
           >
             แก้ไข
           </Button>
-        </Box>
-        <Box
-          sx={{
-            width: 750,
-            mt: 3,
-          }}
-        >
-          <InputBase
-            placeholder={errorNoti ? errorNoti : "หัวข้อ"}
-            value={labelText}
-            onChange={(e) => setLabelText(e.target.value)}
-            sx={{ width: 750, px: 7, fontWeight: "500", fontSize: 42 }}
-            inputProps={{ maxLength: 150 }}
-            required
-            autoFocus
-          />
         </Box>
         <Box sx={{ width: 750, height: 380, mt: 3 }}>
           <Box sx={{ position: "relative", px: 7, height: 380 }}>

@@ -7,10 +7,15 @@ import { handleGetComment } from "../../services/feedServices";
 import { useDispatch, useSelector } from "react-redux";
 import { AddUserData } from "../../store/userSlice";
 import { CheckSecondComment } from "../../store/selectSlice";
+import { PostRichTextModalEdit } from "./Rightbar/components/PostRichTextEditor/PostRichTextModalEdit";
+import ReportDialog from "./Rightbar/components/Dialog/reportDialog";
 
 export const Rightbar = ({ commentData, setCommentData }) => {
   const token = localStorage.getItem("token");
   const [richTextModalToggle, setRichTextModalToggle] = useState(false);
+  const [richTextEditModalToggle, setRichTextEditModalToggle] = useState(false);
+  const [htmlContent, setHtmlContent] = useState();
+  const [openReport, setOpenReport] = useState(false);
   const postId = useSelector((state) => state.select.postIdSelect);
   const updateComment = useSelector((state) => state.user.updateCommentData);
   const dispatch = useDispatch();
@@ -65,6 +70,9 @@ export const Rightbar = ({ commentData, setCommentData }) => {
                 key={index}
                 data={item}
                 setRichTextModalToggle={setRichTextModalToggle}
+                setRichTextEditModalToggle={setRichTextEditModalToggle}
+                setHtmlContent={setHtmlContent}
+                setOpenReport={setOpenReport}
               />
             ))
           ) : (
@@ -84,6 +92,19 @@ export const Rightbar = ({ commentData, setCommentData }) => {
       >
         <PostRichTextModal onClose={() => setRichTextModalToggle(false)} />
       </Modal>
+      <Modal
+        open={richTextEditModalToggle}
+        onClose={() => {
+          setRichTextEditModalToggle(false);
+          dispatch(CheckSecondComment(false));
+        }}
+      >
+        <PostRichTextModalEdit
+          onClose={() => setRichTextEditModalToggle(false)}
+          html={htmlContent}
+        />
+      </Modal>
+      <ReportDialog open={openReport} onClose={() => setOpenReport(false)} />
     </Box>
   );
 };
