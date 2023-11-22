@@ -1,4 +1,12 @@
-import { Avatar, Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Box,
+  IconButton,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
 import { Close } from "@mui/icons-material";
@@ -45,6 +53,12 @@ export default function Notification({ onClose }) {
   const token = localStorage.getItem("token");
   const [value, setValue] = React.useState(0);
   const notification = useSelector((state) => state.user.notification);
+  const unreadNotificationsNotiList = notification.notiList?.filter(
+    (notification) => !notification.isRead
+  );
+  const unreadNotificationsNotiKeepList = notification.notiKeepList?.filter(
+    (notification) => !notification.isRead
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = (event, newValue) => {
@@ -121,7 +135,17 @@ export default function Notification({ onClose }) {
           />
         </IconButton>
       </Box>
-      <Box sx={{ px: 2 }}>
+      <Box sx={{ px: 2, position: "relative" }}>
+        <Badge
+          badgeContent={unreadNotificationsNotiList?.length}
+          color="error"
+          sx={{ position: "absolute", left: "20%" }}
+        ></Badge>
+        <Badge
+          badgeContent={unreadNotificationsNotiKeepList?.length}
+          color="error"
+          sx={{ position: "absolute", left: "52%" }}
+        ></Badge>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -155,6 +179,7 @@ export default function Notification({ onClose }) {
               },
             }}
           />
+
           <Tab
             label="โพสต์ที่คุณ Keep"
             onClick={() => {
@@ -165,7 +190,7 @@ export default function Notification({ onClose }) {
             sx={{
               fontSize: 18,
               ml: 1,
-              textTransform: 'none',
+              textTransform: "none",
               "&.MuiButtonBase-root": {
                 color: "#808080",
               },
