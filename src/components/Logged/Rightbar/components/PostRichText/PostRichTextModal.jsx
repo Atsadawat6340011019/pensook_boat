@@ -194,6 +194,7 @@ export const PostRichTextModal = forwardRef(
       ) {
         setErrorNoti("กรุณาใส่เนื้อหา");
         setButtonDisable(false);
+        setLoading(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);
