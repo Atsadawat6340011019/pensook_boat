@@ -178,6 +178,7 @@ export const PostRichTextModal = forwardRef(
       } else if (!AllContent.label) {
         setErrorNoti("กรุณาใส่หัวข้อ");
         setButtonDisable(false);
+        setLoading(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);
@@ -187,6 +188,7 @@ export const PostRichTextModal = forwardRef(
       ) {
         setErrorNoti("กรุณาใส่เนื้อหา");
         setButtonDisable(false);
+        setLoading(false);
         setTimeout(() => {
           setErrorNoti("");
         }, 2000);

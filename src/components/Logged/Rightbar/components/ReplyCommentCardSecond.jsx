@@ -477,7 +477,10 @@ export const ReplyCommentCardSecond = ({
               }}
               onClick={() => handleChangeVote("Down")}
             >
-              <PiSmileySadThin size={25} />
+              <PiSmileySadThin
+                size={25}
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+              />
             </Button>
           </GrayTooltip>
         </Box>

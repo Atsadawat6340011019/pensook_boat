@@ -102,6 +102,14 @@ export const PostRichTextModalEdit = forwardRef(
     const [htmlBase64, setHtmlBase64] = useState();
     const dispatch = useDispatch();
 
+    useEffect(() => {
+      if (content === "<p><br></p>") {
+        setButtonDisable(true);
+      } else {
+        setButtonDisable(false);
+      }
+    }, [content]);
+
     function replaceParagraphsWithCenterAlignment(htmlText) {
       return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
     }

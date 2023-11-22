@@ -600,7 +600,10 @@ export const PostCard = ({
               }}
               onClick={() => handleChangeVote("Down")}
             >
-              <PiSmileySadThin size={25} />
+              <PiSmileySadThin
+                size={25}
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+              />
             </Button>
           </GrayTooltip>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
