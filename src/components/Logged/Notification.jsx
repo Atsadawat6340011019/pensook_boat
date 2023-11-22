@@ -223,6 +223,9 @@ export default function Notification({ onClose }) {
                 py: 2,
                 background: item.isRead ? "#fff" : "#E9E9E9",
                 cursor: "pointer",
+                "&:hover": {
+                  bgcolor: "#f1f1f1",
+                },
               }}
               key={item._id}
               onClick={() => navigate(`/feed/${item.post}`)}
@@ -264,6 +267,9 @@ export default function Notification({ onClose }) {
                 py: 2,
                 background: item.isRead ? "#fff" : "#E9E9E9",
                 cursor: "pointer",
+                "&:hover": {
+                  bgcolor: "#f1f1f1",
+                },
               }}
               key={item._id}
               onClick={() => navigate(`/feed/${item.post}`)}
@@ -292,7 +298,8 @@ export default function Notification({ onClose }) {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {parse(item?.content.substring(0, 100))}
+                  {parse(item?.content.substring(0, 132))}
+                  {item.content.length > 132 ? "..." : null}
                 </Typography>
               </Box>
             </Box>
