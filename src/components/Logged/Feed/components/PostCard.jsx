@@ -21,7 +21,6 @@ import { formatTimestamp } from "../../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 import "./PostCard.css";
-import { PiShareFat } from "react-icons/pi";
 import {
   handleDeletePost,
   handleDownVotePost,
@@ -46,6 +45,7 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { PiBookmarkSimpleLight } from "react-icons/pi";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { PostRichTextModalEdit } from "./PostRichTextEditor/PostRichTextModalEdit";
+import { PiShareFatThin } from "react-icons/pi";
 
 const GrayTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -672,7 +672,7 @@ export const PostCard = ({
                   },
                 }}
               >
-                <PiShareFat color="#000" size={"60px"} />
+                <PiShareFatThin color="#000" size={"60px"} />
               </IconButton>
             </GrayTooltip>
             <SharePostDialog

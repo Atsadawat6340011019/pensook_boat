@@ -27,12 +27,16 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from "@lexical/list";
-import { Box, IconButton, Modal } from "@mui/material";
+import { Box, IconButton, Menu, Modal } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { IoMdCodeWorking } from "react-icons/io";
 import { ImageNode } from "../Nodes/ImageNode";
 import ImagesPlugin, { InsertImageDialog } from "../Plugin/ImagePlugin";
-import { CropOriginal } from "@mui/icons-material";
+import {
+  Close,
+  CropOriginal,
+  SentimentSatisfiedAlt,
+} from "@mui/icons-material";
 import { MaxLengthPlugin } from "../Plugin/MaxLengthPlugin";
 import { addClassNamesToElement } from "@lexical/utils";
 import {
@@ -45,6 +49,7 @@ import {
   createLinkMatcherWithRegExp,
 } from "@lexical/react/LexicalAutoLinkPlugin";
 import { AutoLinkNode } from "@lexical/link";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 
 const theme = {
   // Theme styling goes here
@@ -154,6 +159,10 @@ const MATCHERS = [
 ];
 
 function ToolbarPlugin({ setModalUploadImage, content }) {
+  const [editor] = useLexicalComposerContext();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedEmoji, setSelectedEmoji] = useState("1f60a");
+
   function countImgTags(htmlString) {
     const div = document.createElement("div");
     div.innerHTML = htmlString;
@@ -163,6 +172,20 @@ function ToolbarPlugin({ setModalUploadImage, content }) {
     const imgCount = imgTags.length;
 
     return imgCount;
+  }
+
+  function update(emoji) {
+    editor.update(() => {
+      const selection = $getSelection();
+      selection.insertText(emoji);
+
+      //editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+    });
+  }
+
+  function onClick(emojiData, event) {
+    setSelectedEmoji(emojiData.unified);
+    update(emojiData.emoji);
   }
 
   return (
@@ -193,11 +216,53 @@ function ToolbarPlugin({ setModalUploadImage, content }) {
             }}
           />
         </IconButton>
+        <IconButton onClick={(event) => setAnchorEl(event.currentTarget)}>
+          <SentimentSatisfiedAlt sx={{ color: "#000" }} />
+        </IconButton>
       </Box>
       <Box sx={{ pr: 6 }}>
         <ListToolbarPlugin />
         <LinePlugin />
       </Box>
+      <Menu
+        id="post-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: -70,
+          horizontal: 80,
+        }}
+        transformOrigin={{
+          vertical: "-50",
+          horizontal: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "317px",
+            height: "30px",
+            position: "relative",
+          }}
+        >
+          <IconButton
+            color="inherit"
+            onClick={() => setAnchorEl(null)}
+            aria-label="close"
+            sx={{ position: "absolute", top: -10, right: 0 }}
+          >
+            <Close />
+          </IconButton>
+        </div>
+        <EmojiPicker
+          height={400}
+          width={310}
+          skinTonesDisabled={true}
+          onEmojiClick={onClick}
+          emojiStyle={EmojiStyle.NATIVE}
+        />
+      </Menu>
     </Box>
   );
 }

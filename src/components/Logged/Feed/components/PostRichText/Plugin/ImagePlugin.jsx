@@ -24,11 +24,19 @@ import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import Resizer from "react-image-file-resizer";
 
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { CAN_USE_DOM } from "../../../../../../utils/canUseDom";
 import { $createImageNode, $isImageNode, ImageNode } from "../Nodes/ImageNode";
 import NoneImage from "../../../../../../assets/no_image.png";
+import { Close } from "@mui/icons-material";
 
 const style = {
   position: "relative",
@@ -89,7 +97,7 @@ export function InsertImageUriDialogBody({ onClick }) {
   );
 }
 
-export function InsertImageUploadedDialogBody({ onClick }) {
+export function InsertImageUploadedDialogBody({ onClick, onClose }) {
   const [src, setSrc] = useState("");
   const [fileName, setFileName] = useState();
   const [editor] = useLexicalComposerContext();
@@ -166,6 +174,9 @@ export function InsertImageUploadedDialogBody({ onClick }) {
 
   return (
     <Box sx={style}>
+      <IconButton sx={{ position: "absolute", right: 5 }} onClick={onClose}>
+        <Close sx={{ color: "#000" }} />
+      </IconButton>
       <img
         src={fileName ? fileName : NoneImage}
         width={200}
@@ -226,7 +237,7 @@ export function InsertImageDialog({ onClose }) {
 
   return (
     <>
-      <InsertImageUploadedDialogBody onClick={onClick} />
+      <InsertImageUploadedDialogBody onClick={onClick} onClose={onClose} />
     </>
   );
 }
