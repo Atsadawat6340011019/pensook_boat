@@ -8,13 +8,14 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
-import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import { ReplyCommentCard } from "./ReplyCommentCard";
 import { formatTimestamp } from "../../../utils/functions";
 import parse from "html-react-parser";
 import "./CommentCard.css";
 import { ImageShow } from "./CommentImageShow/ImageShow";
 import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
+import { TfiCommentAlt } from "react-icons/tfi";
+import { CiFaceSmile } from "react-icons/ci";
 
 export const CommentCard = ({ data }) => {
   const [replyCommentToggle, setReplyCommentToggle] = useState(false);
@@ -90,7 +91,7 @@ export const CommentCard = ({ data }) => {
         }}
       >
         <Button
-          startIcon={<ArrowDropUp sx={{ width: 30, height: 30 }} />}
+          startIcon={<CiFaceSmile size={25} />}
           sx={{
             border: "1px solid #000",
             borderRadius: "8px",
@@ -101,26 +102,20 @@ export const CommentCard = ({ data }) => {
             },
           }}
         >
-          {data.upVote} Up Vote
+          {data.upVote}
         </Button>
         <Box sx={{ display: "flex", alignItems: "center", height: 30 }}>
           <IconButton
             sx={{
-              width: 30,
-              height: 30,
+              width: 35,
+              height: 35,
               "&:hover": {
                 bgcolor: "#ededed",
               },
             }}
             onClick={() => setReplyCommentToggle(!replyCommentToggle)}
           >
-            <CommentOutlined
-              sx={{
-                width: 20,
-                height: 20,
-                color: "#000",
-              }}
-            />
+            <TfiCommentAlt size={35} color="#000" />
           </IconButton>
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
             {data.commentList.length}

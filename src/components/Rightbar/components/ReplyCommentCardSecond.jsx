@@ -1,12 +1,12 @@
 import { Avatar, Box, Button, Divider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
-import { ArrowDropUp } from "@mui/icons-material";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../utils/functions";
 import "./CommentCard.css";
 import { ImageShow } from "./CommentImageShow/ImageShow";
 import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
+import { CiFaceSmile } from "react-icons/ci";
 
 export const ReplyCommentCardSecond = ({ data }) => {
   const [showMore, setShowMore] = useState(false);
@@ -82,7 +82,7 @@ export const ReplyCommentCardSecond = ({ data }) => {
         }}
       >
         <Button
-          startIcon={<ArrowDropUp sx={{ width: 30, height: 30 }} />}
+          startIcon={<CiFaceSmile size={25} />}
           sx={{
             border: "1px solid #000",
             borderRadius: "8px",
@@ -93,7 +93,7 @@ export const ReplyCommentCardSecond = ({ data }) => {
             },
           }}
         >
-          {data.upVote} Up Vote
+          {data.upVote}
         </Button>
       </Box>
       <Divider />

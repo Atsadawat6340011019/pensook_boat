@@ -7,7 +7,6 @@ import {
   TextField,
   Button,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -20,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import ReportDialogReported from "./reportDialogReported";
 import { handleSendReport } from "../../../../../services/feedServices";
+import { Oval } from "react-loader-spinner";
 
 const ReportDialog = ({ open, onClose, postId, commentId }) => {
   const token = localStorage.getItem("token");
@@ -30,6 +30,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
   const [showCopiedDialog, setShowCopiedDialog] = useState(false);
   const [disabledButton, setDisableButton] = useState(false);
   const [errorNoti, setErrorNoti] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCopy = async () => {
     const content = {
@@ -38,16 +39,19 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
       description: description,
     };
 
-    console.log(content);
+    setLoading(true);
     setDisableButton(true);
     if (content.reportType !== "none") {
       const sendReport = await handleSendReport(token, content);
-      console.log(sendReport);
       if (sendReport.session) {
         setShowCopiedDialog(true);
         setDisableButton(false);
+        setLoading(false);
+        setReportType("none");
+        setDescription("");
       }
     } else {
+      setLoading(false);
       setErrorNoti("กรุณาเลือกประเภทที่ต้องการรายงาน");
       setTimeout(() => {
         setErrorNoti("");
@@ -87,9 +91,28 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
           style: {
             borderRadius: "8px",
             maxWidth: "550px",
+            position: "relative",
           },
         }}
       >
+        {loading && (
+          <Box
+            sx={{ position: "absolute", top: "45%", left: "42.5%", zIndex: 10 }}
+          >
+            <Oval
+              height={80}
+              width={80}
+              color="#007DFC"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#007DFC"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </Box>
+        )}
         <DialogTitle
           style={{
             display: "flex",

@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AddPostId } from "../../../store/selectSlice";
+import { TfiCommentAlt } from "react-icons/tfi";
+import { CiFaceSmile } from "react-icons/ci";
 
 export const KeepPostCard = ({ data }) => {
   const [windowSize, setWindowSize] = useState({
@@ -38,6 +39,9 @@ export const KeepPostCard = ({ data }) => {
         alignItems: "center",
         mb: 1,
         cursor: "pointer",
+        "&:hover": {
+          backgroundColor: "#f2f6fa",
+        },
       }}
       onClick={() => {
         navigate(`/${data?.postId}`);
@@ -70,14 +74,14 @@ export const KeepPostCard = ({ data }) => {
         </Typography>
         <Box sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", alignItems: "center", mr: 2 }}>
-            <ArrowDropUp sx={{ width: 30, height: 30 }} />
-            <Typography sx={{ fontWeight: "400", fontSize: 10 }}>
-              {data.upVote} Up Vote
+            <CiFaceSmile size={15} color="#000" />
+            <Typography sx={{ fontWeight: "400", fontSize: 10, ml: 1 }}>
+              {data.upVote}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <CommentOutlined sx={{ width: 15, height: 15 }} />
-            <Typography sx={{ fontWeight: "400", fontSize: 10, ml: 2 }}>
+            <TfiCommentAlt size={12} color="#000" />
+            <Typography sx={{ fontWeight: "400", fontSize: 10, ml: 1 }}>
               {data.commentList.length}
             </Typography>
           </Box>

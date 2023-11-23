@@ -1,13 +1,14 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
-import { ArrowDropUp, CommentOutlined } from "@mui/icons-material";
 import parse from "html-react-parser";
 import { formatTimestamp } from "../../../utils/functions";
 import { ImageShow } from "./PostCard/ImageShow";
 import { ImageSlideShow } from "./PostCard/ImageSlideShow";
 import "./PostCard.css";
 import { useNavigate } from "react-router-dom";
+import { CiFaceSmile } from "react-icons/ci";
+import { TfiCommentAlt } from "react-icons/tfi";
 
 export const PostCard = ({
   data,
@@ -109,7 +110,7 @@ export const PostCard = ({
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
         <Button
-          startIcon={<ArrowDropUp sx={{ width: 30, height: 30 }} />}
+          startIcon={<CiFaceSmile size={25} />}
           sx={{
             border: "1px solid #000",
             borderRadius: "8px",
@@ -121,13 +122,13 @@ export const PostCard = ({
           }}
           onClick={() => navigate("/login")}
         >
-          {data.upVote} Up Vote
+          {data.upVote}
         </Button>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             sx={{
-              width: 30,
-              height: 30,
+              width: 35,
+              height: 35,
               "&:hover": {
                 bgcolor: "#ededed",
               },
@@ -137,13 +138,7 @@ export const PostCard = ({
               setSelectIndexComment(index);
             }}
           >
-            <CommentOutlined
-              sx={{
-                width: 20,
-                height: 20,
-                color: "#000",
-              }}
-            />
+            <TfiCommentAlt size={35} color="#000" />
           </IconButton>
 
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>

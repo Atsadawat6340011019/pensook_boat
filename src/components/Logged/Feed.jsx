@@ -166,7 +166,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
             currentURL === "/myanonymouspost" ||
             currentURL === "/myreplypost"
               ? 770
-              : currentURL === "/search"
+              : currentURL === "/search" || currentURL === "/keeppost"
               ? 820
               : 750,
           overflow: "auto",
