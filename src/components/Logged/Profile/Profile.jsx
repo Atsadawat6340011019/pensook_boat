@@ -175,9 +175,22 @@ export const Profile = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    const firstName = data.get("firstName");
+    const lastName = data.get("lastName");
+
+    const onlyCharactersRegex = /^[A-Za-zก-๙]+$/;
+
+    if (
+      !onlyCharactersRegex.test(firstName) ||
+      !onlyCharactersRegex.test(lastName)
+    ) {
+      setErrorNoti("ชื่อ และนามสกุล สามารถใช้ได้เพียงตัวอักษร");
+      return;
+    }
+
     const dataUpdate = {
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
+      firstName: firstName,
+      lastName: lastName,
       profileImage: imageProflieFile,
       profileCover: imageProflieCoverFile,
     };
