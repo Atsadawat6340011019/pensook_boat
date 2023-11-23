@@ -46,6 +46,7 @@ import { PiBookmarkSimpleLight } from "react-icons/pi";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { PostRichTextModalEdit } from "./PostRichTextEditor/PostRichTextModalEdit";
 import { PiShareFatThin } from "react-icons/pi";
+import verifiedIcon from "../../../../assets/verified-icon.png";
 
 const GrayTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -467,8 +468,28 @@ export const PostCard = ({
           loading="lazy"
         />
         <Box sx={{ ml: 2 }}>
-          <Typography sx={{ fontWeight: "500", fontSize: 16 }}>
-            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
+          <Typography
+            sx={{
+              fontWeight: "500",
+              fontSize: 16,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {data.isAnonymous ? (
+              "สมาชิกไม่เปิดเผยตัวตน"
+            ) : data.verified ? (
+              <React.Fragment>
+                {`${data.fullName} `}
+                <img
+                  src={verifiedIcon}
+                  alt="Verified Icon"
+                  style={{ width: "16px", height: "16px", marginLeft: "4px" }}
+                />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>{`${data.fullName} `}</React.Fragment>
+            )}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}

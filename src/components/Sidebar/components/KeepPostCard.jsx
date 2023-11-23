@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { AddPostId } from "../../../store/selectSlice";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { CiFaceSmile } from "react-icons/ci";
+import verifiedIcon from "../../../assets/verified-icon.png";
 
 export const KeepPostCard = ({ data }) => {
   const [windowSize, setWindowSize] = useState({
@@ -59,8 +60,29 @@ export const KeepPostCard = ({ data }) => {
       )}
 
       <Box sx={{ px: 2, pt: 1 }}>
-        <Typography sx={{ fontWeight: "600", fontSize: 10, color: "#007DFC" }}>
-          {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
+        <Typography
+          sx={{
+            fontWeight: "600",
+            fontSize: 10,
+            color: "#007DFC",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {data.isAnonymous ? (
+            "สมาชิกไม่เปิดเผยตัวตน"
+          ) : data.verified ? (
+            <React.Fragment>
+              {`${data.fullName} `}
+              <img
+                src={verifiedIcon}
+                alt="Verified Icon"
+                style={{ width: "16px", height: "16px", marginLeft: "4px" }}
+              />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>{`${data.fullName} `}</React.Fragment>
+          )}
         </Typography>
         <Typography
           sx={{

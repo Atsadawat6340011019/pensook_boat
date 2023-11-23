@@ -41,6 +41,7 @@ import { PiSmileySadThin } from "react-icons/pi";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { UpdataCommentData } from "../../../../store/userSlice";
+import verifiedIcon from "../../../../assets/verified-icon.png";
 
 const GrayTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -341,8 +342,30 @@ export const CommentCard = ({
           alt="avatar"
         />
         <Box sx={{ ml: 2 }}>
-          <Typography variant="body1" sx={{ fontWeight: "500", fontSize: 16 }}>
-            {data.isAnonymous ? "สมาชิกไม่เปิดเผยตัวตน" : data.fullName}
+          <Typography
+            variant="body1"
+            sx={{
+              fontWeight: "500",
+              fontSize: 16,
+              alignItems: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {data.isAnonymous ? (
+              "สมาชิกไม่เปิดเผยตัวตน"
+            ) : data.verified ? (
+              <React.Fragment>
+                {`${data.fullName} `}
+                <img
+                  src={verifiedIcon}
+                  alt="Verified Icon"
+                  style={{ width: "16px", height: "16px", marginLeft: "4px" }}
+                />
+              </React.Fragment>
+            ) : (
+              <React.Fragment>{`${data.fullName} `}</React.Fragment>
+            )}
           </Typography>
           <Typography
             sx={{ fontWeight: "400", fontSize: 10, color: "#808080" }}
