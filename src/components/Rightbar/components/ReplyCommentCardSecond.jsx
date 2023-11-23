@@ -7,10 +7,12 @@ import "./CommentCard.css";
 import { ImageShow } from "./CommentImageShow/ImageShow";
 import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
 import { CiFaceSmile } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 export const ReplyCommentCardSecond = ({ data }) => {
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
+  const navigate = useNavigate();
 
   return (
     <Box mb={1}>
@@ -92,6 +94,7 @@ export const ReplyCommentCardSecond = ({ data }) => {
               bgcolor: "#ededed",
             },
           }}
+          onClick={() => navigate("/login")}
         >
           {data.upVote}
         </Button>

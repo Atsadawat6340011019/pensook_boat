@@ -16,11 +16,14 @@ import { ImageShow } from "./CommentImageShow/ImageShow";
 import { ImageSlideShow } from "./CommentImageShow/ImageSlideShow";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { CiFaceSmile } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 export const ReplyCommentCard = ({ data }) => {
   const [replyCommentToggle, setReplyCommentToggle] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
+  const navigate = useNavigate();
+  
   return (
     <Box mb={1}>
       <Box sx={{ display: "flex" }}>
@@ -102,6 +105,7 @@ export const ReplyCommentCard = ({ data }) => {
               bgcolor: "#ededed",
             },
           }}
+          onClick={() => navigate("/login")}
         >
           {data.upVote}
         </Button>
