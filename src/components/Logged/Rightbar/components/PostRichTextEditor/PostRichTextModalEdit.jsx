@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   IconButton,
-  InputBase,
   Switch,
   Typography,
 } from "@mui/material";
@@ -13,11 +12,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RichTextEditor } from "./Components/RichTextEditor";
 import LogoPensook from "../../../../../assets/PENSOOK_logo_32.png";
-import {
-  handleCreatePost,
-  handleUpdateComment,
-  handleUpdatePost,
-} from "../../../../../services/feedServices";
+import { handleUpdateComment } from "../../../../../services/feedServices";
 import { Oval } from "react-loader-spinner";
 import { UpdataCommentData } from "../../../../../store/userSlice";
 
@@ -26,7 +21,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 800,
+  maxWidth: 800,
   height: 700,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -310,13 +305,16 @@ export const PostRichTextModalEdit = forwardRef(
         <Box sx={{ height: 35 }}></Box>
         <Box
           sx={{
-            width: 750,
+            maxWidth: 750,
+            width: "100%",
             display: "flex",
             justifyContent: "space-between",
             mt: 3,
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{ display: "flex", alignItems: "center", pl: { xs: 2, md: 0 } }}
+          >
             <Avatar
               src={isAnonymous ? LogoPensook : userData.profileImagePath}
               sx={{ width: 40, height: 40 }}
@@ -333,14 +331,20 @@ export const PostRichTextModalEdit = forwardRef(
           <Button
             variant="contained"
             color="primary"
-            sx={{ width: 103, height: 40, borderRadius: "8px", fontSize: 16 }}
+            sx={{
+              width: 103,
+              height: 40,
+              borderRadius: "8px",
+              fontSize: 16,
+              mr: { xs: 2, md: 0 },
+            }}
             onClick={handleSubmit}
             disabled={buttonDisable}
           >
             แก้ไข
           </Button>
         </Box>
-        <Box sx={{ width: 750, height: 380, mt: 3 }}>
+        <Box sx={{ maxWidth: 750, width: "100%", height: 380, mt: 3 }}>
           <Box sx={{ position: "relative", px: 7, height: 380 }}>
             {htmlBase64 && (
               <RichTextEditor

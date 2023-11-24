@@ -106,7 +106,7 @@ export default function Notification({ onClose }) {
   };
 
   return (
-    <Box sx={{ width: 520, height: 480, borderRadius: "8px" }}>
+    <Box sx={{ width: 520, height: "auto", borderRadius: "8px" }}>
       <Box
         sx={{
           px: 2,
@@ -152,7 +152,7 @@ export default function Notification({ onClose }) {
           aria-label="basic tabs example"
         >
           <Tab
-            label="ทั้งหมด"
+            label="โพสต์ของคุณ"
             onClick={() => {
               //dispatch(addNotificationStock([]));
               handleupdateNotificationReadFinal(token, "Normal");
@@ -213,7 +213,7 @@ export default function Notification({ onClose }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Box sx={{ overflow: "auto", height: 380 }}>
+        <Box sx={{ overflow: "auto", maxHeight: "70vh" }}>
           {notification.notiList?.map((item) => (
             <Box
               sx={{
@@ -228,7 +228,10 @@ export default function Notification({ onClose }) {
                 },
               }}
               key={item._id}
-              onClick={() => navigate(`/feed/${item.post}`)}
+              onClick={() => {
+                navigate(`/feed/${item.post}`);
+                onClose();
+              }}
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
               <Box>
@@ -263,7 +266,7 @@ export default function Notification({ onClose }) {
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Box sx={{ overflow: "auto", height: 380 }}>
+        <Box sx={{ overflow: "auto", maxHeight: "70vh" }}>
           {notification.notiKeepList?.map((item) => (
             <Box
               sx={{
@@ -278,7 +281,10 @@ export default function Notification({ onClose }) {
                 },
               }}
               key={item._id}
-              onClick={() => navigate(`/feed/${item.post}`)}
+              onClick={() => {
+                navigate(`/feed/${item.post}`);
+                onClose();
+              }}
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
               <Box>

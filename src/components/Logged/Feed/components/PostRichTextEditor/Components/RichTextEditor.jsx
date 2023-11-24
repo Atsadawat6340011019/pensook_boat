@@ -191,13 +191,14 @@ function ToolbarPlugin({ setModalUploadImage, content }) {
   return (
     <Box
       sx={{
-        width: 750,
+        maxWidth: 750,
+        width: { xs: "95%", md: "100%" },
         height: 50,
         border: "1px #808080 solid",
         borderRadius: "8px",
         position: "absolute",
         bottom: -50,
-        left: 0,
+        left: { xs: 10, md: 0 },
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -296,7 +297,10 @@ export const RichTextEditor = ({
     <LexicalComposer initialConfig={initialConfig}>
       <RichTextPlugin
         contentEditable={
-          <ContentEditable className="contentEditable" autoFocus="none" />
+          <ContentEditable
+            className="contentEditablePostEdit"
+            autoFocus="none"
+          />
         }
         placeholder={
           errorNoti === "กรุณาใส่เนื้อหา" ? (

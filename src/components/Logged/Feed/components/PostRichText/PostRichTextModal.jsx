@@ -21,7 +21,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 800,
+  maxWidth: 800,
   height: 785,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -231,7 +231,8 @@ export const PostRichTextModal = forwardRef(
             border: "1px #808080 solid",
             borderRadius: "8px",
             height: 70,
-            width: 750,
+            maxWidth: 750,
+            width: { xs: "95%", md: "100%" },
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -250,13 +251,16 @@ export const PostRichTextModal = forwardRef(
         </Box>
         <Box
           sx={{
-            width: 750,
+            maxWidth: 750,
+            width: "100%",
             display: "flex",
             justifyContent: "space-between",
             mt: 3,
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{ display: "flex", alignItems: "center", pl: { xs: 2, md: 0 } }}
+          >
             <Avatar
               src={isAnonymous ? LogoPensook : userData.profileImagePath}
               sx={{ width: 40, height: 40 }}
@@ -273,7 +277,13 @@ export const PostRichTextModal = forwardRef(
           <Button
             variant="contained"
             color="primary"
-            sx={{ width: 103, height: 40, borderRadius: "8px", fontSize: 16 }}
+            sx={{
+              width: 103,
+              height: 40,
+              borderRadius: "8px",
+              fontSize: 16,
+              mr: { xs: 2, md: 0 },
+            }}
             onClick={handleSubmit}
             disabled={buttonDisable}
           >
@@ -282,7 +292,8 @@ export const PostRichTextModal = forwardRef(
         </Box>
         <Box
           sx={{
-            width: 750,
+            maxWidth: 750,
+            width: "100%",
             mt: 3,
           }}
         >
@@ -290,13 +301,19 @@ export const PostRichTextModal = forwardRef(
             placeholder={errorNoti ? errorNoti : "หัวข้อ"}
             value={labelText}
             onChange={(e) => setLabelText(e.target.value)}
-            sx={{ width: 750, px: 7, fontWeight: "500", fontSize: 42 }}
+            sx={{
+              maxWidth: 750,
+              width: "100%",
+              px: 7,
+              fontWeight: "500",
+              fontSize: 42,
+            }}
             inputProps={{ maxLength: 150 }}
             required
             autoFocus
           />
         </Box>
-        <Box sx={{ width: 750, height: 380, mt: 3 }}>
+        <Box sx={{ maxWidth: 750, width: "100%", height: 380, mt: 3 }}>
           <Box sx={{ position: "relative", px: 7, height: 380 }}>
             <RichTextEditor
               content={content}
