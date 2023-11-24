@@ -241,7 +241,7 @@ export const PostRichTextModal = forwardRef(
         >
           <Typography
             align="center"
-            sx={{ fontWeight: "400", fontSize: 16, px: 6 }}
+            sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, px: 6 }}
           >
             โพสต์โดยไม่เปิดเผยตัวตน
           </Typography>

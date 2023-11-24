@@ -171,6 +171,83 @@ export const PostCard = ({
     }
   }, [voteValue]);
 
+  /*const handleVote = async (voteType) => {
+    try {
+      let voteResult;
+      if (voteType === "Up") {
+        voteResult = await handleUpVotePost(token, data?.postId);
+      } else if (voteType === "Down") {
+        voteResult = await handleDownVotePost(token, data?.postId);
+      } else if (voteType === null) {
+        voteResult = await handleUnVotePost(token, data?.postId);
+      }
+
+      console.log(voteResult);
+
+      if (voteResult.response.status === "success") {
+        setUpVoteCountCurrent(voteResult.response.result.upVote.toString());
+      }
+    } catch (error) {
+      console.log(error.error);
+      if (error.error === "postId is not found") {
+        setDialogTogglePostDel(true);
+        setTimeout(() => {
+          setDialogTogglePostDel(false);
+          dispatch(AddPostId(""));
+          dispatch(UpdataCommentData(Math.floor(Math.random() * 101)));
+        }, 1000);
+      }
+    }
+  };
+
+  const handleLocalStorageVotes = () => {
+    const currentVotesString = localStorage.getItem("votes");
+    const currentVotes = currentVotesString
+      ? JSON.parse(currentVotesString)
+      : {};
+
+    if (currentVotes[data?.postId]) {
+      const { voteValue, timestamp } = currentVotes[data?.postId];
+
+      const currentTime = new Date().getTime();
+      const oneMinuteInMillis = 60 * 1000;
+
+      if (currentTime - timestamp >= oneMinuteInMillis) {
+        // ถ้าเวลาผ่านไปแล้วให้ดำเนินการ
+        handleVote(voteValue);
+
+        delete currentVotes[data?.postId];
+        localStorage.setItem("votes", JSON.stringify(currentVotes));
+      }
+    }
+  };
+
+  const vote = (postId, voteValue) => {
+    const timestamp = new Date().getTime();
+
+    const currentVotesString = localStorage.getItem("votes");
+    const currentVotes = currentVotesString
+      ? JSON.parse(currentVotesString)
+      : {};
+
+    if (currentVotes[postId] && data.voteCurrent === voteValue) {
+      delete currentVotes[postId];
+    } else {
+      currentVotes[postId] = { voteValue, timestamp };
+    }
+
+    localStorage.setItem("votes", JSON.stringify(currentVotes));
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log("ทำงานทุก 5 วิ");
+      handleLocalStorageVotes();
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [token, data, setUpVoteCountCurrent, dispatch]);*/
+
   useEffect(() => {
     if (keepPostValue === "t") {
       const handleKeepPostFinal = async () => {
@@ -226,8 +303,10 @@ export const PostCard = ({
     console.log("votevale", voteValue);
     if (value === (voteValue || data?.voteCurrent)) {
       setVoteValue("unvote");
+      //vote(data.postId, null);
     } else {
       setVoteValue(value);
+      //vote(data.postId, value);
     }
   };
 
@@ -523,7 +602,8 @@ export const PostCard = ({
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
-              width: data.attachImageList.length > 1 ? 630 : "100%",
+              maxWidth: 630,
+              width: data.attachImageList.length > 1 ? "100%" : "100%",
             }}
           >
             {!imageSelect && (
@@ -579,8 +659,27 @@ export const PostCard = ({
                     : "#ededed",
                 },
               }}
-              onClick={() => handleChangeVote("Up")}
+              onClick={() => {
+                handleChangeVote("Up");
+              }}
             >
+              {/*voteValue === "Up"
+                ? data?.voteCurrent === "Up"
+                  ? data?.upVote
+                  : data?.upVote + 1
+                : voteValue === "Down" && data?.voteCurrent !== null
+                ? data?.upVote > 0
+                  ? data?.upVote - 1
+                  : 0
+                : voteValue === "unvote" &&
+                  data?.voteCurrent === "Up" &&
+                  data?.upVote > 0
+                ? data?.upVote - 1
+                : voteValue === "unvote" || data?.voteCurrent === null
+                ? data?.upVote
+                : voteValue === data?.voteCurrent
+                ? data?.upVote
+            : data?.upVote*/}
               {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
             </Button>
           </GrayTooltip>
@@ -631,8 +730,8 @@ export const PostCard = ({
             <GrayTooltip title="ความคิดเห็น" placement="top">
               <IconButton
                 sx={{
-                  width: 35,
-                  height: 35,
+                  width: { xs: 30, md: 35 },
+                  height: { xs: 30, md: 35 },
                   "&:hover": {
                     bgcolor: "#ededed",
                   },
@@ -646,7 +745,9 @@ export const PostCard = ({
                 <TfiCommentAlt size={35} color="#000" />
               </IconButton>
             </GrayTooltip>
-            <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
+            <Typography
+              sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, ml: 2 }}
+            >
               {data?.commentList?.length}
             </Typography>
           </Box>
@@ -656,12 +757,13 @@ export const PostCard = ({
             <GrayTooltip title="Keep โพสต์" placement="top">
               <IconButton
                 sx={{
-                  width: 40,
-                  height: 40,
+                  width: { xs: 35, md: 40 },
+                  height: { xs: 35, md: 40 },
                   "&:hover": {
                     bgcolor: "#ededed",
                   },
                 }}
+                disabled={userData?.userId === data?.userId}
                 onClick={() => handleChangeKeepPost("t")}
               >
                 {keepPostValue ? (
@@ -677,7 +779,9 @@ export const PostCard = ({
                 )}
               </IconButton>
             </GrayTooltip>
-            <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 1 }}>
+            <Typography
+              sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, ml: 1 }}
+            >
               {keepPostCountCurrent ? keepPostCountCurrent : data?.keepCount}
             </Typography>
           </Box>
@@ -686,8 +790,8 @@ export const PostCard = ({
               <IconButton
                 onClick={handleClick}
                 sx={{
-                  width: 40,
-                  height: 40,
+                  width: { xs: 35, md: 40 },
+                  height: { xs: 35, md: 40 },
                   "&:hover": {
                     bgcolor: "#ededed",
                   },
@@ -702,7 +806,9 @@ export const PostCard = ({
               postId={data?.postId}
             />
 
-            <Typography sx={{ fontWeight: "500", fontSize: 16, ml: 1 }}>
+            <Typography
+              sx={{ fontWeight: "500", fontSize: { xs: 14, md: 16 }, ml: 1 }}
+            >
               แชร์
             </Typography>
           </Box>

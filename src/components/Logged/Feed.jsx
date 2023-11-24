@@ -145,7 +145,15 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   }, [setCommentData, dispatch, navigate, reflesh, updateComment, postArray]);
 
   return (
-    <Box flex={3} maxWidth={1000}>
+    <Box
+      flex={3}
+      maxWidth={1000}
+      sx={{
+        ".css-rjb2l0-MuiStack-root > :not(style) ~ :not(style)": {
+          marginLeft: 0,
+        },
+      }}
+    >
       {(currentURL === "/mypost" && <TabSelectCard />) ||
         (currentURL === "/myanonymouspost" && <TabSelectCard />) ||
         (currentURL === "/myreplypost" && <TabSelectCard />)}
