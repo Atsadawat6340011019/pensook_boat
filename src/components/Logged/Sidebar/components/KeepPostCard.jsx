@@ -2,7 +2,11 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AddKeepPostId } from "../../../../store/selectSlice";
+import {
+  AddKeepPostId,
+  AddSearchKeyword,
+  CheckNoti,
+} from "../../../../store/selectSlice";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { CiFaceSmile } from "react-icons/ci";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
@@ -48,6 +52,8 @@ export const KeepPostCard = ({ data }) => {
       onClick={() => {
         navigate(`/feed/${data?.postId}`);
         dispatch(AddKeepPostId(data?.postId));
+        dispatch(CheckNoti(false));
+        dispatch(AddSearchKeyword(undefined));
       }}
     >
       {data.attachImageList.length > 0 && (

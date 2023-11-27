@@ -24,7 +24,7 @@ import {
   handleGetNotification,
   handleGetSearchList,
 } from "../../services/getDataServices";
-import { AddSearchPostId } from "../../store/selectSlice";
+import { AddSearchKeyword, AddSearchPostId } from "../../store/selectSlice";
 import Notification from "./Notification";
 
 const StyledToolbar = styled(Toolbar)({
@@ -253,14 +253,24 @@ export const Navbar = () => {
                   <MenuItem
                     key={item._id}
                     onClick={() => {
-                      dispatch(AddSearchPostId([item?._id]));
+                      if (item._id === null) {
+                        dispatch(AddSearchKeyword(item?.label));
+                      } else if (item._id) {
+                        dispatch(AddSearchPostId([item?._id]));
+                        dispatch(AddSearchKeyword(undefined));
+                      }
                       setSearchTerm(item?.label);
                       setShowResults(false);
                       navigate(`/search`);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        dispatch(AddSearchPostId([item?._id]));
+                        if (item._id === null) {
+                          dispatch(AddSearchKeyword(item?.label));
+                        } else if (item._id) {
+                          dispatch(AddSearchPostId([item?._id]));
+                          dispatch(AddSearchKeyword(undefined));
+                        }
                         setSearchTerm(item?.label);
                         setShowResults(false);
                         navigate(`/search`);

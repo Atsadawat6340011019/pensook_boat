@@ -10,7 +10,11 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AddKeepPostId } from "../../../../store/selectSlice";
+import {
+  AddKeepPostId,
+  AddSearchKeyword,
+  CheckNoti,
+} from "../../../../store/selectSlice";
 import { UpdataCommentData } from "../../../../store/userSlice";
 
 export const ProfileCard = () => {
@@ -79,6 +83,8 @@ export const ProfileCard = () => {
                 navigate("/mypost");
                 dispatch(AddKeepPostId());
                 dispatch(UpdataCommentData());
+                dispatch(CheckNoti(false));
+                dispatch(AddSearchKeyword(undefined));
               }}
             />
           </Box>
@@ -96,6 +102,8 @@ export const ProfileCard = () => {
             navigate("/profile");
             dispatch(AddKeepPostId());
             dispatch(UpdataCommentData());
+            dispatch(CheckNoti(false));
+            dispatch(AddSearchKeyword(undefined));
           }}
         >
           <ListItemIcon>
@@ -116,6 +124,8 @@ export const ProfileCard = () => {
             navigate("/setting");
             dispatch(AddKeepPostId());
             dispatch(UpdataCommentData());
+            dispatch(CheckNoti(false));
+            dispatch(AddSearchKeyword(undefined));
           }}
         >
           <ListItemIcon>

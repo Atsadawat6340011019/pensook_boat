@@ -3,11 +3,16 @@ import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AddKeepPostId } from "../../../../store/selectSlice";
+import {
+  AddKeepPostId,
+  AddSearchKeyword,
+  CheckNoti,
+} from "../../../../store/selectSlice";
 import { UpdataCommentData } from "../../../../store/userSlice";
 
 export const MenuNameCard = () => {
   const keepPostId = useSelector((state) => state.select.keepPostIdSelect);
+  const checkNoti = useSelector((state) => state.select.checkNoti);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -39,6 +44,8 @@ export const MenuNameCard = () => {
             navigate("/feed");
             dispatch(AddKeepPostId());
             dispatch(UpdataCommentData());
+            dispatch(CheckNoti(false));
+            dispatch(AddSearchKeyword(undefined));
           }}
         >
           <ArrowBackIosNewRounded />
@@ -54,8 +61,12 @@ export const MenuNameCard = () => {
         {currentURL === "/myanonymouspost" && "โพสต์ของคุณ"}
         {currentURL === "/myreplypost" && "โพสต์ของคุณ"}
         {currentURL === "/search" && "ผลการค้นหา"}
-        {currentURL.includes("/feed/") && !keepPostId && "หน้าหลัก"}
+        {currentURL.includes("/feed/") &&
+          !keepPostId &&
+          !checkNoti &&
+          "หน้าหลัก"}
         {currentURL.includes("/feed/") && keepPostId && "โพสต์ที่คุณ Keep"}
+        {currentURL.includes("/feed/") && checkNoti && "การแจ้งเตือน"}
       </Typography>
     </Box>
   );

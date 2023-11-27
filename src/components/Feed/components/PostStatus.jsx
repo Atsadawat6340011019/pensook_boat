@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import LogoPensook from "../../../assets/PENSOOK_logo_32.png";
+import { useNavigate } from "react-router-dom";
 export const PostStatus = () => {
+  const navigate = useNavigate();
   return (
     <Box
       bgcolor="#fff"
@@ -11,7 +13,9 @@ export const PostStatus = () => {
         height: 70,
         px: 2,
         borderRadius: "8px",
+        cursor: "pointer",
       }}
+      onClick={() => navigate("/login")}
     >
       <img
         src={LogoPensook}

@@ -26,6 +26,17 @@ export const handleGetFeedBySearch = (token, postArray) => {
   );
 };
 
+export const handleGetFeedByKeyWord = (token, keyword) => {
+  return axios.get(
+    `${BACKEND_URL}/api/social/getFeedByKeyword?keyword=${keyword}`,
+    {
+      headers: {
+        "x-access-token": token,
+      },
+    }
+  );
+};
+
 export const handleGetFeedWithPostIdLogged = (token, postId) => {
   return axios.get(`${BACKEND_URL}/api/social/getFeed?postId=${postId}`, {
     headers: {

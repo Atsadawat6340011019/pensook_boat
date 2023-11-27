@@ -19,6 +19,7 @@ import io from "socket.io-client";
 import { handleGetNotification } from "./services/getDataServices";
 import { useDispatch, useSelector } from "react-redux";
 import { AddNotificationData } from "./store/userSlice";
+import { HelmetProvider } from "react-helmet-async";
 
 const HomePage = ({
   keepPostData,
@@ -83,112 +84,114 @@ function App() {
   }, []);
 
   return (
-    <Box bgcolor="#F1F1F1" sx={{ height: "100vh" }}>
-      <Routes>
-        <Route element={<UnloggedRoute />}>
-          <Route
-            path=""
-            element={
-              <HomePage
-                keepPostData={keepPostData}
-                setCommentData={setCommentData}
-                setKeepPostData={setKeepPostData}
-                commentData={commentData}
-              />
-            }
-          />
-          <Route
-            path="/:id"
-            element={
-              <HomePage
-                keepPostData={keepPostData}
-                setCommentData={setCommentData}
-                setKeepPostData={setKeepPostData}
-                commentData={commentData}
-              />
-            }
-          />
-        </Route>
-        <Route element={<UnloggedRoute />}>
-          <Route path="login" element={<LoginPage />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route
-            path=""
-            element={<RootLayout refleshKeepPost={refleshKeepPost} />}
-          >
+    <HelmetProvider>
+      <Box bgcolor="#F1F1F1" sx={{ height: "100vh" }}>
+        <Routes>
+          <Route element={<UnloggedRoute />}>
             <Route
-              path="feed"
+              path=""
               element={
-                <FeedAndCommentsPage
+                <HomePage
+                  keepPostData={keepPostData}
                   setCommentData={setCommentData}
-                  commentData={commentData}
-                  setRefleshKeepPost={setRefleshKeepPost}
-                />
-              }
-            />
-            <Route
-              path="feed/:id"
-              element={
-                <FeedAndCommentsPage
-                  setCommentData={setCommentData}
-                  commentData={commentData}
-                  setRefleshKeepPost={setRefleshKeepPost}
-                />
-              }
-            />
-            <Route
-              path="search"
-              element={
-                <FeedAndCommentsPage
-                  setCommentData={setCommentData}
-                  commentData={commentData}
-                  setRefleshKeepPost={setRefleshKeepPost}
-                />
-              }
-            />
-            <Route
-              path="mypost"
-              element={
-                <MyPostPage
-                  setCommentData={setCommentData}
+                  setKeepPostData={setKeepPostData}
                   commentData={commentData}
                 />
               }
             />
             <Route
-              path="myanonymouspost"
+              path="/:id"
               element={
-                <MyPostPage
+                <HomePage
+                  keepPostData={keepPostData}
                   setCommentData={setCommentData}
+                  setKeepPostData={setKeepPostData}
                   commentData={commentData}
                 />
               }
             />
-            <Route
-              path="myreplypost"
-              element={
-                <MyPostPage
-                  setCommentData={setCommentData}
-                  commentData={commentData}
-                />
-              }
-            />
-            <Route
-              path="keeppost"
-              element={
-                <KeepPostPage
-                  setCommentData={setCommentData}
-                  commentData={commentData}
-                />
-              }
-            />
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="setting" element={<SettingPage />} />
           </Route>
-        </Route>
-      </Routes>
-    </Box>
+          <Route element={<UnloggedRoute />}>
+            <Route path="login" element={<LoginPage />} />
+          </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path=""
+              element={<RootLayout refleshKeepPost={refleshKeepPost} />}
+            >
+              <Route
+                path="feed"
+                element={
+                  <FeedAndCommentsPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                    setRefleshKeepPost={setRefleshKeepPost}
+                  />
+                }
+              />
+              <Route
+                path="feed/:id"
+                element={
+                  <FeedAndCommentsPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                    setRefleshKeepPost={setRefleshKeepPost}
+                  />
+                }
+              />
+              <Route
+                path="search"
+                element={
+                  <FeedAndCommentsPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                    setRefleshKeepPost={setRefleshKeepPost}
+                  />
+                }
+              />
+              <Route
+                path="mypost"
+                element={
+                  <MyPostPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                  />
+                }
+              />
+              <Route
+                path="myanonymouspost"
+                element={
+                  <MyPostPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                  />
+                }
+              />
+              <Route
+                path="myreplypost"
+                element={
+                  <MyPostPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                  />
+                }
+              />
+              <Route
+                path="keeppost"
+                element={
+                  <KeepPostPage
+                    setCommentData={setCommentData}
+                    commentData={commentData}
+                  />
+                }
+              />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="setting" element={<SettingPage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </Box>
+    </HelmetProvider>
   );
 }
 

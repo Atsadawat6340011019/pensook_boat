@@ -6,6 +6,8 @@ const initialState = {
   keepPostIdSelect: undefined,
   checkSecondComment: false,
   postArray: undefined,
+  checkNoti: false,
+  keyword: undefined,
 };
 
 export const selectSlice = createSlice({
@@ -27,6 +29,12 @@ export const selectSlice = createSlice({
     AddSearchPostId: (state, action) => {
       state.postArray = action.payload;
     },
+    CheckNoti: (state, action) => {
+      state.checkNoti = action.payload;
+    },
+    AddSearchKeyword: (state, action) => {
+      state.keyword = action.payload;
+    },
   },
 });
 
@@ -36,6 +44,8 @@ export const {
   AddKeepPostId,
   CheckSecondComment,
   AddSearchPostId,
+  CheckNoti,
+  AddSearchKeyword,
 } = selectSlice.actions;
 
 export default selectSlice.reducer;

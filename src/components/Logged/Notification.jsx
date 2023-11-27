@@ -7,7 +7,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Close } from "@mui/icons-material";
 import { formatTimestamp } from "../../utils/functions";
@@ -15,6 +15,8 @@ import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
 import { handleUpdateNotification } from "../../services/feedServices";
 import { useNavigate } from "react-router-dom";
+import { AddPostId, CheckNoti } from "../../store/selectSlice";
+import { UpdataCommentData } from "../../store/userSlice";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,35 +66,8 @@ export default function Notification({ onClose }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  function formatDateTime(timestamp) {
-    const dateTime = new Date(timestamp);
 
-    const day = dateTime.getDate();
-    const month = dateTime.getMonth() + 1;
-    const year = dateTime.getFullYear();
-
-    const hours = dateTime.getHours();
-    const minutes = dateTime.getMinutes();
-
-    const formattedDate = `${day}/${month}/${year}`;
-    const formattedTime = `${hours}:${String(minutes).padStart(2, "0")}`;
-
-    return `${formattedDate} ${formattedTime} น.`;
-  }
-
-  function getUnreadNotificationIds(notifications) {
-    const unreadNotifications = notifications.filter(
-      (notification) => !notification.hasReaded
-    );
-
-    const unreadNotificationIds = unreadNotifications.map(
-      (notification) => notification.notificaitonId
-    );
-
-    return unreadNotificationIds;
-  }
-
-  React.useEffect(() => {
+  useEffect(() => {
     handleupdateNotificationReadFinal(token, "Normal");
   }, []);
 
@@ -231,6 +206,11 @@ export default function Notification({ onClose }) {
               onClick={() => {
                 navigate(`/feed/${item.post}`);
                 onClose();
+                dispatch(CheckNoti(true));
+                dispatch(
+                  UpdataCommentData(Math.floor(Math.random() * 100) + 1)
+                );
+                dispatch(AddPostId(item.post));
               }}
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />
@@ -284,6 +264,11 @@ export default function Notification({ onClose }) {
               onClick={() => {
                 navigate(`/feed/${item.post}`);
                 onClose();
+                dispatch(CheckNoti(true));
+                dispatch(
+                  UpdataCommentData(Math.floor(Math.random() * 100) + 1)
+                );
+                dispatch(AddPostId(item.post));
               }}
             >
               <Avatar src={item?.image} sx={{ mx: 2 }} />

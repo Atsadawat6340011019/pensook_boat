@@ -4,6 +4,7 @@ import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
 import {
   handleGetFeed,
+  handleGetFeedByKeyWord,
   handleGetFeedBySearch,
   handleGetFeedWithPostIdLogged,
   handleGetKeepPost,
@@ -30,6 +31,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
   const [reflesh, setReflesh] = useState("");
   const updateComment = useSelector((state) => state.user.updateCommentData);
   const postArray = useSelector((state) => state.select.postArray);
+  const searchKeyword = useSelector((state) => state.select.keyword);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -119,11 +121,23 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
             setCommentData(response.data.response[0].commentList);
             dispatch(AddPostId(response.data.response[0].postId));
           }
-        } else if (currentURL === "/search") {
+        } else if (currentURL === "/search" && !searchKeyword) {
           if (!updateComment) {
             setCommentData([]);
           }
           const response = await handleGetFeedBySearch(token, postArray);
+          dispatch(AddUserData(response.data.session));
+          dispatch(AddNotificationData(response.data.session.notification));
+          setFeedData(response.data.response);
+          if (!updateComment) {
+            setCommentData(response.data.response[0].commentList);
+            dispatch(AddPostId(response.data.response[0].postId));
+          }
+        } else if (currentURL === "/search" && searchKeyword) {
+          if (!updateComment) {
+            setCommentData([]);
+          }
+          const response = await handleGetFeedByKeyWord(token, searchKeyword);
           dispatch(AddUserData(response.data.session));
           dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
@@ -142,7 +156,15 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
     };
 
     fectFeedData(token);
-  }, [setCommentData, dispatch, navigate, reflesh, updateComment, postArray]);
+  }, [
+    setCommentData,
+    dispatch,
+    navigate,
+    reflesh,
+    updateComment,
+    postArray,
+    searchKeyword,
+  ]);
 
   return (
     <Box
