@@ -6,7 +6,7 @@ const BACKEND_URL =
     : process.env.REACT_APP_BACKEND_URL;
 
 export const handleGetFeed = () => {
-  return axios.get(`${BACKEND_URL}/auth/getFeed`);
+  return axios.get(`${BACKEND_URL}/socialApi/getFeed`);
 };
 
 export const handleGetFeaturedPost = () => {
@@ -14,11 +14,11 @@ export const handleGetFeaturedPost = () => {
 };
 
 export const handleGetFeedWithPostId = (postId) => {
-  return axios.get(`${BACKEND_URL}/auth/getFeed?postId=${postId}`);
+  return axios.get(`${BACKEND_URL}/socialApi/getFeed?postId=${postId}`);
 };
 
 export const handleGetSearchList = (token) => {
-  return axios.get(`${BACKEND_URL}/api/social/getSearchList`, {
+  return axios.get(`${BACKEND_URL}/socialApi/getSearchList`, {
     headers: {
       "x-access-token": token,
     },

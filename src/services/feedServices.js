@@ -28,7 +28,7 @@ export const handleGetFeedBySearch = (token, postArray) => {
 
 export const handleGetFeedByKeyWord = (token, keyword) => {
   return axios.get(
-    `${BACKEND_URL}/api/social/getFeedByKeyword?keyword=${keyword}`,
+    `${BACKEND_URL}/socialApi/getFeedByKeyword?keyword=${keyword}`,
     {
       headers: {
         "x-access-token": token,

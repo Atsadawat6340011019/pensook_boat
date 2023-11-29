@@ -138,8 +138,6 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
             setCommentData([]);
           }
           const response = await handleGetFeedByKeyWord(token, searchKeyword);
-          dispatch(AddUserData(response.data.session));
-          dispatch(AddNotificationData(response.data.session.notification));
           setFeedData(response.data.response);
           if (!updateComment) {
             setCommentData(response.data.response[0].commentList);

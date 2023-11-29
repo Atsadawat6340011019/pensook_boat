@@ -66,10 +66,10 @@ export const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState();
   const userData = useSelector((state) => state.user.userData);
   const notification = useSelector((state) => state.user.notification);
-  const unreadNotificationsNotiList = notification.notiList?.filter(
+  const unreadNotificationsNotiList = notification?.notiList?.filter(
     (notification) => !notification.isRead
   );
-  const unreadNotificationsNotiKeepList = notification.notiKeepList?.filter(
+  const unreadNotificationsNotiKeepList = notification?.notiKeepList?.filter(
     (notification) => !notification.isRead
   );
   const navigate = useNavigate();
