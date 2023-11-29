@@ -29,7 +29,7 @@ export const FeedAndCommentsPage = ({
         maxWidth={1000}
         sx={{
           width: "100%",
-          display: { xs: "none", sm: "block" },
+          display: { xs: "none", md: "block" },
         }}
       >
         <Feed
@@ -44,7 +44,7 @@ export const FeedAndCommentsPage = ({
           maxWidth={1000}
           sx={{
             width: "100%",
-            display: { xs: "block", sm: "none", md: "none" },
+            display: { xs: "block", sm: "block", md: "none" },
           }}
         >
           <Feed

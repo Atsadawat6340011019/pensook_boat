@@ -20,7 +20,7 @@ export const CommentStatus = forwardRef(
           borderRadius: "8px",
           cursor: "pointer",
           position: { xs: "fixed", lg: "absolute" },
-          bottom: { xs: -40, lg: 5 },
+          bottom: { xs: 0, lg: 5 },
           maxWidth: "100%",
           width: "90%",
         }}

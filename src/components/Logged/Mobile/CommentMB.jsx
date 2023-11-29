@@ -1,9 +1,11 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Dialog,
   IconButton,
   Modal,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -12,7 +14,7 @@ import { CommentStatus } from "../Rightbar/components/CommentStatus";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetComment } from "../../../services/feedServices";
 import { AddUserData } from "../../../store/userSlice";
-import { CheckSecondComment } from "../../../store/selectSlice";
+import { AddCommentId, CheckSecondComment } from "../../../store/selectSlice";
 import ReportDialog from "../Rightbar/components/Dialog/reportDialog";
 import { setCommentMobile } from "../../../store/mobileSlice";
 import { PostRichTextModal } from "../Rightbar/components/PostRichText/PostRichTextModal";
@@ -25,7 +27,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: 500,
-  height: 785,
+  height: "80vh",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -40,11 +42,13 @@ export const CommentMB = ({ commentData, setCommentData }) => {
   const [richTextEditModalToggle, setRichTextEditModalToggle] = useState(false);
   const [htmlContent, setHtmlContent] = useState();
   const [openReport, setOpenReport] = useState(false);
+  const userData = useSelector((state) => state.user.userData);
   const postId = useSelector((state) => state.select.postIdSelect);
   const updateComment = useSelector((state) => state.user.updateCommentData);
   const mobileCommentToggle = useSelector(
     (state) => state.mobile.commentMobile
   );
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const dispatch = useDispatch();
   console.log(postId);
   console.log(commentData);
@@ -61,6 +65,21 @@ export const CommentMB = ({ commentData, setCommentData }) => {
       fecthData();
     }
   }, [updateComment]);
+
+  useEffect(() => {
+    // Function to handle window resize events
+    const handleResize = () => {
+      setScreenHeight(window.innerHeight);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Box sx={style}>
@@ -82,7 +101,7 @@ export const CommentMB = ({ commentData, setCommentData }) => {
         <Box
           bgcolor="#fff"
           sx={{
-            height: 830,
+            height: "80vh",
             borderRadius: "8px",
           }}
         >
@@ -94,12 +113,13 @@ export const CommentMB = ({ commentData, setCommentData }) => {
           <Box
             sx={{
               px: 2,
-              height: 680,
+              height: "60vh",
               overflow: "auto",
               ...(commentData?.length === 0 && {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                position: "relative",
               }),
             }}
           >
@@ -122,10 +142,50 @@ export const CommentMB = ({ commentData, setCommentData }) => {
                 ยังไม่มีความคิดเห็น
               </Typography>
             )}
+            <Toolbar sx={{ display: { xs: "block", md: "none" } }} />
           </Box>
-
           {token && (
-            <CommentStatus setRichTextModalToggle={setRichTextModalToggle} />
+            <Box
+              bgcolor="#fff"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                height: 70,
+                px: 2,
+                borderRadius: "8px",
+                cursor: "pointer",
+                position: "absolute",
+                bottom: 0,
+                maxWidth: "100%",
+                width: "90%",
+              }}
+              onClick={() => {
+                setRichTextModalToggle(true);
+                dispatch(AddCommentId(""));
+              }}
+            >
+              <Avatar
+                src={userData?.profileImagePath}
+                sx={{ width: 40, height: 40 }}
+                alt="avatar"
+              />
+              <Box
+                bgcolor="#F1F1F1"
+                sx={{
+                  ml: 2,
+                  height: 40,
+                  borderRadius: "30px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  px: 2,
+                }}
+              >
+                <Typography sx={{ userSelect: "none" }}>
+                  ความคิดเห็นของคุณ...
+                </Typography>
+              </Box>
+            </Box>
           )}
         </Box>
         <Modal

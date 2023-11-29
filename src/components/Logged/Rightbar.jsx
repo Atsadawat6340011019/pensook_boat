@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Modal, Toolbar, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { CommentCard } from "./Rightbar/components/CommentCard";
 import { PostRichTextModal } from "./Rightbar/components/PostRichText/PostRichTextModal";
@@ -109,6 +109,7 @@ export const Rightbar = ({ commentData, setCommentData }) => {
         />
       </Modal>
       <ReportDialog open={openReport} onClose={() => setOpenReport(false)} />
+      <Toolbar sx={{ display: { xs: "block", md: "none" } }} />
     </Box>
   );
 };

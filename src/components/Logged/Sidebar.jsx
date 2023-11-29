@@ -23,7 +23,7 @@ export const Sidebar = ({}) => {
   return (
     <Box
       flex={1.5}
-      sx={{ display: { xs: "none", sm: "block" }, pl: 2 }}
+      sx={{ display: { xs: "none", sm: "none", md: "block" }, pl: 2 }}
       maxWidth={350}
     >
       <MenuNameCard />
