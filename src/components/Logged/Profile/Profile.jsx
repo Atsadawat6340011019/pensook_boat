@@ -527,7 +527,7 @@ export const Profile = () => {
               }
               style={{
                 maxWidth: 640,
-                width: "100%",
+                width: "90%",
                 maxHeight: 200,
                 height: "100%",
                 objectFit: "cover",

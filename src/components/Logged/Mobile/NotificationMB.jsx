@@ -86,8 +86,9 @@ export const NotificationMB = () => {
       bgcolor="#fff"
       sx={{
         display: { xs: "block", sm: "none", md: "none" },
-        height: "auto",
+        height: "80vh",
         borderRadius: "8px",
+        width: "100%",
       }}
     >
       <Box

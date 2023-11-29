@@ -49,10 +49,31 @@ const HomePage = ({
         }}
       >
         <Sidebar keepPostData={keepPostData} />
-        <Feed
-          setCommentData={setCommentData}
-          setKeepPostData={setKeepPostData}
-        />
+        <Box
+          maxWidth={1000}
+          sx={{
+            width: "100%",
+            display: { xs: "none", sm: "block" },
+          }}
+        >
+          <Feed
+            setCommentData={setCommentData}
+            setKeepPostData={setKeepPostData}
+          />
+        </Box>
+
+        <Box
+          maxWidth={1000}
+          sx={{
+            width: "100%",
+            display: { xs: "block", sm: "none", md: "none" },
+          }}
+        >
+          <Feed
+            setCommentData={setCommentData}
+            setKeepPostData={setKeepPostData}
+          />
+        </Box>
         <Modal
           open={mobileCommentToggle}
           onClose={() => dispatch(setCommentMobile(false))}
