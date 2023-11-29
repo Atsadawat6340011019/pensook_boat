@@ -9,6 +9,10 @@ export const handleGetFeed = () => {
   return axios.get(`${BACKEND_URL}/auth/getFeed`);
 };
 
+export const handleGetFeaturedPost = () => {
+  return axios.get(`${BACKEND_URL}/socialApi/getFeaturedPost`);
+};
+
 export const handleGetFeedWithPostId = (postId) => {
   return axios.get(`${BACKEND_URL}/auth/getFeed?postId=${postId}`);
 };

@@ -13,7 +13,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 800,
+  maxWidth: 800,
   height: 700,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -93,7 +93,7 @@ export const ModalDeleteUser = forwardRef(({ ModalRef, onClose }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: 400,
+          maxWidth: 400,
           mt: 5,
         }}
       >
@@ -114,7 +114,8 @@ export const ModalDeleteUser = forwardRef(({ ModalRef, onClose }) => {
           ref={ModalRef}
           sx={{
             borderRadius: "8px",
-            width: 400,
+            maxWidth: 400,
+            width: "100%",
             height: 50,
             fontWeight: "500",
           }}
@@ -138,7 +139,8 @@ export const ModalDeleteUser = forwardRef(({ ModalRef, onClose }) => {
         <Grid
           item
           sx={{
-            mr: 1,
+            mr: { xs: 0, md: 1 },
+            pb: { xs: 1, md: 0 },
           }}
         >
           <Button

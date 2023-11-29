@@ -3,7 +3,7 @@ import React from "react";
 
 export const ImageShow = ({ imageData, setImageSelect }) => {
   return (
-    <Box>
+    <Box sx={{ width: "100%" }}>
       {imageData.length === 1 && (
         <Grid container>
           <Grid item xs={12}>
@@ -21,13 +21,15 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[0])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[0]}
-              style={{ objectFit: "cover" }}
-              width={315}
-              height={300}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              }}
               alt="contentImage"
             />
           </Grid>
@@ -35,13 +37,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[1])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[1]}
-              style={{ objectFit: "cover" }}
-              width={315}
-              height={300}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -54,13 +54,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             xs={12}
             height={300}
             onClick={() => setImageSelect(imageData[0])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[0]}
-              width={630}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -68,13 +66,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[1])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[1]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -82,13 +78,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[2])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[2]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -101,13 +95,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             xs={6}
             height={300}
             onClick={() => setImageSelect(imageData[0])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[0]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -116,13 +108,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             xs={6}
             height={300}
             onClick={() => setImageSelect(imageData[1])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[1]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -130,13 +120,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[2])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[2]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -144,13 +132,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[3])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[3]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -163,13 +149,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             xs={6}
             height={300}
             onClick={() => setImageSelect(imageData[0])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[0]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -178,13 +162,11 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             xs={6}
             height={300}
             onClick={() => setImageSelect(imageData[1])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[1]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
@@ -192,27 +174,32 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
             item
             xs={6}
             onClick={() => setImageSelect(imageData[2])}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", height: { xs: 180, md: 300 } }}
           >
             <img
               src={imageData[2]}
-              width={315}
-              height={300}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               alt="contentImage"
             />
           </Grid>
           <Grid
             item
             xs={6}
-            sx={{ position: "relative", cursor: "pointer" }}
+            sx={{
+              position: "relative",
+              cursor: "pointer",
+              height: { xs: 180, md: 300 },
+            }}
             onClick={() => setImageSelect(imageData[3])}
           >
             <img
               src={imageData[3]}
-              width={315}
-              height={300}
-              style={{ opacity: "70%", objectFit: "cover" }}
+              style={{
+                opacity: "70%",
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              }}
               alt="contentImage"
             />
             <Typography
@@ -220,7 +207,7 @@ export const ImageShow = ({ imageData, setImageSelect }) => {
                 position: "absolute",
                 top: "40%",
                 left: "40%",
-                fontSize: 48,
+                fontSize: { xs: 40, md: 48 },
                 fontWeight: "500",
                 cursor: "pointer",
               }}

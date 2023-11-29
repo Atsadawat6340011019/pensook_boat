@@ -21,10 +21,10 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 858,
+  maxWidth: 858,
   height: 761,
   bgcolor: "background.paper",
-  borderRadius: 10,
+  borderRadius: "8px",
   p: 4,
 };
 
@@ -138,11 +138,21 @@ export const Login = () => {
           }}
         >
           <IconButton
-            sx={{ position: "absolute", left: 0, width: 60, height: 60 }}
+            sx={{
+              position: "absolute",
+              left: 0,
+              width: { xs: 40, md: 60 },
+              height: { xs: 40, md: 60 },
+              zIndex: 999,
+            }}
             onClick={() => navigate("/")}
           >
             <ArrowBackIosNewRounded
-              sx={{ width: 56, height: 56, color: "#000" }}
+              sx={{
+                width: { xs: 36, md: 56 },
+                height: { xs: 36, md: 56 },
+                color: "#000",
+              }}
             />
           </IconButton>
           <img
@@ -280,10 +290,21 @@ export const Login = () => {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <Box sx={style}>
           <IconButton
-            sx={{ position: "absolute", right: 20, width: 56, height: 56 }}
+            sx={{
+              position: "absolute",
+              right: 20,
+              width: { xs: 40, md: 56 },
+              height: { xs: 40, md: 56 },
+            }}
             onClick={() => setModalOpen(false)}
           >
-            <Close sx={{ width: 56, height: 56, color: "#000" }} />
+            <Close
+              sx={{
+                width: { xs: 40, md: 56 },
+                height: { xs: 40, md: 56 },
+                color: "#000",
+              }}
+            />
           </IconButton>
           <Grid container>
             <Grid item>

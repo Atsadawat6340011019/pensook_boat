@@ -108,7 +108,10 @@ export const PostRichTextModalEdit = forwardRef(
     }, [content]);
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
-      return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
+      return htmlText.replace(
+        /<p>/g,
+        '<p style="text-align: center;" classname="spilt">'
+      );
     }
 
     const extractImgSrc = (htmlString) => {

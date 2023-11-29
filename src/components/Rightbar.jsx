@@ -4,7 +4,12 @@ import { CommentCard } from "./Rightbar/components/CommentCard";
 
 export const Rightbar = ({ commentData }) => {
   return (
-    <Box flex={2} sx={{ display: { xs: "none", sm: "block" } }} maxWidth={500}>
+    <Box
+      flex={2}
+      sx={{ display: { xs: "none", sm: "none", md: "none", lg: "block" } }}
+      minWidth={450}
+      maxWidth={500}
+    >
       <Box
         bgcolor="#fff"
         sx={{

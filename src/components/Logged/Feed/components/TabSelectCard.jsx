@@ -39,7 +39,7 @@ export const TabSelectCard = () => {
             label="โพสต์ทั้งหมด"
             {...a11yProps(0)}
             sx={{
-              fontSize: 18,
+              fontSize: { xs: 14, md: 18 },
               "&.MuiButtonBase-root:hover": {
                 color: "#000",
                 borderBottom: "2px solid #007DFC",
@@ -56,7 +56,7 @@ export const TabSelectCard = () => {
             label="โพสต์ที่ไม่เปิดเผยตัวตน"
             {...a11yProps(1)}
             sx={{
-              fontSize: 18,
+              fontSize: { xs: 14, md: 18 },
               "&.MuiButtonBase-root:hover": {
                 color: "#000",
                 borderBottom: "2px solid #007DFC",
@@ -73,7 +73,7 @@ export const TabSelectCard = () => {
             label="การตอบกลับ"
             {...a11yProps(2)}
             sx={{
-              fontSize: 18,
+              fontSize: { xs: 14, md: 18 },
               "&.MuiButtonBase-root:hover": {
                 color: "#000",
                 borderBottom: "2px solid #007DFC",

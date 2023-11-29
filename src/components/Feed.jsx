@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
 import {
+  handleGetFeaturedPost,
   handleGetFeed,
   handleGetFeedWithPostId,
 } from "../services/getDataServices";
@@ -29,7 +30,15 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
         } catch (error) {
           console.error("เกิดข้อผิดพลาด :", error.error);
         }
-      } else {
+      } else if (currentURL === "/featuredpost") {
+        try {
+          const response = await handleGetFeaturedPost();
+          setFeedData(response.data.response);
+          setCommentData(response.data.response[0].commentList);
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาด :", error.error);
+        }
+      } else if (currentURL === "/") {
         try {
           const response = await handleGetFeed();
           setFeedData(response.data.response);
@@ -42,7 +51,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
 
     const fetchFeedDataPost = async () => {
       try {
-        const response = await handleGetFeed();
+        const response = await handleGetFeaturedPost();
         setKeepPostData(response.data.response);
       } catch (error) {
         console.error("เกิดข้อผิดพลาด :", error.error);
@@ -51,7 +60,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
 
     fectFeedData();
     fetchFeedDataPost();
-  }, [setCommentData, setKeepPostData, postIdSelect]);
+  }, [setCommentData, setKeepPostData, postIdSelect, currentURL]);
 
   return (
     <Box flex={3} maxWidth={1000}>
@@ -69,7 +78,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
       )}
 
       <PostStatus />
-      <Box sx={{ mt: 1, height: 760, overflow: "auto" }}>
+      <Box sx={{ mt: 1, maxWidth: 1000, height: 760, overflow: "auto" }}>
         {feedData?.map((item, index) => (
           <PostCard
             key={index}
@@ -81,6 +90,7 @@ export const Feed = ({ setCommentData, setKeepPostData }) => {
           />
         ))}
       </Box>
+      <Toolbar sx={{ display: { xs: "block", md: "none" } }} />
     </Box>
   );
 };

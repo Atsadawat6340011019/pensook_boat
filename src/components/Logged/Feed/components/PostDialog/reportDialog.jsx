@@ -205,6 +205,7 @@ const ReportDialog = ({ open, onClose, postId, commentId }) => {
                 name="radio-buttons-group"
                 style={{
                   ...customFontStyle,
+                  textAlign: "left",
                 }}
                 value={reportType}
                 onChange={handleSelectReportType}

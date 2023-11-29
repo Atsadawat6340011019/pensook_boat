@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Modal, Toolbar, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { PostStatus } from "./Feed/components/PostStatus";
 import { PostCard } from "./Feed/components/PostCard";
@@ -231,6 +231,7 @@ export const Feed = ({ setCommentData, setRefleshKeepPost }) => {
           setReflesh={setReflesh}
         />
       </Modal>
+      <Toolbar sx={{ display: { xs: "block", md: "none" } }} />
     </Box>
   );
 };

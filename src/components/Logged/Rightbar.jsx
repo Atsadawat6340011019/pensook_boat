@@ -37,7 +37,11 @@ export const Rightbar = ({ commentData, setCommentData }) => {
   return (
     <Box
       flex={2}
-      sx={{ display: { xs: "none", sm: "block" }, position: "relative" }}
+      sx={{
+        display: { xs: "none", sm: "none", md: "none", lg: "block" },
+        position: "relative",
+      }}
+      minWidth={450}
       maxWidth={500}
     >
       <Box

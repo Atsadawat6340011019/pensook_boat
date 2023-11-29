@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
 import { Feed } from "./components/Feed";
 import { Rightbar } from "./components/Rightbar";
-import { Box, Stack } from "@mui/material";
+import { Box, Modal, Stack } from "@mui/material";
 import { Navbar } from "./components/Navbar";
 import { RootLayout } from "./layouts/RootLayout";
 import { FeedAndCommentsPage } from "./pages/FeedAndCommentsPage";
@@ -20,27 +20,54 @@ import { handleGetNotification } from "./services/getDataServices";
 import { useDispatch, useSelector } from "react-redux";
 import { AddNotificationData } from "./store/userSlice";
 import { HelmetProvider } from "react-helmet-async";
+import { CommentMB } from "./components/Logged/Mobile/CommentMB";
+import { setCommentMobile } from "./store/mobileSlice";
+import { BottomNavbar } from "./components/BottomNavbar";
 
 const HomePage = ({
   keepPostData,
   setCommentData,
   setKeepPostData,
   commentData,
-}) => (
-  <>
-    <Navbar />
-    <Stack
-      direction="row"
-      spacing={1.8}
-      justifyContent={"space-between"}
-      sx={{ bgcolor: "#F1F1F1" }}
-    >
-      <Sidebar keepPostData={keepPostData} />
-      <Feed setCommentData={setCommentData} setKeepPostData={setKeepPostData} />
-      <Rightbar commentData={commentData} />
-    </Stack>
-  </>
-);
+}) => {
+  const dispatch = useDispatch();
+  const mobileCommentToggle = useSelector(
+    (state) => state.mobile.commentMobile
+  );
+  return (
+    <>
+      <Navbar />
+      <Stack
+        direction="row"
+        spacing={1.8}
+        justifyContent={"space-between"}
+        sx={{
+          bgcolor: "#F1F1F1",
+          "&.MuiStack-root": {
+            mr: "14.4px",
+          },
+        }}
+      >
+        <Sidebar keepPostData={keepPostData} />
+        <Feed
+          setCommentData={setCommentData}
+          setKeepPostData={setKeepPostData}
+        />
+        <Modal
+          open={mobileCommentToggle}
+          onClose={() => dispatch(setCommentMobile(false))}
+        >
+          <CommentMB
+            commentData={commentData}
+            setCommentData={setCommentData}
+          />
+        </Modal>
+        <Rightbar commentData={commentData} />
+        <BottomNavbar />
+      </Stack>
+    </>
+  );
+};
 
 function App() {
   const [commentData, setCommentData] = useState();
@@ -90,6 +117,17 @@ function App() {
           <Route element={<UnloggedRoute />}>
             <Route
               path=""
+              element={
+                <HomePage
+                  keepPostData={keepPostData}
+                  setCommentData={setCommentData}
+                  setKeepPostData={setKeepPostData}
+                  commentData={commentData}
+                />
+              }
+            />
+            <Route
+              path="/featuredpost"
               element={
                 <HomePage
                   keepPostData={keepPostData}

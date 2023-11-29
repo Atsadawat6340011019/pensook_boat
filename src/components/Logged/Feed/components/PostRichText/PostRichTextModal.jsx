@@ -87,7 +87,10 @@ export const PostRichTextModal = forwardRef(
     const [buttonDisable, setButtonDisable] = useState(false);
 
     function replaceParagraphsWithCenterAlignment(htmlText) {
-      return htmlText.replace(/<p>/g, '<p style="text-align: center;">');
+      return htmlText.replace(
+        /<p>/g,
+        '<p style="text-align: center;" classname="spilt">'
+      );
     }
 
     const extractImgSrc = (htmlString) => {
@@ -241,11 +244,15 @@ export const PostRichTextModal = forwardRef(
         >
           <Typography
             align="center"
-            sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, px: 6 }}
+            sx={{
+              fontWeight: "400",
+              fontSize: { xs: 14, md: 16 },
+              px: { xs: 2, md: 6 },
+            }}
           >
             โพสต์โดยไม่เปิดเผยตัวตน
           </Typography>
-          <Box sx={{ px: 9 }}>
+          <Box sx={{ px: { xs: 6, md: 9 } }}>
             <AntSwitch onClick={() => setIsAnonymous(!isAnonymous)} />
           </Box>
         </Box>

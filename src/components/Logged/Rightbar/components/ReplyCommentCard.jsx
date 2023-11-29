@@ -46,6 +46,7 @@ import {
   ReportOutlined,
 } from "@mui/icons-material";
 import verifiedIcon from "../../../../assets/verified-icon.png";
+import { useNavigate } from "react-router-dom";
 
 const GrayTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -75,6 +76,7 @@ export const ReplyCommentCard = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogToggle, setDialogToggle] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -161,14 +163,16 @@ export const ReplyCommentCard = ({
 
   return (
     <Box mb={1} sx={{ position: "relative" }}>
-      <IconButton
-        aria-controls="post-menu"
-        aria-haspopup="true"
-        onClick={handleMenuOpen}
-        style={{ position: "absolute", top: 0, right: 10 }}
-      >
-        <MoreHoriz />
-      </IconButton>
+      {userData && (
+        <IconButton
+          aria-controls="post-menu"
+          aria-haspopup="true"
+          onClick={handleMenuOpen}
+          style={{ position: "absolute", top: 0, right: 10 }}
+        >
+          <MoreHoriz />
+        </IconButton>
+      )}
 
       {userData?.userId === data?.userId && (
         <Menu
@@ -424,90 +428,108 @@ export const ReplyCommentCard = ({
           py: 2,
         }}
       >
-        <Box>
-          <GrayTooltip title="ชอบ" placement="top">
-            <Button
-              startIcon={<CiFaceSmile size={25} />}
-              sx={{
-                border: "1px solid #bfbfbf",
-                borderTopRightRadius: "0px",
-                borderBottomRightRadius: "0px",
-                borderTopLeftRadius: "8px",
-                borderBottomLeftRadius: "8px",
-                color: voteValue
-                  ? voteValue === "Up"
+        {userData ? (
+          <Box>
+            <GrayTooltip title="ชอบ" placement="top">
+              <Button
+                startIcon={<CiFaceSmile size={25} />}
+                sx={{
+                  border: "1px solid #bfbfbf",
+                  borderTopRightRadius: "0px",
+                  borderBottomRightRadius: "0px",
+                  borderTopLeftRadius: "8px",
+                  borderBottomLeftRadius: "8px",
+                  color: voteValue
+                    ? voteValue === "Up"
+                      ? "#007DFC"
+                      : "#000"
+                    : data?.voteCurrent === "Up"
                     ? "#007DFC"
-                    : "#000"
-                  : data?.voteCurrent === "Up"
-                  ? "#007DFC"
-                  : "#000",
-                bgcolor: voteValue
-                  ? voteValue === "Up"
-                    ? "#E4F1FF"
-                    : ""
-                  : data?.voteCurrent === "Up"
-                  ? "#E4F1FF"
-                  : "",
-                height: 32,
-                "&:hover": {
+                    : "#000",
                   bgcolor: voteValue
                     ? voteValue === "Up"
                       ? "#E4F1FF"
-                      : "#ededed"
+                      : ""
                     : data?.voteCurrent === "Up"
                     ? "#E4F1FF"
-                    : "#ededed",
-                },
-              }}
-              onClick={() => handleChangeVote("Up")}
-            >
-              {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
-            </Button>
-          </GrayTooltip>
-          <GrayTooltip title="ไม่ชอบ" placement="top">
-            <Button
-              sx={{
-                border: "1px solid #bfbfbf",
-                borderTopRightRadius: "8px",
-                borderBottomRightRadius: "8px",
-                borderTopLeftRadius: "0px",
-                borderBottomLeftRadius: "0px",
-                color: voteValue
-                  ? voteValue === "Down"
+                    : "",
+                  height: 32,
+                  "&:hover": {
+                    bgcolor: voteValue
+                      ? voteValue === "Up"
+                        ? "#E4F1FF"
+                        : "#ededed"
+                      : data?.voteCurrent === "Up"
+                      ? "#E4F1FF"
+                      : "#ededed",
+                  },
+                }}
+                onClick={() => handleChangeVote("Up")}
+              >
+                {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
+              </Button>
+            </GrayTooltip>
+            <GrayTooltip title="ไม่ชอบ" placement="top">
+              <Button
+                sx={{
+                  border: "1px solid #bfbfbf",
+                  borderTopRightRadius: "8px",
+                  borderBottomRightRadius: "8px",
+                  borderTopLeftRadius: "0px",
+                  borderBottomLeftRadius: "0px",
+                  color: voteValue
+                    ? voteValue === "Down"
+                      ? "#FF0000"
+                      : "#000"
+                    : data?.voteCurrent === "Down"
                     ? "#FF0000"
-                    : "#000"
-                  : data?.voteCurrent === "Down"
-                  ? "#FF0000"
-                  : "#000",
-                bgcolor: voteValue
-                  ? voteValue === "Down"
-                    ? "#FFE9E9"
-                    : ""
-                  : data?.voteCurrent === "Down"
-                  ? "#FFE9E9"
-                  : "",
-                minWidth: 10,
-                height: 32,
-                padding: 0,
-                "&:hover": {
+                    : "#000",
                   bgcolor: voteValue
                     ? voteValue === "Down"
                       ? "#FFE9E9"
-                      : "#ededed"
+                      : ""
                     : data?.voteCurrent === "Down"
                     ? "#FFE9E9"
-                    : "#ededed",
-                },
-              }}
-              onClick={() => handleChangeVote("Down")}
-            >
-              <PiSmileySadThin
-                size={25}
-                style={{ paddingLeft: 5, paddingRight: 5 }}
-              />
-            </Button>
-          </GrayTooltip>
-        </Box>
+                    : "",
+                  minWidth: 10,
+                  height: 32,
+                  padding: 0,
+                  "&:hover": {
+                    bgcolor: voteValue
+                      ? voteValue === "Down"
+                        ? "#FFE9E9"
+                        : "#ededed"
+                      : data?.voteCurrent === "Down"
+                      ? "#FFE9E9"
+                      : "#ededed",
+                  },
+                }}
+                onClick={() => handleChangeVote("Down")}
+              >
+                <PiSmileySadThin
+                  size={25}
+                  style={{ paddingLeft: 5, paddingRight: 5 }}
+                />
+              </Button>
+            </GrayTooltip>
+          </Box>
+        ) : (
+          <Button
+            startIcon={<CiFaceSmile size={25} />}
+            sx={{
+              border: "1px solid #000",
+              borderRadius: "8px",
+              color: "#000",
+              height: 32,
+              "&:hover": {
+                bgcolor: "#ededed",
+              },
+            }}
+            onClick={() => navigate("/login")}
+          >
+            {data.upVote}
+          </Button>
+        )}
         <Box sx={{ display: "flex", alignItems: "center", height: 30 }}>
           <GrayTooltip title="ความคิดเห็น" placement="top">
             <IconButton
@@ -528,32 +550,35 @@ export const ReplyCommentCard = ({
           </Typography>
         </Box>
       </Box>
-      <Typography
-        align="right"
-        sx={{
-          fontSize: 14,
-          color: "#007DFC",
-          cursor: "pointer",
-          "&:hover": {
-            textDecoration: "underline",
-            fontWeight: "500",
-          },
-          mr: 7,
-          mb: 1,
-        }}
-        onClick={() => {
-          dispatch(AddCommentId(data?.commentId));
-          dispatch(CheckSecondComment(true));
-          setRichTextModalToggle(true);
-        }}
-      >
-        ตอบกลับ
-      </Typography>
+      {userData && (
+        <Typography
+          align="right"
+          sx={{
+            fontSize: 14,
+            color: "#007DFC",
+            cursor: "pointer",
+            "&:hover": {
+              textDecoration: "underline",
+              fontWeight: "500",
+            },
+            mr: 7,
+            mb: 1,
+          }}
+          onClick={() => {
+            dispatch(AddCommentId(data?.commentId));
+            dispatch(CheckSecondComment(true));
+            setRichTextModalToggle(true);
+          }}
+        >
+          ตอบกลับ
+        </Typography>
+      )}
+
       <Divider />
       {replyCommentToggle &&
         data?.commentList &&
         data.commentList.length > 0 && (
-          <Box sx={{ pl: 8, mt: 1 }}>
+          <Box sx={{ pl: { xs: 3, lg: 8 }, mt: 1 }}>
             {data?.commentList.map((item, index) => (
               <ReplyCommentCardSecond
                 key={index}

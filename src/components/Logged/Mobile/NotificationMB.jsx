@@ -10,13 +10,14 @@ import {
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Close } from "@mui/icons-material";
-import { formatTimestamp } from "../../utils/functions";
+import { formatTimestamp } from "../../../utils/functions";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { handleUpdateNotification } from "../../services/feedServices";
+import { handleUpdateNotification } from "../../../services/feedServices";
 import { useNavigate } from "react-router-dom";
-import { AddPostId, CheckNoti } from "../../store/selectSlice";
-import { UpdataCommentData } from "../../store/userSlice";
+import { AddPostId, CheckNoti } from "../../../store/selectSlice";
+import { UpdataCommentData } from "../../../store/userSlice";
+import { setNotiMobile } from "../../../store/mobileSlice";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,7 +52,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Notification({ onClose }) {
+export const NotificationMB = () => {
   const token = localStorage.getItem("token");
   const [value, setValue] = React.useState(0);
   const notification = useSelector((state) => state.user.notification);
@@ -82,11 +83,11 @@ export default function Notification({ onClose }) {
 
   return (
     <Box
+      bgcolor="#fff"
       sx={{
-        maxWidth: 520,
+        display: { xs: "block", sm: "none", md: "none" },
         height: "auto",
         borderRadius: "8px",
-        position: "relative",
       }}
     >
       <Box
@@ -101,6 +102,7 @@ export default function Notification({ onClose }) {
         <Typography
           sx={{
             fontWeight: 600,
+            py: 1,
             fontSize: { xs: 18, md: 24 },
           }}
         >
@@ -116,7 +118,6 @@ export default function Notification({ onClose }) {
           top: 10,
           right: 10,
         }}
-        onClick={() => onClose()}
       >
         <Close
           sx={{
@@ -220,8 +221,8 @@ export default function Notification({ onClose }) {
               }}
               key={item._id}
               onClick={() => {
+                dispatch(setNotiMobile(false));
                 navigate(`/feed/${item.post}`);
-                onClose();
                 dispatch(CheckNoti(true));
                 dispatch(
                   UpdataCommentData(Math.floor(Math.random() * 100) + 1)
@@ -283,8 +284,8 @@ export default function Notification({ onClose }) {
               }}
               key={item._id}
               onClick={() => {
+                dispatch(setNotiMobile(false));
                 navigate(`/feed/${item.post}`);
-                onClose();
                 dispatch(CheckNoti(true));
                 dispatch(
                   UpdataCommentData(Math.floor(Math.random() * 100) + 1)
@@ -333,4 +334,4 @@ export default function Notification({ onClose }) {
       </CustomTabPanel>
     </Box>
   );
-}
+};

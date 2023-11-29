@@ -1,5 +1,6 @@
-.test img {
+.postcard img {
   max-width: 500px;
+  width: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -7,10 +8,21 @@
   padding-bottom: 10px;
 }
 
-.test span {
+.postcard span {
   word-wrap: break-word;
 }
 
-.test p {
+.postcard p {
   word-wrap: break-word;
+}
+
+.spilt span {
+  white-space: nowrap !important;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
 }

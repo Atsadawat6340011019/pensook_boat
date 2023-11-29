@@ -47,6 +47,7 @@ import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { PostRichTextModalEdit } from "./PostRichTextEditor/PostRichTextModalEdit";
 import { PiShareFatThin } from "react-icons/pi";
 import verifiedIcon from "../../../../assets/verified-icon.png";
+import { setCommentMobile } from "../../../../store/mobileSlice";
 
 const GrayTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -585,7 +586,7 @@ export const PostCard = ({
           {data.label}
         </Typography>
       </Box>
-      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="test">
+      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="postcard">
         {showMore
           ? parse(data.content)
           : parse(data.contentText.substring(0, 250))}
@@ -626,44 +627,45 @@ export const PostCard = ({
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <GrayTooltip title="ชอบ" placement="top">
-            <Button
-              startIcon={<CiFaceSmile size={25} />}
-              sx={{
-                border: "1px solid #bfbfbf",
-                borderTopRightRadius: "0px",
-                borderBottomRightRadius: "0px",
-                borderTopLeftRadius: "8px",
-                borderBottomLeftRadius: "8px",
-                color: voteValue
-                  ? voteValue === "Up"
+            <span>
+              <Button
+                startIcon={<CiFaceSmile size={25} />}
+                sx={{
+                  border: "1px solid #bfbfbf",
+                  borderTopRightRadius: "0px",
+                  borderBottomRightRadius: "0px",
+                  borderTopLeftRadius: "8px",
+                  borderBottomLeftRadius: "8px",
+                  color: voteValue
+                    ? voteValue === "Up"
+                      ? "#007DFC"
+                      : "#000"
+                    : data?.voteCurrent === "Up"
                     ? "#007DFC"
-                    : "#000"
-                  : data?.voteCurrent === "Up"
-                  ? "#007DFC"
-                  : "#000",
-                bgcolor: voteValue
-                  ? voteValue === "Up"
-                    ? "#E4F1FF"
-                    : ""
-                  : data?.voteCurrent === "Up"
-                  ? "#E4F1FF"
-                  : "",
-                height: 32,
-                "&:hover": {
+                    : "#000",
                   bgcolor: voteValue
                     ? voteValue === "Up"
                       ? "#E4F1FF"
-                      : "#ededed"
+                      : ""
                     : data?.voteCurrent === "Up"
                     ? "#E4F1FF"
-                    : "#ededed",
-                },
-              }}
-              onClick={() => {
-                handleChangeVote("Up");
-              }}
-            >
-              {/*voteValue === "Up"
+                    : "",
+                  height: 32,
+                  "&:hover": {
+                    bgcolor: voteValue
+                      ? voteValue === "Up"
+                        ? "#E4F1FF"
+                        : "#ededed"
+                      : data?.voteCurrent === "Up"
+                      ? "#E4F1FF"
+                      : "#ededed",
+                  },
+                }}
+                onClick={() => {
+                  handleChangeVote("Up");
+                }}
+              >
+                {/*voteValue === "Up"
                 ? data?.voteCurrent === "Up"
                   ? data?.upVote
                   : data?.upVote + 1
@@ -680,71 +682,96 @@ export const PostCard = ({
                 : voteValue === data?.voteCurrent
                 ? data?.upVote
             : data?.upVote*/}
-              {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
-            </Button>
+                {upVoteCountCurrent ? upVoteCountCurrent : data?.upVote}
+              </Button>
+            </span>
           </GrayTooltip>
           <GrayTooltip title="ไม่ชอบ" placement="top">
-            <Button
-              sx={{
-                border: "1px solid #bfbfbf",
-                borderTopRightRadius: "8px",
-                borderBottomRightRadius: "8px",
-                borderTopLeftRadius: "0px",
-                borderBottomLeftRadius: "0px",
-                color: voteValue
-                  ? voteValue === "Down"
+            <span>
+              <Button
+                sx={{
+                  border: "1px solid #bfbfbf",
+                  borderTopRightRadius: "8px",
+                  borderBottomRightRadius: "8px",
+                  borderTopLeftRadius: "0px",
+                  borderBottomLeftRadius: "0px",
+                  color: voteValue
+                    ? voteValue === "Down"
+                      ? "#FF0000"
+                      : "#000"
+                    : data?.voteCurrent === "Down"
                     ? "#FF0000"
-                    : "#000"
-                  : data?.voteCurrent === "Down"
-                  ? "#FF0000"
-                  : "#000",
-                bgcolor: voteValue
-                  ? voteValue === "Down"
-                    ? "#FFE9E9"
-                    : ""
-                  : data?.voteCurrent === "Down"
-                  ? "#FFE9E9"
-                  : "",
-                minWidth: 10,
-                height: 32,
-                padding: 0,
-                "&:hover": {
+                    : "#000",
                   bgcolor: voteValue
                     ? voteValue === "Down"
                       ? "#FFE9E9"
-                      : "#ededed"
+                      : ""
                     : data?.voteCurrent === "Down"
                     ? "#FFE9E9"
-                    : "#ededed",
-                },
-              }}
-              onClick={() => handleChangeVote("Down")}
-            >
-              <PiSmileySadThin
-                size={25}
-                style={{ paddingLeft: 5, paddingRight: 5 }}
-              />
-            </Button>
+                    : "",
+                  minWidth: 10,
+                  height: 32,
+                  padding: 0,
+                  "&:hover": {
+                    bgcolor: voteValue
+                      ? voteValue === "Down"
+                        ? "#FFE9E9"
+                        : "#ededed"
+                      : data?.voteCurrent === "Down"
+                      ? "#FFE9E9"
+                      : "#ededed",
+                  },
+                }}
+                onClick={() => handleChangeVote("Down")}
+              >
+                <PiSmileySadThin
+                  size={25}
+                  style={{ paddingLeft: 5, paddingRight: 5 }}
+                />
+              </Button>
+            </span>
           </GrayTooltip>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
             <GrayTooltip title="ความคิดเห็น" placement="top">
-              <IconButton
-                sx={{
-                  width: { xs: 30, md: 35 },
-                  height: { xs: 30, md: 35 },
-                  "&:hover": {
-                    bgcolor: "#ededed",
-                  },
-                }}
-                onClick={() => {
-                  setCommentData(data?.commentList);
-                  setSelectIndexComment(index);
-                  dispatch(AddPostId(data?.postId));
-                }}
-              >
-                <TfiCommentAlt size={35} color="#000" />
-              </IconButton>
+              <span>
+                <IconButton
+                  sx={{
+                    display: { xs: "none", lg: "inline-flex" },
+                    width: { xs: 30, md: 35 },
+                    height: { xs: 30, md: 35 },
+                    "&:hover": {
+                      bgcolor: "#ededed",
+                    },
+                  }}
+                  onClick={() => {
+                    setCommentData(data?.commentList);
+                    setSelectIndexComment(index);
+                    dispatch(AddPostId(data?.postId));
+                  }}
+                >
+                  <TfiCommentAlt size={35} color="#000" />
+                </IconButton>
+                <IconButton
+                  sx={{
+                    display: { xs: "inline-flex", lg: "none" },
+                    width: { xs: 30, md: 35 },
+                    height: { xs: 30, md: 35 },
+                    "&:hover": {
+                      bgcolor: "#ededed",
+                    },
+                  }}
+                  onClick={() => {
+                    setCommentData(data?.commentList);
+                    setSelectIndexComment(index);
+                    dispatch(AddPostId(data?.postId));
+                    dispatch(setCommentMobile(true));
+                  }}
+                >
+                  <TfiCommentAlt size={35} color="#000" />
+                </IconButton>
+              </span>
             </GrayTooltip>
+
             <Typography
               sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, ml: 2 }}
             >
@@ -755,29 +782,31 @@ export const PostCard = ({
         <Box sx={{ display: "flex" }}>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
             <GrayTooltip title="Keep โพสต์" placement="top">
-              <IconButton
-                sx={{
-                  width: { xs: 35, md: 40 },
-                  height: { xs: 35, md: 40 },
-                  "&:hover": {
-                    bgcolor: "#ededed",
-                  },
-                }}
-                disabled={userData?.userId === data?.userId}
-                onClick={() => handleChangeKeepPost("t")}
-              >
-                {keepPostValue ? (
-                  keepPostValue === "t" ? (
+              <span>
+                <IconButton
+                  sx={{
+                    width: { xs: 35, md: 40 },
+                    height: { xs: 35, md: 40 },
+                    "&:hover": {
+                      bgcolor: "#ededed",
+                    },
+                  }}
+                  disabled={userData?.userId === data?.userId}
+                  onClick={() => handleChangeKeepPost("t")}
+                >
+                  {keepPostValue ? (
+                    keepPostValue === "t" ? (
+                      <PiBookmarkSimpleFill size={35} color="#000" />
+                    ) : (
+                      <PiBookmarkSimpleLight size={35} color="#000" />
+                    )
+                  ) : resultKeep === "t" ? (
                     <PiBookmarkSimpleFill size={35} color="#000" />
                   ) : (
                     <PiBookmarkSimpleLight size={35} color="#000" />
-                  )
-                ) : resultKeep === "t" ? (
-                  <PiBookmarkSimpleFill size={35} color="#000" />
-                ) : (
-                  <PiBookmarkSimpleLight size={35} color="#000" />
-                )}
-              </IconButton>
+                  )}
+                </IconButton>
+              </span>
             </GrayTooltip>
             <Typography
               sx={{ fontWeight: "400", fontSize: { xs: 14, md: 16 }, ml: 1 }}
@@ -787,18 +816,20 @@ export const PostCard = ({
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
             <GrayTooltip title="แชร์" placement="top">
-              <IconButton
-                onClick={handleClick}
-                sx={{
-                  width: { xs: 35, md: 40 },
-                  height: { xs: 35, md: 40 },
-                  "&:hover": {
-                    bgcolor: "#ededed",
-                  },
-                }}
-              >
-                <PiShareFatThin color="#000" size={"60px"} />
-              </IconButton>
+              <span>
+                <IconButton
+                  onClick={handleClick}
+                  sx={{
+                    width: { xs: 35, md: 40 },
+                    height: { xs: 35, md: 40 },
+                    "&:hover": {
+                      bgcolor: "#ededed",
+                    },
+                  }}
+                >
+                  <PiShareFatThin color="#000" size={"60px"} />
+                </IconButton>
+              </span>
             </GrayTooltip>
             <SharePostDialog
               open={open}

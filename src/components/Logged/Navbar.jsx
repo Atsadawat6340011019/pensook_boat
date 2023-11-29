@@ -26,6 +26,7 @@ import {
 } from "../../services/getDataServices";
 import { AddSearchKeyword, AddSearchPostId } from "../../store/selectSlice";
 import Notification from "./Notification";
+import { setSearchMobile } from "../../store/mobileSlice";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -313,7 +314,7 @@ export const Navbar = () => {
             height: 64,
           }}
         >
-          <img src={LogoPensook32} width={40} height={40} alt="logoPensook" />
+          <img src={LogoPensook} width={125} height={28} alt="logoPensook" />
         </Box>
 
         <Icons>
@@ -362,6 +363,14 @@ export const Navbar = () => {
         </Icons>
 
         <UserBox>
+          <IconButton
+            sx={{ width: 30, height: 30, mr: 1 }}
+            onClick={() => {
+              dispatch(setSearchMobile(true));
+            }}
+          >
+            <SearchOutlined sx={{ width: 30, height: 30, color: "#000" }} />
+          </IconButton>
           <Avatar
             src={userData?.profileImagePath}
             sx={{ width: 40, height: 40 }}

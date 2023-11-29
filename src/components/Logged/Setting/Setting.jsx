@@ -1,4 +1,4 @@
-import { ErrorOutline } from "@mui/icons-material";
+import { ArrowBackIosRounded, ErrorOutline } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   DialogContentText,
   Divider,
   Grid,
+  IconButton,
   Modal,
   Typography,
 } from "@mui/material";
@@ -18,6 +19,7 @@ import { handleGetMyProfile } from "../../../services/profileServices";
 import { AddUserData } from "../../../store/userSlice";
 import { ProfileCard } from "./components/ProfileCard";
 import { ModalDeleteUser } from "./components/ModalDeleteUser";
+import { setMenuMobile } from "../../../store/mobileSlice";
 
 export const Setting = () => {
   const token = localStorage.getItem("token");
@@ -51,6 +53,7 @@ export const Setting = () => {
       sx={{
         height: 830,
         borderRadius: "8px",
+        position: "relative",
       }}
     >
       <Typography
@@ -59,6 +62,20 @@ export const Setting = () => {
       >
         การตั้งค่า
       </Typography>
+      <IconButton
+        sx={{
+          display: { xs: "block", sm: "none" },
+          position: "absolute",
+          top: 10,
+          left: 5,
+        }}
+        onClick={() => {
+          dispatch(setMenuMobile(true));
+          navigate("/feed");
+        }}
+      >
+        <ArrowBackIosRounded sx={{ color: "#000", width: 30, height: 30 }} />
+      </IconButton>
       <Divider sx={{ pt: 3 }} />
       <ProfileCard setDialogToggleWarn={setDialogToggleWarn} />
 
@@ -95,13 +112,13 @@ export const Setting = () => {
         </DialogContent>
         <DialogActions sx={{ p: 0 }}>
           <Grid container sx={{ display: "flex", justifyContent: "center" }}>
-            <Grid item>
+            <Grid item sx={{ width: "50%" }}>
               <Button
                 variant="contained"
                 color="secondary"
                 sx={{
                   height: 60,
-                  width: 200,
+                  width: { xs: "100%", md: 200 },
                   fontSize: 18,
                   borderRadius: 0,
                 }}
@@ -111,14 +128,14 @@ export const Setting = () => {
                 ยกเลิก
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item sx={{ width: "50%" }}>
               <Button
                 ref={ModalRef}
                 variant="contained"
                 color="primary"
                 sx={{
                   height: 60,
-                  width: 200,
+                  width: { xs: "100%", md: 200 },
                   borderRadius: 0,
                   fontSize: 18,
                 }}

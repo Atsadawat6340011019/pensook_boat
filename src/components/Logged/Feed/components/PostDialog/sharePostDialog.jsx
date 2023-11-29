@@ -18,9 +18,8 @@ const SharePostDialog = ({ open, onClose, postId }) => {
       navigator.clipboard.writeText(link);
       setShowCopiedDialog(true);
     } else {
-      alert('คัดลอกลิงค์สามารถใช้ได้สำหรับ Server Production เท่านั้น')
+      alert("คัดลอกลิงค์สามารถใช้ได้สำหรับ Server Production เท่านั้น");
     }
-    
   };
 
   useEffect(() => {
@@ -41,7 +40,7 @@ const SharePostDialog = ({ open, onClose, postId }) => {
   };
 
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
       <Dialog
         open={open}
         onClose={onClose}
@@ -65,7 +64,7 @@ const SharePostDialog = ({ open, onClose, postId }) => {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ overflow: "hidden" }}>
           <div
             style={{
               ...customFontStyle,
@@ -86,12 +85,23 @@ const SharePostDialog = ({ open, onClose, postId }) => {
               textAlign: "left",
               height: "70px",
               borderRadius: "8px",
-              border: "2px solid black",
+              border: "1px solid #808080",
               marginTop: "5%",
-              pointerEvents: "none",
+              cursor: "text",
             }}
           >
-            <p style={{ paddingLeft: "8px" }}>{link}</p>
+            <p
+              style={{
+                paddingLeft: "8px",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                maxWidth: "100%",
+                fontWeight: "500",
+              }}
+            >
+              {link}
+            </p>
           </div>
           <Button
             variant="contained"

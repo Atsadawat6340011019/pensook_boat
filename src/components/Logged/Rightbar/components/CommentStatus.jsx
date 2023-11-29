@@ -19,8 +19,9 @@ export const CommentStatus = forwardRef(
           px: 2,
           borderRadius: "8px",
           cursor: "pointer",
-          position: "absolute",
-          bottom: 5,
+          position: { xs: "fixed", lg: "absolute" },
+          bottom: { xs: -40, lg: 5 },
+          maxWidth: "100%",
           width: "90%",
         }}
         onClick={() => {

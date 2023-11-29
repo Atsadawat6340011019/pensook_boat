@@ -1,4 +1,5 @@
 import {
+  ArrowBackIosRounded,
   CheckCircleOutline,
   EditOutlined,
   ModeEditOutlined,
@@ -11,7 +12,9 @@ import {
   DialogContentText,
   Divider,
   Grid,
+  IconButton,
   OutlinedInput,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
@@ -24,6 +27,7 @@ import {
 import { AddUserData } from "../../../store/userSlice";
 import ImageCropperDialog from "./imageCropperDialog";
 import Resizer from "react-image-file-resizer";
+import { setMenuMobile } from "../../../store/mobileSlice";
 
 export const Profile = () => {
   const userData = useSelector((state) => state.user.userData);
@@ -227,10 +231,25 @@ export const Profile = () => {
       onSubmit={handleSubmit}
       bgcolor="#fff"
       sx={{
-        height: 830,
+        height: "auto",
         borderRadius: "8px",
+        position: "relative",
       }}
     >
+      <IconButton
+        sx={{
+          display: { xs: "block", sm: "none" },
+          position: "absolute",
+          top: 10,
+          left: 5,
+        }}
+        onClick={() => {
+          dispatch(setMenuMobile(true));
+          navigate("/feed");
+        }}
+      >
+        <ArrowBackIosRounded sx={{ color: "#000", width: 30, height: 30 }} />
+      </IconButton>
       <Typography
         align="center"
         sx={{ fontWeight: "500", fontSize: 18, pt: 3 }}
@@ -245,6 +264,7 @@ export const Profile = () => {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          pb: stateEdit ? 15 : 20,
         }}
       >
         {stateEdit ? (
@@ -365,8 +385,10 @@ export const Profile = () => {
                     : "https://images.squarespace-cdn.com/content/v1/5b7fcdb28ab722e3da4af3cc/1592215617998-RGLPH8B4W7F4T2PBIGW1/Dust+Grey.jpeg"
                 }
                 style={{
-                  width: 640,
-                  height: 200,
+                  maxWidth: 640,
+                  width: "100%",
+                  maxHeight: 200,
+                  height: "100%",
                   objectFit: "cover",
                   borderRadius: "8px",
                 }}
@@ -411,12 +433,18 @@ export const Profile = () => {
             </Typography>
             <Grid
               container
-              sx={{ display: "flex", justifyContent: "center", pt: 2 }}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                pt: 2,
+                pb: { xs: 2 },
+              }}
             >
               <Grid
                 item
                 sx={{
-                  mr: 1,
+                  mr: { xs: 0, md: 1 },
+                  mb: { xs: 1, md: 0 },
                 }}
               >
                 <Button
@@ -466,7 +494,7 @@ export const Profile = () => {
                 borderRadius: "8px",
                 position: "absolute",
                 top: 10,
-                right: 100,
+                right: { xs: 25, md: 100 },
               }}
               startIcon={<EditOutlined />}
               onClick={() => setStateEdit(true)}
@@ -498,8 +526,10 @@ export const Profile = () => {
                   : "https://images.squarespace-cdn.com/content/v1/5b7fcdb28ab722e3da4af3cc/1592215617998-RGLPH8B4W7F4T2PBIGW1/Dust+Grey.jpeg"
               }
               style={{
-                width: 640,
-                height: 200,
+                maxWidth: 640,
+                width: "100%",
+                maxHeight: 200,
+                height: "100%",
                 objectFit: "cover",
                 borderRadius: "8px",
               }}
@@ -540,6 +570,7 @@ export const Profile = () => {
           </DialogContentText>
         </DialogContent>
       </Dialog>
+      <Toolbar sx={{ display: { xs: "block", md: "none" } }} />
     </Box>
   );
 };

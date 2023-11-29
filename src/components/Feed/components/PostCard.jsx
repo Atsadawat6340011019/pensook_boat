@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { CiFaceSmile } from "react-icons/ci";
 import { TfiCommentAlt } from "react-icons/tfi";
 import verifiedIcon from "../../../assets/verified-icon.png";
+import { setCommentMobile } from "../../../store/mobileSlice";
+import { useDispatch } from "react-redux";
 
 export const PostCard = ({
   data,
@@ -21,6 +23,7 @@ export const PostCard = ({
   const [showMore, setShowMore] = useState(false);
   const [imageSelect, setImageSelect] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Box
@@ -92,7 +95,7 @@ export const PostCard = ({
       >
         {data.label}
       </Typography>
-      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="test">
+      <Box sx={{ fontWeight: "400", fontSize: 16, mt: 2 }} className="postcard">
         {showMore
           ? parse(data.content)
           : parse(data.contentText.substring(0, 250))}
@@ -109,7 +112,8 @@ export const PostCard = ({
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box
             sx={{
-              width: data.attachImageList.length > 1 ? 630 : "100%",
+              maxWidth: 630,
+              width: data.attachImageList.length > 1 ? "100%" : "100%",
             }}
           >
             {!imageSelect && (
@@ -148,6 +152,7 @@ export const PostCard = ({
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             sx={{
+              display: { xs: "none", lg: "inline-flex" },
               width: 35,
               height: 35,
               "&:hover": {
@@ -161,7 +166,23 @@ export const PostCard = ({
           >
             <TfiCommentAlt size={35} color="#000" />
           </IconButton>
-
+          <IconButton
+            sx={{
+              display: { xs: "inline-flex", lg: "none" },
+              width: { xs: 30, md: 35 },
+              height: { xs: 30, md: 35 },
+              "&:hover": {
+                bgcolor: "#ededed",
+              },
+            }}
+            onClick={() => {
+              setCommentData(data?.commentList);
+              setSelectIndexComment(index);
+              dispatch(setCommentMobile(true));
+            }}
+          >
+            <TfiCommentAlt size={35} color="#000" />
+          </IconButton>
           <Typography sx={{ fontWeight: "400", fontSize: 16, ml: 2 }}>
             {data.commentList.length}
           </Typography>

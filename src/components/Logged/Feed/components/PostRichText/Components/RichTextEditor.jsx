@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 import {
   $createTextNode,
   $getRoot,
@@ -9,9 +9,12 @@ import {
   INSERT_LINE_BREAK_COMMAND,
   INSERT_TAB_COMMAND,
   INSERT_PARAGRAPH_COMMAND,
+  INSERT_HTML_COMMAND,
+  SET_RANGE_COMMAND,
+  $insertNodes,
 } from "lexical";
 import "./styles.css";
-import { $generateHtmlFromNodes } from "@lexical/html";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
@@ -73,13 +76,16 @@ function LinePlugin() {
 
   function update() {
     editor.update(() => {
-      const root = $getRoot;
+      const root = $getRoot();
       const selection = $getSelection();
+      const paragraphNode = $createParagraphNode();
+
       editor.dispatchCommand(INSERT_PARAGRAPH_COMMAND);
+
+      //$getRoot.apply($insertNodes(nodes));
       selection.insertText(
         ".....................................................................................................................\n"
       );
-
       //editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
       editor.dispatchCommand(INSERT_PARAGRAPH_COMMAND);
     });

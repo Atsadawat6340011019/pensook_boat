@@ -112,7 +112,7 @@ export const Navbar = () => {
             height: 64,
           }}
         >
-          <img src={LogoPensook32} width={40} height={40} alt="logoPensook" />
+          <img src={LogoPensook} width={125} height={28} alt="logoPensook" />
         </Box>
 
         <Icons>
@@ -133,7 +133,18 @@ export const Navbar = () => {
         </Icons>
 
         <UserBox>
-          <Avatar src={userData?.photoURL} sx={{ width: 40, height: 40 }} />
+          <Button
+            variant="contained"
+            sx={{
+              fontSize: 16,
+              height: 50,
+              width: 130,
+              borderRadius: "8px",
+            }}
+            onClick={() => navigate("/login")}
+          >
+            เข้าสู่ระบบ
+          </Button>
         </UserBox>
       </StyledToolbar>
     </AppBar>
