@@ -23,7 +23,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: 800,
-  height: 785,
+  height: "90vh",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -301,8 +301,8 @@ export const PostRichTextModal = forwardRef(
             ส่ง
           </Button>
         </Box>
-        <Box sx={{ maxWidth: 750, width: "100%", height: 380, mt: 3 }}>
-          <Box sx={{ position: "relative", px: 7, height: 480 }}>
+        <Box sx={{ maxWidth: 750, width: "100%", height: "50%", mt: 3 }}>
+          <Box sx={{ position: "relative", px: 7, height: "100%" }}>
             <RichTextEditor
               content={content}
               setContent={setContent}

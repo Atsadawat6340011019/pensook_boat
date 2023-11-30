@@ -206,7 +206,7 @@ export const NotificationMB = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Box sx={{ overflow: "auto", maxHeight: "70vh" }}>
+        <Box sx={{ overflow: "auto", maxHeight: "65vh" }}>
           {notification.notiList?.map((item) => (
             <Box
               sx={{

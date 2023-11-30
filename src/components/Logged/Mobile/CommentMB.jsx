@@ -48,7 +48,6 @@ export const CommentMB = ({ commentData, setCommentData }) => {
   const mobileCommentToggle = useSelector(
     (state) => state.mobile.commentMobile
   );
-  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const dispatch = useDispatch();
   console.log(postId);
   console.log(commentData);
@@ -65,21 +64,6 @@ export const CommentMB = ({ commentData, setCommentData }) => {
       fecthData();
     }
   }, [updateComment]);
-
-  useEffect(() => {
-    // Function to handle window resize events
-    const handleResize = () => {
-      setScreenHeight(window.innerHeight);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Box sx={style}>

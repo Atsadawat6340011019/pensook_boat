@@ -25,7 +25,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: 800,
-  height: 785,
+  height: "90vh",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
@@ -381,8 +381,8 @@ export const PostRichTextModalEdit = forwardRef(
             autoFocus
           />
         </Box>
-        <Box sx={{ maxWidth: 750, width: "100%", height: 380, mt: 3 }}>
-          <Box sx={{ position: "relative", px: 7, height: 380 }}>
+        <Box sx={{ maxWidth: 750, width: "100%", height: "60%", mt: 3 }}>
+          <Box sx={{ position: "relative", px: 7, height: "85%" }}>
             {htmlBase64 && (
               <RichTextEditor
                 content={content}
