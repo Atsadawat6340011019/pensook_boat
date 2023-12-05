@@ -15,6 +15,7 @@ import { ArrowBackIosNewRounded, Close } from "@mui/icons-material";
 import { auth, googleAuthProvider } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { handleCreateUser, handleLogin } from "../../services/authServices";
+import Interest from "./Interest";
 
 const style = {
   position: "relative",
@@ -31,6 +32,9 @@ const style = {
 export const Login = () => {
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [interest, setInterest] = useState(false);
+  const [interestContactCategory, setInterestContactCategory] = useState(null);
+  const [interestArray, setinterestArray] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -49,12 +53,16 @@ export const Login = () => {
         const firstName = nameParts[0];
         const lastName = nameParts.slice(1).join(" ");
         console.log("isNewUser", additionalUserInfo.isNewUser);
+
         if (additionalUserInfo.isNewUser) {
           console.log("isNewUser", additionalUserInfo.isNewUser);
+
           const googleImage = user.photoURL;
+
           const coverttobase64 = async (image) => {
             try {
               const response = await fetch(image);
+
               if (!response.ok) {
                 throw new Error(
                   `Failed to fetch the image. Status: ${response.status}`
@@ -93,6 +101,7 @@ export const Login = () => {
                     user.email,
                     idToken.token
                   );
+
                   console.log("เข้าสู่ระบบ", loginRespone);
 
                   if (loginRespone.status === "success") {
@@ -110,8 +119,22 @@ export const Login = () => {
             });
         } else {
           const loginRespone = await handleLogin(user.email, idToken.token);
+
           console.log(loginRespone);
-          if (loginRespone.status === "success") {
+          if (loginRespone.firstTimeLogin == true) {
+            console.log("ผู้ใช้ใหม่");
+            console.log("ทดสอบ", loginRespone.interests);
+
+            const interestContactCategory =
+              loginRespone.interests.contactCategory;
+            console.log("Interest Type:", interestContactCategory);
+
+            const interestArray = loginRespone.interests.interestArray;
+            console.log("Interest Type:", interestArray);
+            setinterestArray(interestArray);
+            setInterestContactCategory(interestContactCategory);
+            setInterest(true);
+          } else {
             const googleToken = idToken.token;
             localStorage.setItem("token", JSON.stringify(googleToken));
             navigate("/feed");
@@ -137,96 +160,112 @@ export const Login = () => {
             position: "relative",
           }}
         >
-          <IconButton
-            sx={{
-              position: "absolute",
-              left: 0,
-              width: { xs: 40, md: 60 },
-              height: { xs: 40, md: 60 },
-              zIndex: 999,
-            }}
-            onClick={() => navigate("/")}
-          >
-            <ArrowBackIosNewRounded
-              sx={{
-                width: { xs: 36, md: 56 },
-                height: { xs: 36, md: 56 },
-                color: "#000",
-              }}
+          {interest ? (
+            <Interest
+              interestContactCategory={interestContactCategory}
+              interestArray={interestArray}
             />
-          </IconButton>
-          <img
-            src={LogoPensook}
-            style={{ width: 229, height: 55, objectFit: "cover" }}
-            alt="LogoPensook"
-          />
-
-          <Typography
-            align="center"
-            sx={{ fontWeight: "500", fontSize: 18, pt: 15, pb: 10, width: 200 }}
-          >
-            เข้าสู่ระบบเพื่อถามคำถาม เกี่ยวกับสุขภาพที่คุณสงสัย
-          </Typography>
-
-          <Button
-            fullWidth
-            variant="outlined"
-            sx={{
-              mt: 3,
-              mb: 2,
-              maxWidth: 466,
-              borderRadius: "8px",
-              textTransform: "none",
-              fontWeight: "600",
-            }}
-            startIcon={<FcGoogle />}
-            disabled={!checked}
-            onClick={handleLoginByGoogle}
-          >
-            Continue with Google
-          </Button>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              py: 10,
-            }}
-          >
-            <Checkbox checked={checked} onChange={handleChange} />
-            <Typography sx={{ color: "#000" }}>
-              ยอมรับ
-              <Typography
+          ) : (
+            <>
+              <IconButton
                 sx={{
-                  color: "#007DFC",
-                  cursor: "pointer",
-                  "&:hover": {
-                    textDecoration: "underline",
-                  },
+                  position: "absolute",
+                  left: 0,
+                  width: { xs: 40, md: 60 },
+                  height: { xs: 40, md: 60 },
+                  zIndex: 999,
                 }}
-                variant="span"
-                component="span"
-                onClick={() => setModalOpen(true)}
+                onClick={() => navigate("/")}
               >
-                เงื่อนไข
+                <ArrowBackIosNewRounded
+                  sx={{
+                    width: { xs: 36, md: 56 },
+                    height: { xs: 36, md: 56 },
+                    color: "#000",
+                  }}
+                />
+              </IconButton>
+              <img
+                src={LogoPensook}
+                style={{ width: 229, height: 55, objectFit: "cover" }}
+                alt="LogoPensook"
+              />
+
+              <Typography
+                align="center"
+                sx={{
+                  fontWeight: "500",
+                  fontSize: 18,
+                  pt: 15,
+                  pb: 10,
+                  width: 200,
+                }}
+              >
+                เข้าสู่ระบบเพื่อถามคำถาม เกี่ยวกับสุขภาพที่คุณสงสัย
               </Typography>
-              ทุกอย่าง
-            </Typography>
-          </Box>
-          <Typography align="center" sx={{ color: "#000", maxWidth: 500 }}>
-            <Typography
-              sx={{
-                color: "#007DFC",
-              }}
-              variant="span"
-              component="span"
-            >
-              Pensook health care technology Co.,Ltd
-            </Typography>{" "}
-            เป็นบริษัท health care startup ของประเทศไทย
-            ที่มีความมุ่งหวังอยากจะทำให้ผู้คน มีคุณภาพชีวิตที่ดี
-            เข้าถึงการรักษาพยาบาลได้ง่าย และมีอายุขัยที่ยืนยาวขึ้น
-          </Typography>
+
+              <Button
+                fullWidth
+                variant="outlined"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  maxWidth: 466,
+                  borderRadius: "8px",
+                  textTransform: "none",
+                  fontWeight: "600",
+                }}
+                startIcon={<FcGoogle />}
+                disabled={!checked}
+                onClick={handleLoginByGoogle}
+              >
+                Continue with Google
+              </Button>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  py: 10,
+                }}
+              >
+                <Checkbox checked={checked} onChange={handleChange} />
+                <Typography sx={{ color: "#000" }}>
+                  ยอมรับ
+                  <Typography
+                    sx={{
+                      color: "#007DFC",
+                      cursor: "pointer",
+                      "&:hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                    variant="span"
+                    component="span"
+                    onClick={() => setModalOpen(true)}
+                  >
+                    เงื่อนไข
+                  </Typography>
+                  ทุกอย่าง
+                </Typography>
+              </Box>
+              <Typography align="center" sx={{ color: "#000", maxWidth: 500 }}>
+                <Typography
+                  sx={{
+                    color: "#007DFC",
+                  }}
+                  variant="span"
+                  component="span"
+                >
+                  Pensook health care technology Co.,Ltd
+                </Typography>{" "}
+                เป็นบริษัท health care startup ของประเทศไทย
+                ที่มีความมุ่งหวังอยากจะทำให้ผู้คน มีคุณภาพชีวิตที่ดี
+                เข้าถึงการรักษาพยาบาลได้ง่าย และมีอายุขัยที่ยืนยาวขึ้น
+              </Typography>
+            </>
+          )}
+          ;
         </Box>
       </Grid>
       <Grid

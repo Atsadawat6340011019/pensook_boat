@@ -23,6 +23,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { CommentMB } from "./components/Logged/Mobile/CommentMB";
 import { setCommentMobile } from "./store/mobileSlice";
 import { BottomNavbar } from "./components/BottomNavbar";
+import Interest from "./components/Login/Interest"
 
 const HomePage = ({
   keepPostData,
@@ -172,6 +173,7 @@ function App() {
           </Route>
           <Route element={<UnloggedRoute />}>
             <Route path="login" element={<LoginPage />} />
+            <Route path="interest" element={<Interest />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route
@@ -188,6 +190,7 @@ function App() {
                   />
                 }
               />
+
               <Route
                 path="feed/:id"
                 element={
