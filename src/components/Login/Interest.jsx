@@ -59,22 +59,20 @@ export default function Interest({ interestContactCategory, interestArray }) {
     return null;
   };
 
-  const cardTitle = [
-    { text: "โรคซึมเศร้า" },
-    { text: "โรคหัวใจ" },
-    { text: "โรคมะเร็ง" },
-    { text: "โรคไต" },
-    { text: "โรคภูมิแพ้" },
-    { text: "โรคในเด็ก" },
-    { text: "เทคโนโลยีการแพทย์" },
-    { text: "โรคระบาด" },
-  ];
+  
 
   const handleInterestClick = () => {
+    console.log("selectedTitle:", selectedTitle);
+    console.log("selectType:", selectType);
+
     if (selectedTitle.length === 3 && selectType) {
+      const selectedInterests = selectedTitle.map(
+        (index) => interestArray[index].name
+      );
+
       const userData = {
         contactCategory: selectType,
-        interestArray: selectedTitle.map((index) => interestArray[index].text),
+        interestArray: selectedInterests,
       };
 
       console.log(userData);
@@ -82,7 +80,6 @@ export default function Interest({ interestContactCategory, interestArray }) {
       console.log("กรุณาเลือกทุกข้อ");
     }
   };
-
   return (
     <React.Fragment>
       <Box
@@ -153,10 +150,12 @@ export default function Interest({ interestContactCategory, interestArray }) {
                       transform: "scale(1.1)",
                     },
                     cursor: "pointer",
+                    
                   }}
                   onClick={() => handleTitleClick(index)}
                   onMouseEnter={() => setHoverCard(index)}
                   onMouseLeave={() => setHoverCard(null)}
+                  
                 >
                   {HoverCard === index && (
                     <Box
