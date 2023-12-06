@@ -18,6 +18,22 @@ export const handleLogin = async (email, token) => {
   }
 };
 
+export const handleSaveInterests = async (contactCategory, interestArray) => {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/social/saveInterest`,
+      {
+        contactCategory: contactCategory,
+        interestArray: interestArray,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 export const handleCreateUser = async (
   email,
   firstName,
